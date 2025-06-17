@@ -30,7 +30,7 @@
     "expo-web-browser": "~14.1.6",
     "nativewind": "latest",
     "react": "^19.1.0",
-    "react-dom": "19.0.0",
+    "react-dom": "^19.1.0",
     "react-hook-form": "^7.58.1",
     "react-native": "0.79.3",
     "react-native-gesture-handler": "~2.24.0",
@@ -52,7 +52,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.0",
-    "typescript": "~5.8.3"
+    "typescript": "^5.8.3"
   },
   "private": true
 }

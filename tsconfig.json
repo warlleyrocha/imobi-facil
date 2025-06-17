@@ -1,11 +1,10 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "preserve",
     "strict": true,
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
-
     "baseUrl": ".",
     "paths": {
       "~/*": ["*"],
@@ -19,5 +18,5 @@
       "@/styles/*": ["styles/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]
 }
