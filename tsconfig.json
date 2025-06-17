@@ -1,12 +1,22 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "module": "CommonJS",
     "strict": true,
     "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true,
 
     "baseUrl": ".",
     "paths": {
-      "~/*": ["*"]
+      "~/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/store/*": ["store/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/services/*": ["services/*"],
+      "@/types/*": ["types/*"],
+      "@/schemas/*": ["schemas/*"],
+      "@/utils/*": ["utils/*"],
+      "@/styles/*": ["styles/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
