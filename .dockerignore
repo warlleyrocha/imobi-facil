@@ -35,3 +35,67 @@ README.md
 node_modules
 .expo
 *.log
+
+# Expo/React Native específicos
+web-build/
+.expo-shared/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro bundler
+.metro-health-check*
+
+# Debug logs
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Cache directories
+.npm
+.eslintcache
+.parcel-cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# OS specific
+.DS_Store
+Thumbs.db
+*.pem
+
+# Temporary
+tmp/
+temp/
+
+# Build outputs
+.out
+.storybook-out
+
+# Package files
+*.tgz
+.yarn-integrity
+
+# Optional REPL history
+.node_repl_history
+
+# Dependency directories
+jspm_packages/

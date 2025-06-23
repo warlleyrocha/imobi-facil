@@ -1,37 +1,42 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
-
-ARG NODE_VERSION=18.18.2
-
+ARG NODE_VERSION=22.14
 FROM node:${NODE_VERSION}-slim
 
-# Use production node environment by default.
+# Instalar dependências do sistema necessárias para Expo
+RUN apt-get update && apt-get install -y \
+    g++ \
+    git \
+    make \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV NODE_ENV=development
-
-
 WORKDIR /usr/src/app
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
-# into this layer.
+# Copiar arquivos de dependências
+COPY package*.json ./
+
+# Instalar dependências com cache otimizado
 RUN --mount=type=cache,target=/usr/src/app/.npm \
     npm set cache /usr/src/app/.npm && \
-    npm install  # Use `npm ci --omit=dev` for production
+    npm install
 
-# Copy the rest of the source files into the image.
+# Instalar Expo CLI globalmente
+RUN npm install -g @expo/cli@latest
+
+# Copiar o resto do código
 COPY . .
 
-# Run the application as a non-root user.
+# Ajustar permissões para o usuário node
+RUN mkdir -p .expo && \
+    chown -R node:node /usr/src/app
+
+# Mudar para usuário não-root
 USER node
 
-# Expose the port that the application listens on.
-EXPOSE 8081
+# Expor portas necessárias
+EXPOSE 8081 19000 19001 19002
 
-# Run the application.
-CMD ["npx", "expo", "start"]
+# Comando padrão para desenvolvimento
+CMD ["npx", "expo", "start", "--host", "lan"]
