@@ -6,8 +6,7 @@ import Splash from "./splash"; // Importando sua splash customizada
 export default function RootLayout() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  //const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  
   useEffect(() => {
     const checkAuth = async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
