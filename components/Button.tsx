@@ -10,15 +10,10 @@ export const Button = forwardRef<View, ButtonProps>(({ title, ...touchableProps 
     <TouchableOpacity
       ref={ref}
       {...touchableProps}
-      className={`${styles.button} ${touchableProps.className}`}>
-      <Text className={styles.buttonText}>{title}</Text>
+      className={`items-center bg-indigo-500 rounded-[28px] shadow-md p-4 ${touchableProps.className}`}>
+      <Text className='text-white text-lg font-semibold text-center'>{title}</Text>
     </TouchableOpacity>
   );
 });
 
 Button.displayName = 'Button';
-
-const styles = {
-  button: 'items-center bg-indigo-500 rounded-[28px] shadow-md p-4',
-  buttonText: 'text-white text-lg font-semibold text-center',
-};
