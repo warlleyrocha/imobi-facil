@@ -39,7 +39,8 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-web": "^0.20.0",
-    "zod": "^3.25.67"
+    "zod": "^3.25.67",
+    "react-native-svg": "15.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
