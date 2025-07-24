@@ -27,27 +27,31 @@ export default function SignIn() {
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1 bg-[#111928] w-full">
-      <ImageBackground 
-        source={require("../../assets/background-login.png")}
-        className="flex-1 w-full h-full pt-[8vh] overflow-hidden"
-        resizeMode="cover">
-            <Image
-            className="self-center mt-[56px]"
-            source={require("../../assets/splash.png")}/>
-            <Text className="text-[24px] pt-[24px] font-inter-bold text-white px-[55px] text-center line-height-[28px]">
-                Bem vindo ao ImobiFácil
-            </Text>
+        <ImageBackground 
+          source={require("../../assets/background-login.png")}
+          className="flex-1 w-full h-full pt-[8vh] overflow-hidden"
+          resizeMode="cover">
+              <Image
+              className="self-center mt-[56px]"
+              source={require("../../assets/splash.png")}/>
+              <Text className="text-[24px] pt-[24px] font-inter-bold text-white px-[55px] text-center line-height-[28px]">
+                  Bem vindo ao ImobiFácil
+              </Text>
         </ImageBackground>
       </View>
 
       <View className="absolute bottom-0 left-0 right-0 h-[55%] px-[16px] pb-[52px] items-center bg-white rounded-t-[24px] overflow-hidden">
-          <View className="flex-1 items-center pt-[52px] gap-[16px]">
-            <Text className="text-[20px] text-[#111928] font-inter-bold line-height-[22px]">
-                Conheça nosso APP
+        <View className="flex-1 items-center pt-[52px] gap-[16px]">
+          <Text className="text-[20px] text-[#111928] font-inter-bold line-height-[22px]" />
+
+          {/* Container para o conteúdo do login */}
+          <View className="flex-1 px-[16px] items-center justify-center rounded-t-[30px] -mt-[10px] z-10 bg-white gap-[10px]">
+            <Text className="text-[20px] text-[#111928] font-bold">
+              Conheça nosso APP
             </Text>
 
             <Text className="text-[14px] px-[8px] text-[#111928] font-mulish-medium text-center line-height-[22px]">
-            Faça login de forma rápida e segura usando sua conta Google. Assim você acessa o ImobiFácil sem precisar lembrar de senhas.
+              Faça login de forma rápida e segura usando sua conta Google. Assim você acessa o ImobiFácil sem precisar lembrar de senhas.
             </Text>
           </View>           
 
@@ -56,6 +60,7 @@ export default function SignIn() {
             <Text className="text-[#111928] font-inter-light">Continue com o Google</Text>
           </TouchableOpacity>
         </View>
+      </View>
     </View>
   );
 }
