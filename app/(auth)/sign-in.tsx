@@ -14,7 +14,7 @@ export default function SignIn() {
             </Text>
         </ImageBackground>
 
-        // Container para o conteúdo do login
+         {/* Container para o conteúdo do login */}
         <View className="flex-1 px-[16px] items-center justify-center rounded-t-[30px] -mt-[10px] z-10 bg-white gap-[10px]">
             <Text className="text-[20px] text-[#111928] font-bold">
                 Conheça nosso APP
