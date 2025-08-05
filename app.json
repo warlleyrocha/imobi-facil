@@ -36,6 +36,13 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "377ce5a8-a379-4764-b7a5-90cfe8723543"
+      }
+    },
+    "owner": "devanaclimgo"
   }
 }
