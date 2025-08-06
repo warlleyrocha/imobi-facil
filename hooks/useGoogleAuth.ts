@@ -3,7 +3,7 @@ import * as WebBrowser from 'expo-web-browser'
 import * as AuthSession from 'expo-auth-session'
 import { useEffect } from 'react'
 
-WebBrowser.maybeCompleteAuthSession()
+WebBrowser.maybeCompleteAuthSession();
 
 const CLIENT_ID = '880603979575-5lvjao2oitb9rrt91atr5gmttu8ol5aa.apps.googleusercontent.com'
 
@@ -14,14 +14,14 @@ export const useGoogleAuth = () => {
     clientId: CLIENT_ID,
     redirectUri,
     scopes: ['profile', 'email'],
-  })
+  });
 
   useEffect(() => {
     if (response?.type === 'success') {
-      const { authentication } = response
-      console.log('Google Access Token:', authentication?.accessToken)
+      const { authentication } = response;
+      console.log('Google Access Token:', authentication?.accessToken);
     }
-  }, [response])
+  }, [response]);
 
   return { request, response, promptAsync }
 }
