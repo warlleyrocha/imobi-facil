@@ -30,11 +30,11 @@ const Auth = () => {
 
   return (
     <View>
-      <TouchableOpacity className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
+      <TouchableOpacity
+        onPress={() => promptAsync()}
+        className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
-        <Text className="font-inter-light text-[#111928]" onPress={() => promptAsync()}>
-          Continue com o Google
-        </Text>
+        <Text className="font-inter-light text-[#111928]">Continue com o Google</Text>
       </TouchableOpacity>
     </View>
   );
