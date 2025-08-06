@@ -1,6 +1,5 @@
-import React from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
-import { useGoogleAuth } from '../app/src/useGoogleAuth'
+import { Text, View, TouchableOpacity } from 'react-native';
+import { useGoogleAuth } from '../hooks/useGoogleAuth';
 
 import Svg, { Path } from 'react-native-svg';
 
@@ -27,16 +26,18 @@ const GoogleIcon = ({ size = 20 }) => (
 );
 
 const Auth = () => {
-  const { promptAsync } = useGoogleAuth()
+  const { promptAsync } = useGoogleAuth();
 
   return (
     <View>
-      <TouchableOpacity className="flex-row gap-[19px] bg-[#E6E6E6] w-[345px] h-[50px] rounded-[5px] items-center justify-center">
+      <TouchableOpacity
+        onPress={() => promptAsync()}
+        className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
-        <Text className="text-[#111928] font-inter-light" onPress={() => promptAsync()}>Continue com o Google</Text> 
+        <Text className="font-inter-light text-[#111928]">Continue com o Google</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default Auth
+export default Auth;
