@@ -1,13 +1,14 @@
 import { View, Text, TouchableOpacity, Modal, Alert, Image, Platform } from 'react-native';
 import { useState } from 'react';
-import * as Location from 'expo-location';
-import { useRouter } from 'expo-router';
-import LocationSVG from './Icons/Location';
+import * as Location from 'expo-location'; // Biblioteca para lidar com localização em apps Expo
+import { useRouter } from 'expo-router'; // Navegação programática
+import LocationSVG from './Icons/Location'; // Ícone SVG customizado para localização
 
+// Props esperadas pelo modal de permissão de localização
 interface LocationPermissionModalProps {
-  readonly visible: boolean;
-  readonly onClose: () => void;
-  readonly redirectPath: string;
+  readonly visible: boolean; // Controla se o modal está visível
+  readonly onClose: () => void; // Função chamada para fechar o modal
+  readonly redirectPath: string; // Caminho para redirecionar após decisão
 }
 
 export default function LocationPermissionModal({
@@ -18,6 +19,7 @@ export default function LocationPermissionModal({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  // Função para obter localização no navegador web usando API nativa do browser
   async function getLocationWeb() {
     return new Promise<GeolocationPosition>((resolve, reject) => {
       if (!navigator.geolocation) {
@@ -32,19 +34,20 @@ export default function LocationPermissionModal({
     });
   }
 
+  // Lida com permissão "Durante o uso do app" — solicita permissão e pega localização com alta precisão
   async function handleAllowWhileUsingApp() {
     setLoading(true);
     try {
       if (Platform.OS === 'web') {
-        // Web: usa navigator.geolocation
+        // No web, usa a função getLocationWeb
         const location = await getLocationWeb();
         console.log('Localização exata (web):', location);
       } else {
-        // Mobile: usa expo-location
+        // No mobile, solicita permissão de localização em primeiro plano
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.Highest,
+            accuracy: Location.Accuracy.Highest, // máxima precisão
           });
           console.log('Localização exata (mobile):', location);
         } else {
@@ -63,11 +66,12 @@ export default function LocationPermissionModal({
       }
     } finally {
       setLoading(false);
-      onClose();
-      router.push(redirectPath as any);
+      onClose(); // Fecha o modal
+      router.push(redirectPath as any); // Redireciona para a rota indicada
     }
   }
 
+  // Lida com permissão "Apenas dessa vez" — similar a anterior, porém com precisão equilibrada
   async function handleAllowOnce() {
     setLoading(true);
     try {
@@ -78,7 +82,7 @@ export default function LocationPermissionModal({
         const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === 'granted') {
           const location = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.Balanced,
+            accuracy: Location.Accuracy.Balanced, // precisão balanceada
           });
           console.log('Localização temporária (mobile):', location);
         } else {
@@ -102,6 +106,7 @@ export default function LocationPermissionModal({
     }
   }
 
+  // Caso o usuário negue a permissão
   function handleDeny() {
     onClose();
     router.push(redirectPath as any);
@@ -112,38 +117,26 @@ export default function LocationPermissionModal({
       <View
         className="flex-1 items-center justify-center"
         style={{
-          backgroundColor: 'rgba(17, 25, 40, 0.5)', // mesma cor + opacidade
+          backgroundColor: 'rgba(17, 25, 40, 0.5)', // fundo semi-transparente escuro
         }}>
         <View className="h-auto w-[306px] items-center gap-5 rounded-[26px] bg-white p-5">
-          <LocationSVG />
-
+          <LocationSVG /> {/* Ícone de localização */}
           <Text className="text-center font-mulish text-base text-black">
             Permitir que o ImobiFácil acesse a localização desse dispositivo?{' '}
           </Text>
-
+          {/* Explicação visual das opções de localização */}
           <View className="flex-row gap-[30px]">
-            {/* Primeiro item */}
             <View className="items-center gap-3">
-              <Image
-                className=""
-                source={require('../assets/location-1.png')}
-                resizeMode="contain"
-              />
+              <Image source={require('../assets/location-1.png')} resizeMode="contain" />
               <Text className="font-mulish">Exata</Text>
             </View>
 
-            {/* Segundo item */}
             <View className="items-center gap-3">
-              <Image
-                className=""
-                source={require('../assets/location-2.png')}
-                resizeMode="contain"
-              />
+              <Image source={require('../assets/location-2.png')} resizeMode="contain" />
               <Text className="font-mulish">Aproximada</Text>
             </View>
           </View>
-
-          {/*Botões */}
+          {/* Botões de ação */}
           <View className="w-full gap-1">
             <TouchableOpacity
               className="h-[50px] items-center justify-center rounded-t-2xl bg-[#D2E4FC] px-4 py-2"

@@ -1,22 +1,31 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// AsyncStorage é usado para armazenar dados persistentes localmente (ex: sessão do usuário)
+
 import { AuthContextData, User } from '../types/authTypes';
+// Tipos TypeScript para o contexto e o objeto User
 
 const STORAGE_KEY = '@yourapp:user';
+// Chave usada para armazenar dados do usuário no AsyncStorage
 
+// Criação do contexto de autenticação, que poderá ser consumido na árvore de componentes
 const AuthContext = createContext<AuthContextData | undefined>(undefined);
 
+// Provider que envolve a aplicação para prover dados de autenticação
 export function AuthContextProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+  // Estado para guardar o usuário autenticado ou null caso não haja
   const [user, setUser] = useState<User | null>(null);
+  // Estado para controlar se está carregando a restauração da sessão
   const [loading, setLoading] = useState(true);
 
+  // useEffect que executa na montagem para tentar restaurar a sessão do AsyncStorage
   useEffect(() => {
     async function restoreSession() {
       try {
         const savedUser = await AsyncStorage.getItem(STORAGE_KEY);
         if (savedUser) {
           const parsedUser: User = JSON.parse(savedUser);
-          // Exemplo de validação simples de token expirado:
+          // Aqui poderia validar token, expiração, etc (exemplo comentado abaixo)
           // if (parsedUser.accessToken && !isTokenExpired(parsedUser.accessToken)) {
           //   setUser(parsedUser);
           // }
@@ -25,12 +34,13 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
       } catch (e) {
         console.error('Erro ao restaurar sessão:', e);
       } finally {
-        setLoading(false);
+        setLoading(false); // Termina o loading mesmo que dê erro
       }
     }
     restoreSession();
   }, []);
 
+  // Função para fazer login: salva o usuário no AsyncStorage e no estado
   async function login(userData: User) {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
@@ -40,6 +50,7 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
     }
   }
 
+  // Função para logout: remove o usuário do AsyncStorage e limpa estado
   async function logout() {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
@@ -49,7 +60,8 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
     }
   }
 
-  // Sincroniza AsyncStorage sempre que user muda (incluindo setUser manual)
+  // Sempre que o user mudar, sincroniza o AsyncStorage
+  // Assim garante que alterações manuais em setUser também persistam
   useEffect(() => {
     async function syncUserStorage() {
       if (user) {
@@ -69,6 +81,7 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
     syncUserStorage();
   }, [user]);
 
+  // Memoriza o valor do contexto para evitar renders desnecessários
   const value = useMemo(
     () => ({
       user,
@@ -80,9 +93,11 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
     [user, loading]
   );
 
+  // Provedor do contexto que envolve os filhos e disponibiliza o valor
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+// Hook customizado para consumir o contexto de autenticação
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth deve ser usado dentro de AuthContextProvider');

@@ -34,6 +34,8 @@ export default function Success() {
       router.replace('/(auth)/select-profile');
     }, 1000);
 
+    // Limpa o timer caso o componente desmonte antes do timeout
+    // Isso é importante para evitar erros se o usuário sair da página antes do redirecionamento
     return () => clearTimeout(timer);
   }, [router]);
   return (
