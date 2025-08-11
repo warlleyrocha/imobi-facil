@@ -13,7 +13,7 @@ web-build/
 expo-env.d.ts
 
 
-
+*.env
 ios
 android
 
