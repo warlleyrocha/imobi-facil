@@ -1,11 +1,20 @@
-// app/(auth)/select-profile.tsx
-import { View, Text, ImageBackground, Dimensions, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import LocationPermissionModal from '../../components/LocationPermission';
 
 const { width } = Dimensions.get('window');
 const IMAGE_RATIO = 368 / 375;
+const MAX_WEB_WIDTH = 375; // limite para web
+const imageWidth = Platform.OS === 'web' ? Math.min(width, MAX_WEB_WIDTH) : width;
 
 export default function SelectProfile() {
   const router = useRouter();
@@ -21,19 +30,26 @@ export default function SelectProfile() {
 
   return (
     <View className="flex-1 bg-white">
-      <ImageBackground
-        source={require('../../assets/select-profile.png')}
-        style={{ width: width, height: width * IMAGE_RATIO }}
-        resizeMode="contain"
-        imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
-        <View className="flex-1 items-center justify-center">
-          <Image
-            className="mb-6 h-[73px] w-[73px]"
-            source={require('../../assets/splash.png')}
-            resizeMode="contain"
-          />
-        </View>
-      </ImageBackground>
+      {/* Wrapper para centralizar só no web */}
+      <View
+        style={{
+          width: '100%',
+          alignItems: Platform.OS === 'web' ? 'center' : 'flex-start',
+        }}>
+        <ImageBackground
+          source={require('../../assets/select-profile.png')}
+          style={{ width: imageWidth, height: imageWidth * IMAGE_RATIO }}
+          resizeMode="contain"
+          imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
+          <View className="flex-1 items-center justify-center">
+            <Image
+              className="mb-6 h-[73px] w-[73px]"
+              source={require('../../assets/splash.png')}
+              resizeMode="contain"
+            />
+          </View>
+        </ImageBackground>
+      </View>
 
       <View className="items-center justify-center gap-6 px-4 pt-[50px]">
         <Text className="font-inter-semibold text-[26px]">Selecione seu perfil</Text>
