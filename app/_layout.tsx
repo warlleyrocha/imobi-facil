@@ -1,11 +1,13 @@
-import { Slot, useRouter, useSegments } from "expo-router";
+// _layout.tsx
+import { Slot, useRouter, useSegments } from 'expo-router';
 import 'global.css';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import { ActivityIndicator, View, Text } from 'react-native';
-import Splash from "./splash";
+import Splash from './splash';
+import { AuthContextProvider, useAuth } from '../contexts/authContext';
 
-// Font imports
+// Font imports...
 import {
   Inter_300Light,
   Inter_400Regular,
@@ -14,7 +16,6 @@ import {
   Inter_700Bold,
   Inter_900Black,
 } from '@expo-google-fonts/inter';
-
 import {
   Mulish_300Light,
   Mulish_400Regular,
@@ -25,8 +26,17 @@ import {
 } from '@expo-google-fonts/mulish';
 
 export default function RootLayout() {
+  return (
+    <AuthContextProvider>
+      <RootLayoutInner />
+    </AuthContextProvider>
+  );
+}
+
+function RootLayoutInner() {
   const router = useRouter();
   const segments = useSegments();
+  const { user, loading } = useAuth();
   const [appReady, setAppReady] = useState(false);
   const [fontsLoaded, fontsError] = useFonts({
     Inter_300Light,
@@ -44,35 +54,41 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (fontsLoaded && !appReady) {
-      // tempo mínimo de splash screen (2s)
-      const timer = setTimeout(() => {
-        setAppReady(true);
-        
-        // checar se já está na auth page (prevenir redirect infinito)
-        const inAuthGroup = segments[0] === '(auth)';
-        
-        if (!inAuthGroup) {
-          router.replace("/(auth)/sign-in");
-        }
-      }, 2000);
+    // Só executa quando fontes carregadas, loading finalizado e appReady ainda falso
+    if (!fontsLoaded || loading || appReady) return;
 
-      return () => clearTimeout(timer);
-    }
-  }, [fontsLoaded, appReady, segments, router]);
+    const timer = setTimeout(() => {
+      setAppReady(true);
 
+      const publicRoutes = ['sign-in'];
+      // Se não existir segmento (como em '/'), força 'sign-in'
+      const currentSegment = segments.length > 0 ? segments[0] : 'sign-in';
+      const isPublic = publicRoutes.includes(currentSegment);
+
+      // Só redireciona se segmento não for +not-found
+      if (currentSegment === '+not-found') {
+        router.replace('/sign-in');
+        return;
+      }
+
+      if (!user && !isPublic) {
+        router.replace('/sign-in');
+      } else if (user && isPublic) {
+        router.replace('/(auth)/select-profile');
+      }
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [fontsLoaded, loading, appReady, user, segments, router]);
   // mostrar splash screen enquanto carrega
-  if (!appReady || !fontsLoaded) {
+  if (!fontsLoaded || loading || !appReady) {
     return <Splash />;
   }
-
   // lidando com erros de carregamento de fonte
   if (fontsError) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 18, marginBottom: 20 }}>
-          Erro carregando fontes
-        </Text>
+        <Text style={{ fontSize: 18, marginBottom: 20 }}>Erro carregando fontes</Text>
         <ActivityIndicator size="large" />
       </View>
     );
