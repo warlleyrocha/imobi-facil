@@ -1,6 +1,7 @@
-import { Text, View, TouchableOpacity } from 'react-native';
+import { useEffect } from 'react';
+import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useGoogleAuth } from '../hooks/useGoogleAuth';
-
 import Svg, { Path } from 'react-native-svg';
 
 // Componente do ícone do Google
@@ -26,16 +27,31 @@ const GoogleIcon = ({ size = 20 }) => (
 );
 
 const Auth = () => {
-  const { promptAsync } = useGoogleAuth();
+  const router = useRouter();
+  const { promptAsync, response, isLoading, error } = useGoogleAuth();
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      router.replace('/(auth)/feedback/success/page');
+    } else if (response?.type === 'error') {
+      router.push('/error/page');
+    }
+  }, [response, router]);
 
   return (
     <View>
       <TouchableOpacity
+        disabled={isLoading}
         onPress={() => promptAsync()}
         className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
-        <Text className="font-inter-light text-[#111928]">Continue com o Google</Text>
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#111928" />
+        ) : (
+          <Text className="font-inter-light text-[#111928]">Continue com o Google</Text>
+        )}
       </TouchableOpacity>
+      {error && <Text className="mt-2 text-red-600">{error}</Text>}
     </View>
   );
 };

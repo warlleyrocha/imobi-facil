@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
-import Auth from '../../components/Auth';
+import Auth from '../components/Auth';
 
 const { width, height } = Dimensions.get('window');
 
@@ -7,7 +7,7 @@ export default function SignIn() {
   return (
     <View className="flex-1 bg-white">
       <ImageBackground
-        source={require('../../assets/background-login.png')}
+        source={require('../assets/background-login.png')}
         style={{
           height: height * 0.5,
           width: '100%',
@@ -15,11 +15,7 @@ export default function SignIn() {
         className="items-center justify-center"
         resizeMode="cover">
         <View className="flex-1 items-center justify-center">
-          <Image
-            className="mb-4"
-            source={require('../../assets/splash.png')}
-            resizeMode="contain"
-          />
+          <Image className="mb-4" source={require('../assets/splash.png')} resizeMode="contain" />
           <Text
             className="text-center font-inter-bold text-white"
             style={{
