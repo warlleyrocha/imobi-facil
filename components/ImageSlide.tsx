@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 
 type ImageData = {
-  id: string; // Adicionando id para cada imagem
-  image: any; // require() de imagem local
+  id: string;
+  image: any;
   title: string;
   description: string;
 };
@@ -112,7 +112,6 @@ export default function ImageSlide({
         showsHorizontalScrollIndicator={false}
       />
 
-      {/* Indicador de pontos */}
       <View className="mt-4 flex-row items-center justify-center gap-[5px]">
         {images.map((item, index) => (
           <View

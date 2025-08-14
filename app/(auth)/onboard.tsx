@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, Text, FlatList } from 'react-native';
-import ImageSlide from '../components/ImageSlide';
+import ImageSlide from '../../components/ImageSlide';
 import Svg, { Path } from 'react-native-svg';
-import { onboardImages } from '../assets/onboard';
+import { onboardImages } from '../../assets/onboard';
 import { useState, useRef } from 'react';
 import { useRouter } from 'expo-router';
 
@@ -45,7 +45,7 @@ export default function Onboard() {
 
   return (
     <View className="flex-1 bg-white">
-      {/* Container para o ImageSlide sem padding lateral */}
+      {/* Container para o ImageSlide */}
       <View className="flex-1 pb-24 pt-12">
         <ImageSlide
           images={onboardImages}
