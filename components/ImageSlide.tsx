@@ -11,14 +11,15 @@ import {
 } from 'react-native';
 
 type ImageData = {
+  id: string; // Adicionando id para cada imagem
   image: any; // require() de imagem local
   title: string;
   description: string;
 };
 
-type ImageCarouselProps = {
+type ImageCarouselProps = Readonly<{
   images: ImageData[];
-};
+}>;
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -32,14 +33,12 @@ export default function ImageSlide({ images }: ImageCarouselProps) {
     setCurrentIndex(index);
   };
 
-  const progress = (currentIndex + 1) / images.length;
-
   return (
     <View className="w-full gap-4">
       <FlatList
         ref={flatListRef}
         data={images}
-        keyExtractor={(_, index) => index.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={{ width: screenWidth }} className="items-center justify-center">
             <TouchableOpacity
@@ -81,9 +80,16 @@ export default function ImageSlide({ images }: ImageCarouselProps) {
         showsHorizontalScrollIndicator={false}
       />
 
-      {/* Barra de progresso */}
-      <View className="mt-[32px] h-1 w-full rounded bg-gray-300">
-        <View className="h-full rounded bg-blue-500" style={{ width: `${progress * 100}%` }} />
+      {/* Indicador de pontos */}
+      <View className="mt-4 flex-row items-center justify-center gap-[5px]">
+        {images.map((item, index) => (
+          <View
+            key={item.id}
+            className={`h-1 rounded-full transition-all duration-300 ${
+              index === currentIndex ? 'w-[50px] bg-cor-primaria' : 'w-[10px] bg-cor-primaria'
+            }`}
+          />
+        ))}
       </View>
     </View>
   );
