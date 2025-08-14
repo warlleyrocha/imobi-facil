@@ -22,6 +22,7 @@ type ImageCarouselProps = Readonly<{
   currentIndex: number;
   setCurrentIndex: (index: number) => void;
   flatListRef: React.RefObject<FlatList<any> | null>;
+  isScrollingProgrammatically: React.RefObject<boolean>;
 }>;
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -31,20 +32,36 @@ export default function ImageSlide({
   currentIndex,
   setCurrentIndex,
   flatListRef,
+  isScrollingProgrammatically,
 }: ImageCarouselProps) {
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / screenWidth);
-    setCurrentIndex(index);
+
+    if (!isScrollingProgrammatically.current && index !== currentIndex) {
+      setCurrentIndex(index);
+    }
+  };
+
+  const handleMomentumScrollEnd = () => {
+    isScrollingProgrammatically.current = false;
   };
 
   const handleSkip = () => {
     const lastIndex = images.length - 1;
+    isScrollingProgrammatically.current = true;
     setCurrentIndex(lastIndex);
-    flatListRef.current?.scrollToIndex({
-      index: lastIndex,
-      animated: true,
-    });
+
+    setTimeout(() => {
+      flatListRef.current?.scrollToIndex({
+        index: lastIndex,
+        animated: true,
+      });
+    }, 50);
+
+    setTimeout(() => {
+      isScrollingProgrammatically.current = false;
+    }, 500);
   };
 
   return (
@@ -90,6 +107,7 @@ export default function ImageSlide({
         horizontal
         pagingEnabled
         onScroll={handleScroll}
+        onMomentumScrollEnd={handleMomentumScrollEnd} // 🔹 reseta flag depois da rolagem
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
       />
@@ -99,7 +117,7 @@ export default function ImageSlide({
         {images.map((item, index) => (
           <View
             key={item.id}
-            className={`h-1 rounded-full transition-all duration-300 ${
+            className={`h-1 rounded-full ${
               index === currentIndex ? 'w-[50px] bg-cor-primaria' : 'w-[10px] bg-cor-primaria'
             }`}
           />

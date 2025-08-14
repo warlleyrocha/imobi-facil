@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 
 export default function Onboard() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const isScrollingProgrammatically = useRef(false);
   const flatListRef = useRef<FlatList<any>>(null);
   const router = useRouter();
 
@@ -14,6 +15,7 @@ export default function Onboard() {
   const handleNext = () => {
     if (currentIndex < onboardImages.length - 1) {
       const nextIndex = currentIndex + 1;
+      isScrollingProgrammatically.current = true;
       setCurrentIndex(nextIndex);
       flatListRef.current?.scrollToIndex({
         index: nextIndex,
@@ -26,6 +28,8 @@ export default function Onboard() {
   const handleBack = () => {
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
+      isScrollingProgrammatically.current = true;
+
       setCurrentIndex(prevIndex);
       flatListRef.current?.scrollToIndex({
         index: prevIndex,
@@ -48,6 +52,7 @@ export default function Onboard() {
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
           flatListRef={flatListRef}
+          isScrollingProgrammatically={isScrollingProgrammatically}
         />
       </View>
 
