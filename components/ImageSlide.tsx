@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -19,18 +19,32 @@ type ImageData = {
 
 type ImageCarouselProps = Readonly<{
   images: ImageData[];
+  currentIndex: number;
+  setCurrentIndex: (index: number) => void;
+  flatListRef: React.RefObject<FlatList<any> | null>;
 }>;
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export default function ImageSlide({ images }: ImageCarouselProps) {
-  const flatListRef = useRef<FlatList<any>>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+export default function ImageSlide({
+  images,
+  currentIndex,
+  setCurrentIndex,
+  flatListRef,
+}: ImageCarouselProps) {
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const index = Math.round(offsetX / screenWidth);
     setCurrentIndex(index);
+  };
+
+  const handleSkip = () => {
+    const lastIndex = images.length - 1;
+    setCurrentIndex(lastIndex);
+    flatListRef.current?.scrollToIndex({
+      index: lastIndex,
+      animated: true,
+    });
   };
 
   return (
@@ -54,7 +68,7 @@ export default function ImageSlide({ images }: ImageCarouselProps) {
                 shadowRadius: 2,
                 elevation: 4, // Para Android
               }}
-              onPress={() => flatListRef.current?.scrollToIndex({ index: 5 })}>
+              onPress={handleSkip}>
               <Text className="font-mulish-bold text-[12px] font-medium leading-5 text-[#FAFAFA] md:text-base">
                 Pular
               </Text>
