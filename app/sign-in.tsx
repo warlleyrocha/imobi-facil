@@ -1,15 +1,9 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import Auth from '../components/Auth';
-import { useRouter } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 
 export default function SignIn() {
-  const router = useRouter();
-
-  const clickRoute = () => {
-    router.push('/onboard');
-  };
   return (
     <View className="flex-1 bg-white">
       <ImageBackground
@@ -59,17 +53,6 @@ export default function SignIn() {
           Faça login de forma rápida e segura usando sua conta Google. Assim você acessa o
           ImobiFácil sem precisar lembrar de senhas.
         </Text>
-
-        <TouchableOpacity
-          className="flex-row items-center justify-center rounded-[5px] bg-[#E6E6E6]"
-          style={{
-            height: 50,
-            width: Math.min(width * 0.9, 345), // 90% da largura ou máximo 345px
-            gap: 23,
-            marginTop: 'auto',
-            marginBottom: 40,
-          }}
-          onPress={clickRoute}></TouchableOpacity>
 
         {/* Botão responsivo */}
         <TouchableOpacity
