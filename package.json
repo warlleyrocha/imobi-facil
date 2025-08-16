@@ -24,7 +24,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/react-native": "^13.2.0",
     "appwrite": "^18.1.1",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "expo": "^53.0.20",
     "expo-auth-session": "^6.2.1",
     "expo-constants": "~17.1.4",
