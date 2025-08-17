@@ -1,126 +1,175 @@
-import { useState } from "react";
-import React from "react";
-import { View, Text, Image } from "react-native";
-import { Container } from "~/components/Container";
-import axios from "axios";
+import React, { useState } from 'react';
+import { View, Text, Image } from 'react-native';
+import { Container } from '~/components/Container';
+import axios from 'axios';
 
 export default function Corretor() {
-  const setaEsquerda = require("~/assets/arrow-left.png");
+  const setaEsquerda = require('~/assets/arrow-left.png');
 
-  interface SignUpFormState  {
-  firstname: string;
-  lastname: string;
-  birthdate: string | number; // Pode ser string ou number dependendo do formato
-  // Se for string, pode ser uma data no formato ISO ou outro formato de data
-  // Se for number, pode ser um timestamp ou outro formato numérico
-  // Aqui, estou usando string | number para permitir ambos os formatos
-  cpf: string | number; // CPF pode ser string ou number dependendo do formato
-  // Se for string, pode ser um CPF formatado com pontos e traços
-  // Se for number, pode ser um CPF numérico sem formatação
-  creci: string
-}
+  interface SignUpFormState {
+    firstname: string;
+    lastname: string;
+    birthdate: string | number; // Pode ser string ou number dependendo do formato
+    // Se for string, pode ser uma data no formato ISO ou outro formato de data
+    // Se for number, pode ser um timestamp ou outro formato numérico
+    // Aqui, estou usando string | number para permitir ambos os formatos
+    cpf: string | number; // CPF pode ser string ou number dependendo do formato
+    // Se for string, pode ser um CPF formatado com pontos e traços
+    // Se for number, pode ser um CPF numérico sem formatação
+    creci: string;
+  }
 
- const [formData, setFormData] = useState<SignUpFormState> ({ // Estado inicial do formulário
+  const [formData, setFormData] = useState<SignUpFormState>({
+    // Estado inicial do formulário
     firstname: '',
     lastname: '',
     birthdate: '',
     cpf: '',
-    creci: ''
-  })
+    creci: '',
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setFormData(prevData => ({...prevData, [name]: value})) // Atualiza o estado do formulário com o novo valor
-  }
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value })); // Atualiza o estado do formulário com o novo valor
+  };
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => { // Previne o comportamento padrão do formulário
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    // Previne o comportamento padrão do formulário
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8081/apiv1/signup', formData);
       console.log(response); // Exibe a resposta da requisição no console
-    }catch (error) {
+    } catch (error) {
       console.error(error); // Exibe o erro no console
     }
-  }
-  
+  };
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   return (
-    <View className="p-0 m-0">
+    <View className="m-0 p-0">
       <Container>
-        <View className="items-start flex-1 justify-center w-full">
-          <View className="flex-row items-center gap-12 justify-between mt-10">
+        <View className="w-full flex-1 items-start justify-center">
+          <View className="mt-10 flex-row items-center justify-between gap-12">
             <Image source={setaEsquerda} style={{ width: 24, height: 24 }} className="text-left" />
-            <Text className="text-xl font-bold text-center">Cadastro do Corretor</Text>
+            <Text className="text-center text-xl font-bold">Cadastro do Corretor</Text>
           </View>
           <View>
-            <form className="mt-8 w-full full-width" onSubmit={handleSubmit}>
+            <form className="full-width mt-8 w-full" onSubmit={handleSubmit}>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700 form-title">Nome*</label>
+                <label className="form-title mb-2 block text-sm font-medium text-gray-700">
+                  Nome*
+                </label>
                 <input
                   type="text"
                   name="firstname"
                   value={formData.firstname}
                   onChange={handleChange}
-                  required 
+                  required
                   maxLength={50}
-                  className="w-full p-2 border border-gray-300 rounded form-text form-input:focus"
+                  className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
                   placeholder="Digite o seu Nome"
                 />
               </div>
 
               <div>
-                <label className="block mt-4 mb-2 text-sm font-medium text-gray-700 form-title">Sobrenome*</label>
+                <label className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
+                  Sobrenome*
+                </label>
                 <input
                   type="text"
                   name="lastname"
                   value={formData.lastname}
                   onChange={handleChange}
-                  required 
+                  required
                   maxLength={50}
-                  className="w-full p-2 border border-gray-300 rounded form-text form-input:focus"
+                  className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
                   placeholder="Digite o seu Nome Completo"
                 />
               </div>
 
               <div>
-                <label className="block mt-4 mb-2 text-sm font-medium text-gray-700 form-title">Data de Nascimento*</label>
+                <label className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
+                  Data de Nascimento*
+                </label>
                 <input
                   type="date"
                   name="birthdate"
                   value={formData.birthdate}
                   onChange={handleChange}
-                  required 
-                  className="w-full p-2 border border-gray-300 rounded form-text form-input:focus"
+                  required
+                  className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
                   placeholder="DD/MM/AAAA"
                 />
               </div>
               <div>
-                <label className="block mt-4 mb-2 text-sm font-medium text-gray-700 form-title">CPF*</label>
+                <label className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
+                  CPF*
+                </label>
                 <input
                   type="text"
                   name="cpf"
                   value={formData.cpf}
                   onChange={handleChange}
-                  required 
+                  required
                   maxLength={11}
-                  className=" w-full p-2 border border-gray-300 rounded form-text form-input:focus"
+                  className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
                   placeholder="000.000.000-00"
                 />
               </div>
 
-              <div>
-                <label className="block mt-4 mb-2 text-sm font-medium text-gray-700 form-title">CRECI/Estado*</label>
+                <div>
+                <label className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
+                  CRECI/Estado*
+                </label>
                 <input
                   type="text"
                   name="creci"
                   value={formData.creci}
                   onChange={handleChange}
-                  required 
+                  required
                   maxLength={20}
-                  className="w-full p-2 border border-gray-300 rounded form-text form-input:focus"
+                  className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
                   placeholder="Digite o seu CRECI"
                 />
-              </div>
+                </div>
             </form>
+          </View>
+          <View className="mt-32 flex w-full justify-end">
+            <div className='flex items-center gap-2 text-center'>
+              <label>
+                <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className="appearance-none text-cor-primaria w-6 h-6 rounded" />
+              </label>
+                <Text className="font-mulish-light text-sm text-gray-500">
+                Concordo com os nossos{' '}
+                <a
+                  href="/termos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cor-primaria underline"
+                >
+                  Termos
+                </a>{' '}
+                e {' '}
+                <a
+                  href="/politicas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cor-primaria underline"
+                >Políticas.
+                </a>{' '}
+                </Text>
+            </div>
+            <button
+              type="submit"
+              className="btn-azul mt-4 w-full rounded p-3 font-mulish-medium text-base text-white"
+              >
+              Cadastrar
+            </button>
           </View>
         </View>
       </Container>
