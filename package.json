@@ -22,6 +22,7 @@
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/native": "^7.0.3",
     "@reduxjs/toolkit": "^2.8.2",
+    "@tailwindcss/forms": "^0.5.10",
     "@testing-library/react-native": "^13.2.0",
     "appwrite": "^18.1.1",
     "axios": "^1.11.0",
