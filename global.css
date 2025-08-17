@@ -10,14 +10,17 @@ body {
   color: #6B7280;
 }
 
-.form-text {
-  color: #9CA3AF;
-}
-
 .full-width {
   width: 335px;
 }
 
 .form-input:focus {
   border-color: #3758F9; 
+}
+
+.btn-azul {
+  background-color: #3758F9;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
 }
