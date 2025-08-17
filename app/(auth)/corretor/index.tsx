@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { Container } from '~/components/Container';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
 
 export default function Corretor() {
   const setaEsquerda = require('~/assets/arrow-left.png');
@@ -39,6 +40,8 @@ export default function Corretor() {
     try {
       const response = await axios.post('http://localhost:8081/apiv1/signup', formData);
       console.log(response); // Exibe a resposta da requisição no console
+      // Redireciona após cadastro bem-sucedido
+      window.location.href = '/(auth)/verificacao';
     } catch (error) {
       console.error(error); // Exibe o erro no console
     }
@@ -49,6 +52,11 @@ export default function Corretor() {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+
+  const router = useRouter();
+  function handleBack() {
+    router.push('/(auth)/corretor/verificacao'); // Navega para a página anterior
+  }
 
   return (
     <View className="m-0 p-0">
@@ -122,7 +130,7 @@ export default function Corretor() {
                 />
               </div>
 
-                <div>
+              <div>
                 <label className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
                   CRECI/Estado*
                 </label>
@@ -136,38 +144,42 @@ export default function Corretor() {
                   className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
                   placeholder="Digite o seu CRECI"
                 />
-                </div>
+              </div>
             </form>
           </View>
           <View className="mt-32 flex w-full justify-end">
-            <div className='flex items-center gap-2 text-center'>
+            <div className="flex items-center gap-2 text-center">
               <label>
-                <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className="appearance-none text-cor-primaria w-6 h-6 rounded" />
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleCheckboxChange}
+                  className="h-6 w-6 appearance-none rounded text-cor-primaria"
+                />
               </label>
-                <Text className="font-mulish-light text-sm text-gray-500">
+              <Text className="font-mulish-light text-sm text-gray-500">
                 Concordo com os nossos{' '}
                 <a
                   href="/termos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-cor-primaria underline"
-                >
+                  className="text-cor-primaria underline">
                   Termos
                 </a>{' '}
-                e {' '}
+                e{' '}
                 <a
                   href="/politicas"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-cor-primaria underline"
-                >Políticas.
+                  className="text-cor-primaria underline">
+                  Políticas.
                 </a>{' '}
-                </Text>
+              </Text>
             </div>
             <button
               type="submit"
               className="btn-azul mt-4 w-full rounded p-3 font-mulish-medium text-base text-white"
-              >
+              onClick={handleBack}>
               Cadastrar
             </button>
           </View>
