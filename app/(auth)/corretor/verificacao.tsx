@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { View, Text, Image } from 'react-native';
 import { Container } from '~/components/Container';
 
-export default function verificacao() {
+export default function Verificacao() {
   const setaEsquerda = require('~/assets/arrow-left.png');
+
+  const router = useRouter();
+    function handleBack() {
+      router.push('/(auth)/corretor/concluido' as any);
+    }
 
   return (
     <View className="m-0 p-0">
@@ -53,7 +58,8 @@ export default function verificacao() {
           <View className="mt-32 flex w-full justify-end"> {/*Botão de enviar*/}
             <button
               type="submit"
-              className="btn-azul mt-4 w-full rounded p-3 font-mulish-medium text-base text-white">
+              className="btn-azul mt-4 w-full rounded p-3 font-mulish-medium text-base text-white"
+              onClick={handleBack}>
               Enviar
             </button>
           </View>
