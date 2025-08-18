@@ -9,7 +9,7 @@ import { fetchUserInfo, decodeGoogleIdToken, isTokenValid } from '../utils/token
 // Completa sessão de autenticação, especialmente para web (fix de problema comum)
 WebBrowser.maybeCompleteAuthSession();
 
-const CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID || '880603979575-5lvjao2oitb9rrt91atr5gmttu8ol5aa.apps.googleusercontent.com';
+const CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID || 'SEU_CLIENT_ID_AQUI';
 // Client ID do Google OAuth, idealmente configurado via variável de ambiente
 
 export const useGoogleAuth = () => {
