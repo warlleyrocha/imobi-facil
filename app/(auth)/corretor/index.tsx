@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, Linking } from 'react-native';
+import Svg, { Polyline } from 'react-native-svg';
 import { Container } from '~/components/Container';
 import { router } from 'expo-router';
 
@@ -42,142 +43,148 @@ export default function Corretor() {
     setIsChecked(!isChecked);
   };
 
+  const openTerms = () => {
+    Linking.openURL('https://seusite.com/termos');
+  };
+
+  const openPolicies = () => {
+    Linking.openURL('https://seusite.com/politicas');
+  };
+
   return (
-    <View className="m-0 p-0 flex-1 bg-white">
+    <View className="m-0 flex-1 bg-[#F6F6F6] p-0">
       <Container>
         <View className="w-full flex-1 items-start justify-center">
-          <View className="mt-10 flex-row items-center justify-between gap-12">
-            <Image source={setaEsquerda} style={{ width: 24, height: 24 }} className="text-left" />
-            <Text className="text-center text-xl font-bold">Cadastro do Corretor</Text>
-          </View>
-          <View>
-            <TouchableOpacity className="full-width mt-8 w-full">
-              <View>
-                <View className="full-width mt-8 w-full">
-                  <View>
-                    <Text className="form-title mb-2 block text-sm font-medium text-gray-700">
-                      Nome*
-                    </Text>
-                    <TextInput
-                      value={formData.firstname}
-                      onChangeText={(value) =>
-                        setFormData((prevData) => ({ ...prevData, firstname: value }))
-                      }
-                      className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
-                      placeholder="Digite o seu Nome"
-                    />
-                  </View>
-                  <Text className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
-                    Sobrenome*
-                  </Text>
-                  <TextInput
-                    value={formData.lastname}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, lastname: value }))
-                    }
-                    className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
-                    placeholder="Digite o seu Nome Completo"
-                  />
-                </View>
-
-                <View>
-                  <Text className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
-                    Data de Nascimento*
-                  </Text>
-                  <TextInput
-                    value={String(formData.birthdate)}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, birthdate: value }))
-                    }
-                    className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
-                    placeholder="DD/MM/AAAA"
-                  />
-                </View>
-                <View>
-                  <Text className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
-                    CPF*
-                  </Text>
-                  <TextInput
-                    value={String(formData.cpf)}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, cpf: value }))
-                    }
-                    keyboardType="numeric"
-                    className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
-                    placeholder="000.000.000-00"
-                  />
-                </View>
-
-                <View>
-                  <Text className="form-title mb-2 mt-4 block text-sm font-medium text-gray-700">
-                    CRECI/Estado*
-                  </Text>
-                  <TextInput
-                    value={formData.creci}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, creci: value }))
-                    }
-                    className="form-input:focus w-full rounded border border-gray-300 p-2 text-black"
-                    placeholder="Digite o seu CRECI"
-                  />
-                </View>
-              </View>
+          <View className="mt-10 w-full flex-row items-center justify-between px-5">
+            <TouchableOpacity onPress={() => router.back()}>
+              <Image source={setaEsquerda} className="h-6 w-6" />
             </TouchableOpacity>
-            <View className="mt-32 flex w-full justify-end">
-              <View className="flex flex-row items-center gap-2 text-center">
-                <TouchableOpacity onPress={handleCheckboxChange} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text className="-ml-6 flex-1 text-center font-inter-bold text-xl">
+              Cadastro do Corretor
+            </Text>
+          </View>
+
+          <View className="w-full px-5">
+            <View className="mt-8 w-full">
+              <View>
+                <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
+                  Nome*
+                </Text>
+                <TextInput
+                  value={formData.firstname}
+                  onChangeText={(value) =>
+                    setFormData((prevData) => ({ ...prevData, firstname: value }))
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-mulish text-black"
+                  placeholder="Digite o seu Nome"
+                  placeholderTextColor="#9CA3AF"
+                />
+              </View>
+
+              <View className="mt-4">
+                <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
+                  Sobrenome*
+                </Text>
+                <TextInput
+                  value={formData.lastname}
+                  onChangeText={(value) =>
+                    setFormData((prevData) => ({ ...prevData, lastname: value }))
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
+                  placeholder="Digite o seu Sobrenome"
+                  placeholderTextColor="#9CA3AF"
+                />
+              </View>
+
+              <View className="mt-4">
+                <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
+                  Data de Nascimento*
+                </Text>
+                <TextInput
+                  value={String(formData.birthdate)}
+                  onChangeText={(value) =>
+                    setFormData((prevData) => ({ ...prevData, birthdate: value }))
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
+                  placeholder="DD/MM/AAAA"
+                  placeholderTextColor="#9CA3AF"
+                  keyboardType="numeric"
+                />
+              </View>
+
+              <View className="mt-4">
+                <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
+                  CPF*
+                </Text>
+                <TextInput
+                  value={String(formData.cpf)}
+                  onChangeText={(value) => setFormData((prevData) => ({ ...prevData, cpf: value }))}
+                  keyboardType="numeric"
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
+                  placeholder="000.000.000-00"
+                  placeholderTextColor="#9CA3AF"
+                />
+              </View>
+
+              <View className="mt-4">
+                <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
+                  CRECI/Estado*
+                </Text>
+                <TextInput
+                  value={formData.creci}
+                  onChangeText={(value) =>
+                    setFormData((prevData) => ({ ...prevData, creci: value }))
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
+                  placeholder="Digite o seu CRECI"
+                  placeholderTextColor="#9CA3AF"
+                />
+              </View>
+            </View>
+
+            <View className="mt-16 w-full">
+              <View className="mb-4 flex-row items-center pr-2">
+                <TouchableOpacity
+                  onPress={handleCheckboxChange}
+                  className="mr-2 mt-0.5 flex-row items-start">
                   <View
-                    style={{
-                      height: 24,
-                      width: 24,
-                      borderRadius: 4,
-                      borderWidth: 2,
-                      borderColor: '#81b0ff',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: isChecked ? '#007bff' : '#fff',
-                    }}
-                  >
+                    className={`h-6 w-6 items-center justify-center rounded border-2 border-blue-300 ${
+                      isChecked ? 'bg-blue-500' : 'bg-white'
+                    }`}>
                     {isChecked && (
-                      // Ícone de "certo" usando SVG
-                      <View style={{ position: 'absolute', left: 2, top: 1 }}>
-                        <svg width="16" height="16" viewBox="0 0 16 16">
-                          <polyline
-                            points="3,9 7,13 13,5"
-                            fill="none"
-                            stroke="#fff"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </View>
+                      <Svg width={16} height={16} viewBox="0 1 16 16">
+                        <Polyline
+                          points="3,9 7,13 13,5"
+                          fill="none"
+                          stroke="#fff"
+                          strokeWidth={2}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </Svg>
                     )}
                   </View>
                 </TouchableOpacity>
-                <Text className="font-mulish-light text-sm text-gray-500">
-                  Concordo com os nossos{' '}
-                  <a
-                    href="/termos"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cor-primaria underline">
-                    Termos
-                  </a>{' '}
-                  e{' '}
-                  <a
-                    href="/politicas"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cor-primaria underline">
-                    Políticas.
-                  </a>{' '}
-                </Text>
+
+                <View className="flex-1">
+                  <Text className="font-mulish text-sm leading-5 text-gray-500">
+                    Concordo com os{' '}
+                    <Text className="font-mulish text-[#1C3FB7] underline" onPress={openTerms}>
+                      Termos
+                    </Text>{' '}
+                    e{' '}
+                    <Text className="font-mulish text-[#1C3FB7] underline" onPress={openPolicies}>
+                      Políticas
+                    </Text>
+                    .
+                  </Text>
+                </View>
               </View>
+
               <TouchableOpacity
-                className="btn-azul mt-4 w-full rounded p-3 font-mulish-medium text-base text-white"
+                className="h-[44px] w-full items-center justify-center rounded-lg bg-cor-primaria px-[28px] py-[13px]"
                 onPress={handleSubmit}>
-                Cadastrar
+                <Text className="font-mulish text-base text-white">Cadastrar</Text>
               </TouchableOpacity>
             </View>
           </View>
