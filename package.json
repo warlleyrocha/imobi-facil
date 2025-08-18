@@ -5,6 +5,7 @@
   "scripts": {
     "android": "expo start --android",
     "ios": "expo start --ios",
+    "dev": "expo start --clear",
     "start": "expo start",
     "prebuild": "expo prebuild",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" && prettier -c \"**/*.{js,jsx,ts,tsx,json}\"",
