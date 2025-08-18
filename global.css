@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply m-0 p-0;
+}
+
+.form-title {
+  color: #6B7280;
+}
+
+.full-width {
+  width: 335px;
+}
+
+.form-input:focus {
+  border-color: #3758F9; 
+}
+
+.btn-azul {
+  background-color: #3758F9;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+}
