@@ -57,6 +57,5 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'), // Plugin para estilização de formulários
-    require('nativewind/tailwindcss/plugin'), // Plugin do NativeWind
   ],
 };
