@@ -44,7 +44,7 @@ export default function Concluido() {
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
-          onPress={() => router.back()}>
+          onPress={() => router.push('/(auth)/onboard')}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
 
