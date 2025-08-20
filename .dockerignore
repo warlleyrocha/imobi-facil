@@ -1,101 +1,51 @@
-# Include any files or directories that you don't want to be copied to your
-# container here (e.g., local build artifacts, temporary files, etc.).
-#
-# For more help, visit the .dockerignore file reference guide at
-# https://docs.docker.com/go/build-context-dockerignore/
-
-**/.classpath
-**/.dockerignore
-**/.env
-**/.git
-**/.gitignore
-**/.project
-**/.settings
-**/.toolstarget
-**/.vs
-**/.vscode
-**/.next
-**/.cache
-**/*.*proj.user
-**/*.dbmdl
-**/*.jfm
-**/charts
-**/docker-compose*
-**/compose.y*ml
-**/Dockerfile*
-**/node_modules
-**/npm-debug.log
-**/obj
-**/secrets.dev.yaml
-**/values.dev.yaml
-**/build
-**/dist
-LICENSE
-README.md
+# Dependências
 node_modules
+npm-debug.log*
+
+# Arquivos de build
 .expo
+dist
+build
+
+# Logs
 *.log
-
-# Expo/React Native específicos
-web-build/
-.expo-shared/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# Metro bundler
-.metro-health-check*
-
-# Debug logs
 yarn-debug.log*
 yarn-error.log*
 
-# Environment files
-.env*.local
+# Arquivos de ambiente
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# TypeScript
-*.tsbuildinfo
-
-# Coverage
-coverage/
-*.lcov
-.nyc_output
-
-# Cache directories
-.npm
-.eslintcache
-.parcel-cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# OS specific
+# Sistema operacional
 .DS_Store
 Thumbs.db
-*.pem
 
-# Temporary
-tmp/
-temp/
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
 
-# Build outputs
-.out
-.storybook-out
+# Git
+.git
+.gitignore
 
-# Package files
-*.tgz
-.yarn-integrity
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
 
-# Optional REPL history
-.node_repl_history
+# Documentação
+README.md
+*.md
 
-# Dependency directories
-jspm_packages/
+# Testes
+coverage
+.nyc_output
+
+# Cache
+.cache
+.parcel-cache

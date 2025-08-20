@@ -20,7 +20,7 @@
     "@expo-google-fonts/inter": "^0.4.1",
     "@expo-google-fonts/mulish": "^0.4.1",
     "@expo/vector-icons": "^14.0.0",
-    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-async-storage/async-storage": "2.1.2",
     "@react-navigation/native": "^7.0.3",
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/forms": "^0.5.10",
@@ -65,7 +65,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.9.2"
+    "typescript": "~5.8.3"
   },
   "private": true
 }
