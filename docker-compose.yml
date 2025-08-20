@@ -1,48 +1,14 @@
+version: '3.8'
+
 services:
-  expo-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: imobi-facil-dev
+  app:
+    build: .
+    container_name: imobi-facil
+    ports:
+      - '8081:8081'
+    volumes:
+      - .:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
-      - EXPO_USE_FAST_RESOLVER=1
-      - WATCHMAN_DISABLE_CI=1
-    ports:
-      - '8081:8081' # Metro bundler
-      - '19000:19000' # Expo DevTools
-      - '19001:19001' # Expo tunnel
-      - '19002:19002' # Expo LAN
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-      - expo_cache:/usr/src/app/.expo
-    stdin_open: true
-    tty: true
     restart: unless-stopped
-    networks:
-      - expo-network
-
-  # Opcional: Container para testes
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: imobi-facil-test
-    environment:
-      - NODE_ENV=test
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    command: ['npm', 'run', 'test']
-    profiles:
-      - test
-    networks:
-      - expo-network
-
-volumes:
-  expo_cache:
-
-networks:
-  expo-network:
-    driver: bridge
