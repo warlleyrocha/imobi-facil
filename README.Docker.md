@@ -1,128 +1,79 @@
 # 📘 Guia de Uso - Ambiente Docker
 
-## 🚀 Iniciando a Aplicação
+## 🚀 Como usar
 
-Para iniciar sua aplicação com build:
+### Iniciar a aplicação
 
 ```bash
 docker compose up --build
 ```
 
+### Parar a aplicação
+
+```bash
+docker compose down
+```
+
+### Ver logs
+
+```bash
+docker compose logs -f app
+```
+
+## 📱 Acesso
+
 A aplicação estará disponível em:
 
-- 🌐 **Metro Bundler:** http://localhost:8081
-- 📊 **Expo DevTools:** http://localhost:19002
-- 📱 **Expo via LAN:** http://localhost:19000
+- **Metro Bundler:** http://localhost:8081
 
----
+## 🔧 Comandos úteis
 
-## 🛠️ Construir a Imagem Manualmente
-
-Crie a imagem localmente:
+### Usando o script facilitador
 
 ```bash
-docker build -t myapp .
+# Iniciar aplicação
+./docker-dev.sh start
+
+# Parar aplicação
+./docker-dev.sh stop
+
+# Ver logs
+./docker-dev.sh logs
+
+# Abrir shell no container
+./docker-dev.sh shell
+
+# Instalar dependências
+./docker-dev.sh install
+
+# Executar lint
+./docker-dev.sh lint
+
+# Executar testes
+./docker-dev.sh test
 ```
 
-Se sua máquina for diferente da arquitetura do destino (ex: Mac M1 vs amd64):
+### Comandos diretos do Docker Compose
 
 ```bash
-docker build --platform=linux/amd64 -t myapp .
+# Instalar novas dependências
+docker compose exec app npm install
+
+# Executar lint
+docker compose exec app npm run lint
+
+# Executar testes
+docker compose exec app npm test
+
+# Rebuild da imagem
+docker compose up --build --force-recreate
 ```
 
----
+## ✨ Melhorias implementadas
 
-## ☁️ Publicando no Cloud
-
-Envie sua imagem para o repositório:
-
-```bash
-docker push myregistry.com/myapp
-```
-
-> ℹ️ Consulte a [documentação oficial do Docker](https://docs.docker.com/go/get-started-sharing/) para mais detalhes sobre build e push de imagens.
-
----
-
-## 🧪 Comandos Úteis para Desenvolvimento
-
-### 🔍 Acessar e Executar no Container
-
-- Acessar terminal do container:
-
-  ```bash
-  docker-compose exec expo-app /bin/bash
-  ```
-
-- Executar scripts:
-
-  ```bash
-  docker-compose exec expo-app npm run lint
-  docker-compose exec expo-app npm run format
-  ```
-
-- Executar testes:
-
-  ```bash
-  docker-compose --profile test up test
-  ```
-
-- Reiniciar apenas o serviço principal:
-
-  ```bash
-  docker-compose restart expo-app
-  ```
-
-- Rebuild com mudanças no Dockerfile:
-  ```bash
-  docker-compose up --build
-  ```
-
----
-
-## 🧭 Monitoramento e Diagnóstico
-
-- Ver status dos containers:
-
-  ```bash
-  docker-compose ps
-  ```
-
-- Acompanhar logs:
-
-  ```bash
-  docker-compose logs -f expo-app
-  ```
-
-- Verificar se a porta está aberta:
-  ```bash
-  docker-compose port expo-app 8081
-  ```
-
----
-
-## 🧹 Parar e Limpar o Ambiente
-
-- Parar os containers:
-
-  ```bash
-  docker-compose down
-  ```
-
-- Parar e remover volumes:
-
-  ```bash
-  docker-compose down -v
-  ```
-
-- Limpar tudo (containers, volumes órfãos, redes):
-  ```bash
-  docker-compose down -v --remove-orphans
-  ```
-
----
-
-## 📚 Referências
-
-- [Guia do Docker para Node.js](https://docs.docker.com/language/nodejs/)
-- [Guia de publicação no Docker Hub](https://docs.docker.com/go/get-started-sharing/)
+- ✅ Imagem base mais leve (Alpine Linux)
+- ✅ Menos portas expostas (apenas 8081)
+- ✅ Configuração simplificada
+- ✅ Build mais rápido
+- ✅ Menor uso de memória
+- ✅ Arquivo .dockerignore otimizado
