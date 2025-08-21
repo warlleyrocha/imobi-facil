@@ -67,8 +67,7 @@ export default function Corretor() {
       <Container>
         <KeyboardAvoidingView
           className="flex-1"
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <ScrollView
             className="flex-1"
             contentContainerStyle={{ flexGrow: 1 }}
