@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import TextSlider from '@/components/TextSlider';
+import TabBar from '~/components/TabBar';
 
 import ImagePro from '@/assets/bg.png';
 import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
@@ -138,7 +139,7 @@ export default function HomeCorretor() {
         <TextSlider />
 
         {/*Contratar PRO*/}
-        <View className="gap-[16px] pt-[40px]">
+        <View className="gap-[16px] pb-[30px] pt-[40px]">
           <View className="flex-row items-center justify-between">
             <Text className="font-mulish-bold text-[18px]">Ver Estatísticas</Text>
             <TouchableOpacity className="flex-row gap-[10px] rounded-lg bg-cor-primaria px-[24px] py-[12px]">
@@ -150,6 +151,11 @@ export default function HomeCorretor() {
           <Image source={ImagePro} style={{ width: 375, height: 240, borderRadius: 8 }} />
         </View>
       </ScrollView>
+
+      {/*TabBar*/}
+      <View className="px-[16px]">
+        <TabBar />
+      </View>
     </SafeAreaView>
   );
 }
