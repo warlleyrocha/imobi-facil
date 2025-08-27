@@ -8,7 +8,7 @@ const TextSlider = () => {
 
   useEffect(() => {
     const startAnimation = () => {
-      translateX.setValue(screenWidth); // começa fora da tela à direita
+      translateX.setValue(screenWidth);
 
       Animated.timing(translateX, {
         toValue: -screenWidth,
