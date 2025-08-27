@@ -11,10 +11,10 @@ const TextSlider = () => {
       translateX.setValue(screenWidth); // começa fora da tela à direita
 
       Animated.timing(translateX, {
-        toValue: -screenWidth, // para assim que sair da tela
-        duration: 8000, // 🔥 8 segundos para cruzar
+        toValue: -screenWidth,
+        duration: 8000,
         useNativeDriver: true,
-      }).start(startAnimation); // 🔥 reinicia instantaneamente
+      }).start(startAnimation);
     };
 
     startAnimation();
