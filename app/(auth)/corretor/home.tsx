@@ -25,6 +25,7 @@ interface StatCardData {
   icon: keyof typeof Ionicons.glyphMap;
   title: string;
   value: string;
+  statistics:string;
   bgColor: string;
 }
 
@@ -48,6 +49,7 @@ const statsData: StatCardData[] = [
     icon: Stats,
     title: 'Novos Leads',
     value: '12',
+    statistics: '+11.01%',
     bgColor: '#DAF8E6',
   },
   {
@@ -75,24 +77,48 @@ export default function HomeCorretor() {
 
   const renderStatCard = ({ item }: { item: StatCardData }) => {
     const Icon = item.icon;
-
+    const isSpecial = item.id === '2';   // Card com statistics
+    const isValueRight = item.id === '3'; // Card com value ao lado do ícone
+  
     return (
       <TouchableOpacity className="flex-1 pb-[16px]">
         <View
           style={{ backgroundColor: item.bgColor }}
-          className="min-h-[56px] flex-row items-center justify-between rounded-2xl bg-[#EDE9FE] p-4">
-          <View className="mr-3 flex-1 flex-row items-center gap-[8px]">
+          className="min-h-[56px] flex-row items-center justify-between rounded-2xl p-4">
+          
+          {/* Coluna esquerda (título + value normal) */}
+          <View className="mr-3 flex-1">
             <Text className="font-mulish-semibold text-[14px]" numberOfLines={2}>
               {item.title}
             </Text>
-            <Text className="mt-1 font-inter-semibold text-[18px]">{item.value}</Text>
+  
+            {/* Só mostra value abaixo do título se NÃO for o item 3 */}
+            {!isValueRight && (
+              <Text className="mt-1 font-inter-semibold text-[18px]">{item.value}</Text>
+            )}
           </View>
+  
+          {/* Coluna direita (ícone + stats/value ao lado) */}
+          <View className="flex-row items-center gap-2">
+            
+            {/* Item 2 -> statistics */}
+            {isSpecial && item.statistics && (
+              <Text className="font-inter-medium text-[12px]">
+                {item.statistics}
+              </Text>
+            )}
 
-          <Icon width={24} height={24} />
+            {/* Item 3 -> value ao lado do ícone */}
+            {isValueRight && (
+              <Text className="font-inter-semibold text-[18px]">{item.value}</Text>
+            )}
+            <Icon width={isSpecial ? 16 : 24} height={isSpecial ? 16 : 24} />
+          </View>
         </View>
       </TouchableOpacity>
     );
   };
+  
 
   return (
     <SafeAreaView className="flex-1 bg-neutral-100">
@@ -148,7 +174,7 @@ export default function HomeCorretor() {
             </TouchableOpacity>
           </View>
 
-          <Image source={ImagePro} style={{ width: 375, height: 240, borderRadius: 8 }} />
+          <Image source={ImagePro} />
         </View>
       </ScrollView>
 
