@@ -86,31 +86,34 @@ export default function HomeCorretor() {
           style={{ backgroundColor: item.bgColor }}
           className="min-h-[56px] flex-row items-center justify-between rounded-2xl p-4">
           
-          {/* Coluna esquerda (título + value normal) */}
+          {/* Coluna esquerda */}
           <View className="mr-3 flex-1">
-            <Text className="font-mulish-semibold text-[14px]" numberOfLines={2}>
-              {item.title}
-            </Text>
+            {/* Para todos os cards, title + value ficam lado a lado */}
+            <View className="flex-row items-center gap-2">
+              <Text className="font-mulish-semibold text-[14px]" numberOfLines={2}>
+                {item.title}
+              </Text>
   
-            {/* Só mostra value abaixo do título se NÃO for o item 3 */}
-            {!isValueRight && (
-              <Text className="mt-1 font-inter-semibold text-[18px]">{item.value}</Text>
-            )}
+              {/* Só mostra value aqui se não for o item 3 */}
+              {!isValueRight && (
+                <Text className="font-inter-semibold text-[18px]">
+                  {item.value}
+                </Text>
+              )}
+            </View>
           </View>
   
-          {/* Coluna direita (ícone + stats/value ao lado) */}
+          {/* Coluna direita */}
           <View className="flex-row items-center gap-2">
-            
-            {/* Item 2 -> statistics */}
             {isSpecial && item.statistics && (
               <Text className="font-inter-medium text-[12px]">
                 {item.statistics}
               </Text>
             )}
-
-            {/* Item 3 -> value ao lado do ícone */}
             {isValueRight && (
-              <Text className="font-inter-semibold text-[18px]">{item.value}</Text>
+              <Text className="font-inter-semibold text-[18px]">
+                {item.value}
+              </Text>
             )}
             <Icon width={isSpecial ? 16 : 24} height={isSpecial ? 16 : 24} />
           </View>
@@ -118,7 +121,6 @@ export default function HomeCorretor() {
       </TouchableOpacity>
     );
   };
-  
 
   return (
     <SafeAreaView className="flex-1 bg-neutral-100">
