@@ -1,5 +1,8 @@
 import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FC } from 'react';
+import { SvgProps } from 'react-native-svg';
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import TextSlider from '@/components/TextSlider';
@@ -16,16 +19,16 @@ import Stats from '@/assets/icons-svg/stats.svg';
 
 interface CardQuickAccess {
   id: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>; // Tipo para SVG
+  icon: FC<SvgProps>; // Tipo para SVG
   title: string;
 }
 
 interface StatCardData {
   id: string;
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: FC<SvgProps>;
   title: string;
   value: string;
-  statistics:string;
+  statistics?:string;
   bgColor: string;
 }
 
