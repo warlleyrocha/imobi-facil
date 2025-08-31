@@ -43,7 +43,7 @@ TypeError: undefined is not an object (evaluating '_prettyFormat.default.default
 
 **Comportamento Observado:**
 - Aplicação pula o carregamento inicial
-- Inicia diretamente na tela de onboarding ("Perfil do Corretor")
+- Inicia diretamente na tela de onboarding
 - AuthFlow não está funcionando corretamente
 
 <img src="./assets/Captura de Tela 2025-08-31 às 10.07.54.png" alt="Android Emulator" width="300">
