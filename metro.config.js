@@ -12,8 +12,6 @@ config.transformer = {
   babelTransformerPath: require.resolve('react-native-svg-transformer'),
 };
 
-config.resolver.blacklistRE = /@testing-library\/react-native|react-test-renderer|jest/;
-
 config.resolver = {
   ...config.resolver,
   assetExts: config.resolver.assetExts.filter((ext) => ext !== 'svg'),
