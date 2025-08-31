@@ -17,7 +17,7 @@ Este relatório documenta os principais erros identificados na aplicação, abra
 TypeError: undefined is not an object (evaluating '_prettyFormat.default.default')
 ```
 
-![Erro no Navegador](../../Captura%20de%20Tela%202025-08-31%20às%2010.06.46.png)
+![Erro no Navegador](./assets/Captura%20de%20Tela%202025-08-31%20às%2010.06.46.png)
 
 
 **Stack Trace:**
@@ -46,7 +46,7 @@ TypeError: undefined is not an object (evaluating '_prettyFormat.default.default
 - Inicia diretamente na tela de onboarding ("Perfil do Corretor")
 - AuthFlow não está funcionando corretamente
 
-<img src="../../Captura de Tela 2025-08-31 às 10.07.54.png" alt="Android Emulator" width="300">
+<img src="./assets/Captura de Tela 2025-08-31 às 10.07.54.png" alt="Android Emulator" width="300">
 
 **Impacto:**
 - Fluxo de autenticação comprometido
