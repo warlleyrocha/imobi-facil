@@ -40,7 +40,7 @@ export default function Onboard() {
 
   // Função para ir para home do corretor
   const handleStart = () => {
-    router.push('/(auth)/corretor');
+    router.push('/(auth)/corretor/home');
   };
 
   return (

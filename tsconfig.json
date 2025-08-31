@@ -6,44 +6,26 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "*"
-      ],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/store/*": [
-        "store/*"
-      ],
-      "@/hooks/*": [
-        "hooks/*"
-      ],
-      "@/services/*": [
-        "services/*"
-      ],
-      "@/types/*": [
-        "types/*"
-      ],
-      "@/schemas/*": [
-        "schemas/*"
-      ],
-      "@/utils/*": [
-        "utils/*"
-      ],
-      "@/styles/*": [
-        "styles/*"
-      ]
+      "~/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/assets/*": ["assets/*"],
+      "@/store/*": ["store/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/services/*": ["services/*"],
+      "@/types/*": ["types/*"],
+      "@/schemas/*": ["schemas/*"],
+      "@/utils/*": ["utils/*"],
+      "@/styles/*": ["styles/*"]
     }
   },
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"],
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    "types/**/*"
   ],
   "extends": "expo/tsconfig.base"
 }
