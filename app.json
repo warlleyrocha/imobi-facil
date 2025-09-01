@@ -33,7 +33,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.devazulciano.imobifacil"
     },
     "android": {
       "adaptiveIcon": {
