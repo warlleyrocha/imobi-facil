@@ -19,10 +19,10 @@ export default function MyImovels() {
           </TouchableOpacity>
         </View>
 
-        <View className="gap-[32px]">
+        <View className="items-center gap-[32px]">
           <ForSaleImage />
 
-          <TouchableOpacity className="flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]">
+          <TouchableOpacity className="w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]">
             <CirclePlusIcon />
             <Text className="font-mulish-medium text-[16px] text-[#FAFAFA]">Novo imóvel</Text>
           </TouchableOpacity>
