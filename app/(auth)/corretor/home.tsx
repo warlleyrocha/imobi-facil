@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from 'react
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FC } from 'react';
 import { SvgProps } from 'react-native-svg';
+import { useRouter, Href } from 'expo-router';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -21,6 +22,7 @@ interface CardQuickAccess {
   id: string;
   icon: FC<SvgProps>; // Tipo para SVG
   title: string;
+  route: Href;
 }
 
 interface StatCardData {
@@ -28,15 +30,15 @@ interface StatCardData {
   icon: FC<SvgProps>;
   title: string;
   value: string;
-  statistics?:string;
+  statistics?: string;
   bgColor: string;
 }
 
 const cardData: CardQuickAccess[] = [
-  { id: '1', icon: HouseAddIcon, title: 'Cadastrar Imóvel' },
-  { id: '2', icon: HouseAltIcon, title: 'Ver Imóveis' },
-  { id: '3', icon: Calendar, title: 'Agendar Visita' },
-  { id: '4', icon: Users, title: 'Pastas de Imóveis' },
+  { id: '1', icon: HouseAddIcon, title: 'Cadastrar Imóvel', route: '/corretor/imoveis/new' },
+  { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/imoveis/' },
+  { id: '3', icon: Calendar, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
+  { id: '4', icon: Users, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
 ];
 
 const statsData: StatCardData[] = [
@@ -50,7 +52,7 @@ const statsData: StatCardData[] = [
   {
     id: '2',
     icon: Stats,
-    title: 'Novos Leads',
+    title: 'Novos Contatos',
     value: '12',
     statistics: '+11.01%',
     bgColor: '#DAF8E6',
@@ -58,18 +60,22 @@ const statsData: StatCardData[] = [
   {
     id: '3',
     icon: Circle,
-    title: 'Documentos pendentes para \naprovação',
+    title: 'Documentos pendentes',
     value: '8',
     bgColor: '#D0F0FD',
   },
 ];
 
 export default function HomeCorretor() {
+  const router = useRouter();
+
   const renderCard = ({ item }: { item: CardQuickAccess }) => {
     const Icon = item.icon; // Pega o componente SVG
 
     return (
-      <TouchableOpacity className="m-2 min-h-[72px] flex-1 flex-row items-center gap-4 rounded-lg border border-cor-primaria bg-cor-primaria/10 p-4">
+      <TouchableOpacity
+        className="m-2 min-h-[72px] flex-1 flex-row items-center gap-4 rounded-lg border border-cor-primaria bg-cor-primaria/10 p-4"
+        onPress={() => router.push(item.route)}>
         <Icon width={24} height={24} />
         <Text className="flex-1 text-center font-mulish-bold text-[16px] text-cor-primaria">
           {item.title}
@@ -80,15 +86,14 @@ export default function HomeCorretor() {
 
   const renderStatCard = ({ item }: { item: StatCardData }) => {
     const Icon = item.icon;
-    const isSpecial = item.id === '2';   // Card com statistics
+    const isSpecial = item.id === '2'; // Card com statistics
     const isValueRight = item.id === '3'; // Card com value ao lado do ícone
-  
+
     return (
       <TouchableOpacity className="flex-1 pb-[16px]">
         <View
           style={{ backgroundColor: item.bgColor }}
           className="min-h-[56px] flex-row items-center justify-between rounded-2xl p-4">
-          
           {/* Coluna esquerda */}
           <View className="mr-3 flex-1">
             {/* Para todos os cards, title + value ficam lado a lado */}
@@ -96,28 +101,20 @@ export default function HomeCorretor() {
               <Text className="font-mulish-semibold text-[14px]" numberOfLines={2}>
                 {item.title}
               </Text>
-  
+
               {/* Só mostra value aqui se não for o item 3 */}
               {!isValueRight && (
-                <Text className="font-inter-semibold text-[18px]">
-                  {item.value}
-                </Text>
+                <Text className="font-inter-semibold text-[18px]">{item.value}</Text>
               )}
             </View>
           </View>
-  
+
           {/* Coluna direita */}
           <View className="flex-row items-center gap-2">
             {isSpecial && item.statistics && (
-              <Text className="font-inter-medium text-[12px]">
-                {item.statistics}
-              </Text>
+              <Text className="font-inter-medium text-[12px]">{item.statistics}</Text>
             )}
-            {isValueRight && (
-              <Text className="font-inter-semibold text-[18px]">
-                {item.value}
-              </Text>
-            )}
+            {isValueRight && <Text className="font-inter-semibold text-[18px]">{item.value}</Text>}
             <Icon width={isSpecial ? 16 : 24} height={isSpecial ? 16 : 24} />
           </View>
         </View>
