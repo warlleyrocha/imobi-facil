@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 
-export default function MyImovels() {
+export default function MyProperties() {
   const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
 
@@ -22,7 +22,9 @@ export default function MyImovels() {
         <View className="items-center gap-[32px]">
           <ForSaleImage />
 
-          <TouchableOpacity className="w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]">
+          <TouchableOpacity
+            className="w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
+            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
             <CirclePlusIcon />
             <Text className="font-mulish-medium text-[16px] text-[#FAFAFA]">Novo imóvel</Text>
           </TouchableOpacity>
