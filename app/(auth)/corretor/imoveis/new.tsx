@@ -1,8 +1,189 @@
-import { View, Text } from 'react-native';
-export default function FormImovel() {
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useRouter } from 'expo-router';
+
+import { Container } from '~/components/Container';
+
+const setaEsquerda = require('~/assets/arrow-left.png');
+
+export default function NewProperty() {
+  const router = useRouter();
+
+  const radioButtons: RadioButtonProps[] = [
+    { id: '1', label: 'Venda', value: 'venda' },
+    { id: '2', label: 'Aluguel', value: 'aluguel' },
+  ];
+
+  const options = [
+    { label: 'Apartamento', value: 'Apartamento' },
+    { label: 'Casa', value: 'Casa' },
+    { label: 'Terreno', value: 'Terreno' },
+    { label: 'Studio', value: 'Studio' },
+    { label: 'Comercial', value: 'Comercial' },
+  ];
+  const [selectedId, setSelectedId] = useState<string | undefined>();
+  const [option, setOption] = useState(null);
+
   return (
-    <View>
-      <Text>Novo Imovel Page</Text>
+    <View className="bg-[#F6F6F6] pt-[34px]">
+      <Container>
+        {/*Header */}
+        <View className="relative flex-row items-center justify-center pb-[33px]">
+          <Text className="text-xl font-bold">Novo Imóvel</Text>
+
+          <TouchableOpacity onPress={() => router.back()} className="absolute left-0">
+            <Image source={setaEsquerda} className="h-6 w-6" />
+          </TouchableOpacity>
+        </View>
+
+        {/*Basic infos */}
+        <View>
+          {/*Title section */}
+          <Text className="pb-[6px] font-inter-medium text-[18px] text-[#374151]">
+            Informações Básicas
+          </Text>
+          {/*Separator */}
+          <View className="h-px w-full bg-cor-secundaria" />
+
+          {/*Tilte property */}
+          <View className="gap-[10px] pb-[12px] pt-[24px]">
+            <Text className="font-mulish-medium text-[16px] text-dark-5">Título do Imóvel*</Text>
+            <TextInput
+              placeholder="Ex: Casa com 3 quartos"
+              placeholderTextColor="#9CA3AF"
+              style={{ color: '#1F2A37', fontSize: 16 }}
+              className="rounded-[8px] border-[1px] border-[#DFE4EA] bg-[#FAFAFA] py-[12px] pl-[20px] pr-[16px]"
+            />
+          </View>
+
+          {/*Propose */}
+          <View>
+            <Text className="font-mulish-medium text-[16px] text-dark-5">Finalidade*</Text>
+            <RadioGroup
+              radioButtons={radioButtons}
+              selectedId={selectedId}
+              onPress={setSelectedId}
+              layout="row"
+            />
+          </View>
+
+          {/* Type of property*/}
+          <View>
+            <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">
+              Tipo de Imóvel*
+            </Text>
+            <Dropdown
+              style={{
+                height: 50,
+                borderColor: '#DFE4EA',
+                borderWidth: 1,
+                borderRadius: 8,
+                paddingHorizontal: 20,
+                backgroundColor: '#FAFAFA',
+                paddingVertical: 12,
+              }}
+              // ✅ Customização da lista dropdown
+              containerStyle={{
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: '#DFE4EA',
+                backgroundColor: '#FFFFFF',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
+                elevation: 5, // Para Android
+                position: 'absolute',
+                top: 270, // Distância do topo
+                left: -165, // Distância da esquerda
+                width: 330, // Largura fixa
+                // ou
+                right: 0, // Distância da direita
+                bottom: 0, // Distância de baixo (para abrir para cima)
+              }}
+              // ✅ Customização dos itens da lista
+              itemTextStyle={{
+                fontSize: 16,
+                color: '#1F2A37',
+                fontFamily: '', // se você tem essa fonte
+              }}
+              // ✅ Customização do item selecionado
+              selectedTextStyle={{
+                fontSize: 16,
+                color: '#1F2A37',
+                fontFamily: '',
+              }}
+              data={options}
+              labelField="label"
+              valueField="value"
+              placeholder="Selecione o tipo"
+              value={option}
+              onChange={(item) => setOption(item.value)}
+            />
+          </View>
+
+          {/*Price and area */}
+          <View className="gap-[10px] pt-[12px]">
+            {/* Linha de labels e inputs alinhados */}
+            <View className="flex-row gap-[20px]">
+              {/* Coluna 1 - Preço */}
+              <View className="flex-1">
+                <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">Preço*</Text>
+                <TextInput
+                  placeholder="0.00"
+                  placeholderTextColor="#9CA3AF"
+                  style={{
+                    color: '#1F2A37',
+                    fontSize: 16, // ✅ Define o tamanho da fonte do placeholder
+                  }}
+                  className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
+                />
+              </View>
+
+              {/* Coluna 2 - Área útil */}
+              <View className="flex-1">
+                <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">
+                  Área útil*
+                </Text>
+                <TextInput
+                  placeholder="000m²"
+                  placeholderTextColor="#9CA3AF"
+                  style={{
+                    color: '#1F2A37',
+                    fontSize: 16, // Define o tamanho da fonte do placeholder
+                  }}
+                  className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
+                />
+              </View>
+            </View>
+          </View>
+
+          {/*Description */}
+          <View className="pt-[12px]">
+            <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">Descrição</Text>
+            <TextInput
+              className="h-[120px] rounded-[6px] border border-stroke bg-white p-[20px]"
+              placeholder="Ex: Casa ampla com quintal, pronta para morar."
+              placeholderTextColor="#9CA3AF"
+              style={{
+                color: '#1F2A37',
+                fontSize: 16, // Define o tamanho da fonte do placeholder
+              }}
+              multiline={true}
+              textAlignVertical="top"
+              maxLength={500}
+            />
+            <Text className="pt-[10px] text-end font-mulish text-[14px] text-texto-c-primario">
+              0/50
+            </Text>
+          </View>
+        </View>
+      </Container>
     </View>
   );
 }
