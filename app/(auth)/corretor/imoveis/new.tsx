@@ -1,20 +1,13 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
-import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useRouter } from 'expo-router';
-
-import { Container } from '~/components/Container';
+import { RadioGroup } from '~/components/RadioButton/RadioGroup';
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 
-export default function NewProperty() {
+export default function FormProperty() {
   const router = useRouter();
-
-  const radioButtons: RadioButtonProps[] = [
-    { id: '1', label: 'Venda', value: 'venda' },
-    { id: '2', label: 'Aluguel', value: 'aluguel' },
-  ];
 
   const options = [
     { label: 'Apartamento', value: 'Apartamento' },
@@ -23,12 +16,12 @@ export default function NewProperty() {
     { label: 'Studio', value: 'Studio' },
     { label: 'Comercial', value: 'Comercial' },
   ];
-  const [selectedId, setSelectedId] = useState<string | undefined>();
+  const [finalidade, setFinalidade] = useState<string | null>(null);
   const [option, setOption] = useState(null);
 
   return (
     <View className="bg-[#F6F6F6] pt-[34px]">
-      <Container>
+      <ScrollView className="m-6 flex flex-1">
         {/*Header */}
         <View className="relative flex-row items-center justify-center pb-[33px]">
           <Text className="text-xl font-bold">Novo Imóvel</Text>
@@ -59,12 +52,15 @@ export default function NewProperty() {
           </View>
 
           {/*Propose */}
-          <View>
+          <View className="gap-[10px] pb-[12px]">
             <Text className="font-mulish-medium text-[16px] text-dark-5">Finalidade*</Text>
             <RadioGroup
-              radioButtons={radioButtons}
-              selectedId={selectedId}
-              onPress={setSelectedId}
+              options={[
+                { label: 'Venda', value: 'venda' },
+                { label: 'Aluguel', value: 'aluguel' },
+              ]}
+              selectedValue={finalidade}
+              onSelect={setFinalidade}
               layout="row"
             />
           </View>
@@ -139,7 +135,7 @@ export default function NewProperty() {
                   placeholderTextColor="#9CA3AF"
                   style={{
                     color: '#1F2A37',
-                    fontSize: 16, // ✅ Define o tamanho da fonte do placeholder
+                    fontSize: 16,
                   }}
                   className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
                 />
@@ -155,7 +151,7 @@ export default function NewProperty() {
                   placeholderTextColor="#9CA3AF"
                   style={{
                     color: '#1F2A37',
-                    fontSize: 16, // Define o tamanho da fonte do placeholder
+                    fontSize: 16,
                   }}
                   className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
                 />
@@ -172,18 +168,18 @@ export default function NewProperty() {
               placeholderTextColor="#9CA3AF"
               style={{
                 color: '#1F2A37',
-                fontSize: 16, // Define o tamanho da fonte do placeholder
+                fontSize: 16,
               }}
               multiline={true}
               textAlignVertical="top"
-              maxLength={500}
+              maxLength={50}
             />
             <Text className="pt-[10px] text-end font-mulish text-[14px] text-texto-c-primario">
               0/50
             </Text>
           </View>
         </View>
-      </Container>
+      </ScrollView>
     </View>
   );
 }
