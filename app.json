@@ -29,9 +29,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.devazulciano.imobifacil"
@@ -45,9 +43,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "377ce5a8-a379-4764-b7a5-90cfe8723543"
+        "projectId": "d3c97ce7-a258-477a-ab64-c3223946c60b"
       }
     },
-    "owner": "devanaclimgo"
+    "owner": "imobifacil"
   }
 }
