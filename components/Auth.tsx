@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
+
 import { useGoogleAuth } from '../hooks/useGoogleAuth';
 import Svg, { Path } from 'react-native-svg';
 
@@ -27,22 +26,21 @@ const GoogleIcon = ({ size = 20 }) => (
 );
 
 const Auth = () => {
-  const router = useRouter();
-  const { promptAsync, response, isLoading, error } = useGoogleAuth();
+  const { signInWithGoogle, isLoading, error } = useGoogleAuth();
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (response?.type === 'success') {
       router.replace('/(auth)/feedback/success/page');
     } else if (response?.type === 'error') {
       router.push('/error/page');
     }
-  }, [response, router]);
+  }, [response, router]);*/
 
   return (
     <View>
       <TouchableOpacity
         disabled={isLoading}
-        onPress={() => promptAsync()}
+        onPress={signInWithGoogle}
         className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
         {isLoading ? (

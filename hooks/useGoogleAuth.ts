@@ -1,80 +1,151 @@
-import { useState, useEffect } from 'react';
-import * as Google from 'expo-auth-session/providers/google'; // Provider de autenticação Google do Expo
-import * as WebBrowser from 'expo-web-browser'; // Para lidar com fluxo de autenticação via navegador
-import * as AuthSession from 'expo-auth-session'; // Utilitários para auth session do Expo
-import { useAuth } from '../contexts/authContext'; // Contexto de autenticação da aplicação
-import { fetchUserInfo, decodeGoogleIdToken, isTokenValid } from '../utils/tokenUtils';
-// Funções utilitárias para lidar com token e dados do usuário
+import { useState } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import { Platform } from 'react-native';
+import { useAuth } from '../contexts/authContext';
 
-// Completa sessão de autenticação, especialmente para web (fix de problema comum)
 WebBrowser.maybeCompleteAuthSession();
 
-const CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID || 'SEU_CLIENT_ID_AQUI';
-// Client ID do Google OAuth, idealmente configurado via variável de ambiente
-
 export const useGoogleAuth = () => {
-  const { login } = useAuth(); // Função de login do contexto para armazenar usuário
-  const redirectUri = AuthSession.makeRedirectUri(); // URI de redirecionamento para o fluxo OAuth
-
-  // Configura o request de autenticação Google com clientId, redirectUri e escopos
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: CLIENT_ID,
-    redirectUri,
-    scopes: ['profile', 'email'],
-  });
-
-  // Estados locais para loading e erro
+  const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Efeito que reage a mudanças na resposta da autenticação
-  useEffect(() => {
-    async function handleAuth() {
-      if (response?.type === 'success') {
-        // Se o login foi um sucesso, pega dados do token e do usuário
-        const authentication = response?.authentication;
-        const idToken = authentication?.idToken;
+  async function signInWithGoogle() {
+    console.log('🚀 Iniciando login Google...');
+    console.log('📱 Platform:', Platform.OS);
+    setIsLoading(true);
+    setError(null);
 
-        if (!authentication?.accessToken) return; // Se não tem accessToken, sai
-
-        setIsLoading(true);
-        setError(null);
-
-        try {
-          // Valida o ID Token (JWT) se disponível, para evitar token expirado
-          if (idToken) {
-            const decodedToken = decodeGoogleIdToken(idToken);
-            if (!isTokenValid(decodedToken)) {
-              throw new Error('Token expirado');
-            }
-          }
-
-          // Busca dados do usuário usando o accessToken
-          const userData = await fetchUserInfo(authentication.accessToken);
-
-          // Faz login local salvando dados no contexto (inclui accessToken)
-          await login({
-            ...userData,
-            accessToken: authentication.accessToken,
-          });
-
-          // A navegação após login deve ser feita fora desse hook
-        } catch (err) {
-          console.error('Erro ao autenticar usuário:', err);
-          setError(String(err));
-        } finally {
-          setIsLoading(false);
-        }
-      } else if (response?.type === 'error') {
-        // Se houve erro na autenticação, atualiza o estado de erro
-        console.log('Google Auth Error:', response.error);
-        setError(response.error?.message || 'Erro desconhecido');
+    try {
+      if (Platform.OS === 'web') {
+        // Para Web - usar popup em vez de redirect
+        await handleWebAuth();
+      } else {
+        // Para Mobile - usar deep link
+        await handleMobileAuth();
       }
+    } catch (err: any) {
+      console.error('💥 Erro no login Google:', err);
+      const errorMessage = err.message || 'Erro desconhecido';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
+    } finally {
+      console.log('🏁 Finalizando processo de login');
+      setIsLoading(false);
     }
+  }
 
-    handleAuth();
-  }, [response, login]);
+  const handleWebAuth = async () => {
+    // Para web - abrir popup e aguardar mensagem
+    const authUrl = `http://localhost:3333/auth/google?redirect_uri=${encodeURIComponent('http://localhost:3000/auth/callback')}`;
 
-  // Retorna o objeto para controlar o login, incluindo o prompt para iniciar o fluxo
-  return { request, response, promptAsync, isLoading, error };
+    const popup = window.open(
+      authUrl,
+      'google-auth',
+      'width=500,height=600,scrollbars=yes,resizable=yes'
+    );
+
+    return new Promise<void>((resolve, reject) => {
+      const checkClosed = setInterval(() => {
+        if (popup?.closed) {
+          clearInterval(checkClosed);
+          reject(new Error('Popup foi fechado antes da conclusão'));
+        }
+      }, 1000);
+
+      // Escutar mensagens do popup
+      const messageListener = (event: MessageEvent) => {
+        if (event.origin !== window.location.origin) return;
+
+        if (event.data.type === 'GOOGLE_AUTH_SUCCESS') {
+          clearInterval(checkClosed);
+          window.removeEventListener('message', messageListener);
+
+          const { token, user } = event.data;
+
+          login({
+            id: user.id,
+            email: user.email,
+            name: user.nome || user.email,
+            token: token,
+            role: user.role || 'USER',
+          })
+            .then(() => {
+              popup?.close();
+              resolve();
+            })
+            .catch(reject);
+        } else if (event.data.type === 'GOOGLE_AUTH_ERROR') {
+          clearInterval(checkClosed);
+          window.removeEventListener('message', messageListener);
+          popup?.close();
+          reject(new Error(event.data.error || 'Erro na autenticação'));
+        }
+      };
+
+      window.addEventListener('message', messageListener);
+    });
+  };
+
+  const handleMobileAuth = async () => {
+    const redirectUri = 'imobi-facil://auth/callback';
+    const authUrl = `http://localhost:3333/auth/google?redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+    console.log('🔗 URL de auth:', authUrl);
+    console.log('📱 Redirect URI:', redirectUri);
+
+    const result = await WebBrowser.openAuthSessionAsync(authUrl, redirectUri);
+    console.log('📊 Resultado do WebBrowser:', result);
+
+    if (result.type === 'success' && 'url' in result && result.url) {
+      console.log('✅ Login bem-sucedido, URL:', result.url);
+
+      const url = new URL(result.url);
+      console.log('📝 Parâmetros da URL:', Object.fromEntries(url.searchParams));
+
+      // Verificar se houve erro
+      const errorParam = url.searchParams.get('error');
+      if (errorParam) {
+        const message = url.searchParams.get('message') || 'Falha na autenticação com Google';
+        throw new Error(message);
+      }
+
+      // Extrair dados do usuário
+      const token = url.searchParams.get('token');
+      const id = url.searchParams.get('id');
+      const email = url.searchParams.get('email');
+      const nome = url.searchParams.get('nome');
+      const role = url.searchParams.get('role') || 'USER';
+
+      // Validar dados obrigatórios
+      if (!token || !id || !email) {
+        throw new Error('Dados obrigatórios não encontrados na resposta');
+      }
+
+      // Fazer login no contexto
+      await login({
+        id,
+        email,
+        name: nome || email,
+        token,
+        role,
+      });
+
+      console.log('🎉 Login concluído com sucesso!');
+      return { success: true };
+    } else if (result.type === 'dismiss' || result.type === 'cancel') {
+      throw new Error('Login cancelado pelo usuário');
+    } else {
+      throw new Error(`Resultado inesperado: ${result.type}`);
+    }
+  };
+
+  const clearError = () => setError(null);
+
+  return {
+    signInWithGoogle,
+    isLoading,
+    error,
+    clearError,
+  };
 };
