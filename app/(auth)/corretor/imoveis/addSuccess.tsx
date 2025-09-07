@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
 // Componente SVG customizado do Figma
@@ -35,6 +35,17 @@ export default function SuccessForm() {
           onPress={() => router.push('/(auth)/onboard')}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
+
+        <View className="relative">
+          <View className="inset-0 items-center justify-between">
+            <View className="rounded-full bg-[#ACEFC8;] p-3 shadow-lg">
+              <CustomSuccessIcon width={44} height={44} />
+            </View>
+            <Text className="px-[40px] text-center text-[20px] font-bold text-[#262626]">
+              Imóvel cadastrado com sucesso!
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   );
