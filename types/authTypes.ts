@@ -1,10 +1,19 @@
 // src/types/authTypes.ts
+export interface Token {
+  expires_in: string;
+  token_type: string;
+  access_token: string;
+}
 
 export interface User {
   id: string;
-  name: string;
   email: string;
-  accessToken?: string;
+  name: string;
+  dataNascimento?: string;
+  role: string;
+  createdAt?: string;
+  updatedAt?: string;
+  token: string; // JWT principal
 }
 
 export interface AuthContextData {
