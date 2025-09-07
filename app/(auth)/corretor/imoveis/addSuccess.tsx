@@ -1,4 +1,6 @@
-import { View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { View, TouchableOpacity } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
 // Componente SVG customizado do Figma
@@ -25,8 +27,15 @@ const CustomSuccessIcon = ({ width = 44, height = 44 }) => (
 
 export default function SuccessForm() {
   return (
-    <View>
-      <Text>Confirmação de cadastro</Text>
+    <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
+      <View className="relative h-[350px] w-[343px] items-center justify-center gap-[12px] rounded-[5px] bg-[#F9FAFB]">
+        {/* Ícone de fechar no canto superior direito */}
+        <TouchableOpacity
+          className="absolute right-[12px] top-[12px] z-10"
+          onPress={() => router.push('/(auth)/onboard')}>
+          <Ionicons name="close" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
