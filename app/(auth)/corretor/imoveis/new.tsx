@@ -20,15 +20,15 @@ export default function FormProperty() {
   const [option, setOption] = useState(null);
 
   return (
-    <View className="bg-[#F6F6F6] pt-[34px]">
+    <View className="flex-1 bg-[#F6F6F6] pt-[34px]">
       <ScrollView className="m-6 flex flex-1">
         {/*Header */}
         <View className="relative flex-row items-center justify-center pb-[33px]">
-          <Text className="text-xl font-bold">Novo Imóvel</Text>
-
-          <TouchableOpacity onPress={() => router.back()} className="absolute left-0">
+          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-0">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
+
+          <Text className="text-[20px] font-bold">Novo Imóvel</Text>
         </View>
 
         {/*Basic infos */}
@@ -80,40 +80,6 @@ export default function FormProperty() {
                 backgroundColor: '#FAFAFA',
                 paddingVertical: 12,
               }}
-              // ✅ Customização da lista dropdown
-              containerStyle={{
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: '#DFE4EA',
-                backgroundColor: '#FFFFFF',
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                elevation: 5, // Para Android
-                position: 'absolute',
-                top: 270, // Distância do topo
-                left: -165, // Distância da esquerda
-                width: 330, // Largura fixa
-                // ou
-                right: 0, // Distância da direita
-                bottom: 0, // Distância de baixo (para abrir para cima)
-              }}
-              // ✅ Customização dos itens da lista
-              itemTextStyle={{
-                fontSize: 16,
-                color: '#1F2A37',
-                fontFamily: '', // se você tem essa fonte
-              }}
-              // ✅ Customização do item selecionado
-              selectedTextStyle={{
-                fontSize: 16,
-                color: '#1F2A37',
-                fontFamily: '',
-              }}
               data={options}
               labelField="label"
               valueField="value"
@@ -162,6 +128,7 @@ export default function FormProperty() {
           {/*Description */}
           <View className="pt-[12px]">
             <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">Descrição</Text>
+
             <TextInput
               className="h-[120px] rounded-[6px] border border-stroke bg-white p-[20px]"
               placeholder="Ex: Casa ampla com quintal, pronta para morar."
@@ -174,9 +141,10 @@ export default function FormProperty() {
               textAlignVertical="top"
               maxLength={50}
             />
-            <Text className="pt-[10px] text-end font-mulish text-[14px] text-texto-c-primario">
-              0/50
-            </Text>
+
+            <View className="w-full items-end pt-[10px]">
+              <Text className="font-mulish text-[14px] text-texto-c-primario">0/50</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
