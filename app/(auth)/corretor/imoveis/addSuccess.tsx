@@ -30,7 +30,7 @@ const imovelImage = require('../../../../assets/img-imovel-cadastrado.png');
 export default function SuccessForm() {
   return (
     <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
-      <View className="relative h-[612px] w-[343px] items-center justify-center gap-[12px] rounded-[8px] border border-[#DFE4EA] bg-[#white]">
+      <View className="relative h-[622px] w-[343px] items-center justify-center gap-[12px] rounded-[8px] border border-[#DFE4EA] bg-[#white]">
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
@@ -66,12 +66,19 @@ export default function SuccessForm() {
               </Text>
 
               <TouchableOpacity
-                className="border-blue-500 border w-[170px] rounded-[50px] bg-transparent px-4 py-2 my-2 hover:bg-blue-500"
+                className="my-2 w-[170px] rounded-[50px] border border-blue-500 bg-transparent px-4 py-2 hover:bg-blue-500"
                 onPress={() => router.push('/(auth)/corretor/imoveis/1')}>
-                <Text className="text-center text-blue-500 font-mulish text-[16px] hover:text-white">Ver meu imóvel</Text>
+                <Text className="text-center font-mulish text-[16px] text-blue-500 hover:text-white">
+                  Ver meu imóvel
+                </Text>
               </TouchableOpacity>
 
-              <Text className="mb-6 mt-4 px-4 text-center font-mulish text-[14px] text-[#6B7280] pb-3">Cadastrar outro imóvel</Text>
+              <TouchableOpacity className="w-full bg-transparent px-4"
+                onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+                <Text className="mb-2 mt-4 px-6 pb-6 text-center font-mulish text-[14px] text-[#6B7280] hover:text-blue-500">
+                  Cadastrar outro imóvel
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
