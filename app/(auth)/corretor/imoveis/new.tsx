@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'reac
 import { Dropdown } from 'react-native-element-dropdown';
 import { useRouter } from 'expo-router';
 import { RadioGroup } from '~/components/RadioButton/RadioGroup';
+import AddImage from '@/assets/icons-svg/add-images.svg'
+import UploadIcon from '@/assets/icons-svg/upload-photos.svg'
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 
@@ -20,8 +22,8 @@ export default function FormProperty() {
   const [option, setOption] = useState(null);
 
   return (
-    <View className="flex-1 bg-[#F6F6F6] pt-[55px]">
-      <ScrollView className="px-[16px] flex flex-1">
+    <View className="flex-1 bg-[#F6F6F6]">
+      <ScrollView className="px-[16px] pt-[55px]" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 64 }} >
         {/*Header */}
         <View className="relative flex-row items-center justify-center pb-[33px]">
           <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-1">
@@ -147,6 +149,158 @@ export default function FormProperty() {
             </View>
           </View>
         </View>
+
+        {/*Location infos */}
+        <View>
+          {/*Title section */}
+          <Text className="pb-[6px] font-inter-medium text-[18px] text-[#374151]">
+            Localização
+          </Text>
+          {/*Separator */}
+          <View className="h-px w-full bg-cor-secundaria" />
+
+          {/*CEP */}
+          <View className="gap-[10px] pb-[12px] pt-[22px]">
+            <Text className="font-mulish-medium text-[16px] text-dark-5">CEP*</Text>
+            <TextInput
+              placeholder="Digite o CEP"
+              placeholderTextColor="#9CA3AF"
+              style={{ color: '#1F2A37', fontSize: 16 }}
+              className="rounded-[8px] border-[1px] border-[#DFE4EA] bg-[#FAFAFA] py-[12px] pl-[20px] pr-[16px]"
+            />
+          </View>
+
+          {/*Rua e Numero */}
+          <View className="gap-[10px] pt-[12px]">
+            {/* Linha de labels e inputs alinhados */}
+            <View className="flex-row gap-[20px]">
+              {/* Coluna 1 - Rua */}
+              <View className="flex-[3]">
+                <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">Rua*</Text>
+                <TextInput
+                  placeholder="Rua, avenida..."
+                  placeholderTextColor="#9CA3AF"
+                  style={{
+                    color: '#1F2A37',
+                    fontSize: 16,
+                  }}
+                  className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
+                />
+              </View>
+
+              {/* Coluna 2 - Número */}
+              <View className="flex-[2]">
+                <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">
+                  Número*
+                </Text>
+                <TextInput
+                  placeholder="000"
+                  placeholderTextColor="#9CA3AF"
+                  style={{
+                    color: '#1F2A37',
+                    fontSize: 16,
+                  }}
+                  className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
+                />
+              </View>
+            </View>
+          </View>
+
+          {/*Bairro */}
+          <View className="gap-[10px] pb-[12px] pt-[22px]">
+            <Text className="font-mulish-medium text-[16px] text-dark-5">Bairro*</Text>
+            <TextInput
+              placeholder="Nome do bairro"
+              placeholderTextColor="#9CA3AF"
+              style={{ color: '#1F2A37', fontSize: 16 }}
+              className="rounded-[8px] border-[1px] border-[#DFE4EA] bg-[#FAFAFA] py-[12px] pl-[20px] pr-[16px]"
+            />
+          </View>
+
+          {/*Complemento */}
+          <View className="gap-[10px] pb-[12px] pt-[22px]">
+            <Text className="font-mulish-medium text-[16px] text-dark-5">Complemento</Text>
+            <TextInput
+              placeholder="Complemento"
+              placeholderTextColor="#9CA3AF"
+              style={{ color: '#1F2A37', fontSize: 16 }}
+              className="rounded-[8px] border-[1px] border-[#DFE4EA] bg-[#FAFAFA] py-[12px] pl-[20px] pr-[16px]"
+            />
+          </View>
+          
+          {/*Cidade e UF */}
+          <View className="gap-[10px] pt-[12px]">
+            {/* Linha de labels e inputs alinhados */}
+            <View className="flex-row gap-[20px]">
+              {/* Coluna 1 - Rua */}
+              <View className="flex-[3]">
+                <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">Cidade*</Text>
+                <TextInput
+                  placeholder="Cidade"
+                  placeholderTextColor="#9CA3AF"
+                  style={{
+                    color: '#1F2A37',
+                    fontSize: 16,
+                  }}
+                  className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
+                />
+              </View>
+
+              {/* Coluna 2 - Número */}
+              <View className="flex-[2]">
+                <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">
+                  Estado*
+                </Text>
+                <TextInput
+                  placeholder="UF"
+                  placeholderTextColor="#9CA3AF"
+                  style={{
+                    color: '#1F2A37',
+                    fontSize: 16,
+                  }}
+                  className="h-[52px] rounded-[8px] border border-stroke bg-white py-[12px] pl-[20px] pr-[16px]"
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/*Midias do imovel */}
+        <View className='pt-[32px]'>
+          {/*Title section */}
+          <Text className="pb-[6px] font-inter-medium text-[18px] text-[#374151]">
+            Midias do Imóvel
+          </Text>
+          {/*Separator */}
+          <View className="h-px w-full bg-cor-secundaria" />
+
+          <Text className='font-mulish-medium text-dark-5 text-[16px] pt-[24px]'>Envie de 3 a 10 arquivos (fotos ou videos).</Text>
+
+          {/* Ícones lado a lado */}
+          <View className="flex-row gap-[12px] pt-[12px] items-center justify-center">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <AddImage key={index} />
+            ))}
+          </View>
+
+          <View className="w-full px-[8px] items-end pt-[10px] pb-[12px]">
+            <Text className="font-mulish text-[14px] text-texto-c-primario">0/10</Text>
+          </View>
+
+          {/*Button adicionar */}
+          <View className='justify-center items-center pb-[24px]'>
+            <TouchableOpacity className='py-[12px] gap-[8px] px-[24px] flex-row items-center justify-center w-[148px] h-[44px] border border-cor-primaria bg-cor-primaria-10 rounded-[24px]'>
+            <UploadIcon />
+            <Text className='font-mulish-medium text-[16px] text-cor-primaria'>Adicionar</Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity
+            className="w-full h-[44px] flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
+            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+            
+            <Text className="font-mulish-medium text-[16px] text-white">Cadastrar imóvel</Text>
+          </TouchableOpacity>
       </ScrollView>
     </View>
   );

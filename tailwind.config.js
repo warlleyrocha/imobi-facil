@@ -40,6 +40,7 @@ module.exports = {
 
       colors: {
         'cor-primaria': '#3758F9',
+        'cor-primaria-10': 'rgba(55, 88, 249, 0.1)', // 10% opacity
         'cor-secundaria': '#13C296',
         stroke: '#DFE4EA',
         'dark': '#111928',
