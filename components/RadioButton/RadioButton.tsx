@@ -11,7 +11,7 @@ interface RadioButtonProps {
 export const RadioButton: FC<RadioButtonProps> = ({ label, value, selected, onPress }) => {
   return (
     <TouchableOpacity
-      className="h-[52px] w-[175px] flex-row items-center rounded-lg border border-stroke bg-white py-[12px] pl-[20px] pr-4"
+      className="h-[52px] w-[162px] flex-row items-center rounded-lg border border-stroke bg-white py-[12px] pl-[20px] pr-4"
       onPress={() => onPress(value)}
       activeOpacity={0.7}>
       <View

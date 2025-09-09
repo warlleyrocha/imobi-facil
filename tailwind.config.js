@@ -42,6 +42,7 @@ module.exports = {
         'cor-primaria': '#3758F9',
         'cor-secundaria': '#13C296',
         stroke: '#DFE4EA',
+        'dark': '#111928',
         'dark-2': '#1F2A37',
         'dark-5': '#6B7280',
         'dark-6': '#9CA3AF',

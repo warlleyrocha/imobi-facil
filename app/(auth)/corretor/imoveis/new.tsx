@@ -20,15 +20,15 @@ export default function FormProperty() {
   const [option, setOption] = useState(null);
 
   return (
-    <View className="flex-1 bg-[#F6F6F6] pt-[34px]">
-      <ScrollView className="m-6 flex flex-1">
+    <View className="flex-1 bg-[#F6F6F6] pt-[55px]">
+      <ScrollView className="px-[16px] flex flex-1">
         {/*Header */}
         <View className="relative flex-row items-center justify-center pb-[33px]">
-          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-0">
+          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
 
-          <Text className="text-[20px] font-bold">Novo Imóvel</Text>
+          <Text className="text-[20px] font-mulish-bold text-dark">Novo Imóvel</Text>
         </View>
 
         {/*Basic infos */}
@@ -41,7 +41,7 @@ export default function FormProperty() {
           <View className="h-px w-full bg-cor-secundaria" />
 
           {/*Tilte property */}
-          <View className="gap-[10px] pb-[12px] pt-[24px]">
+          <View className="gap-[10px] pb-[12px] pt-[22px]">
             <Text className="font-mulish-medium text-[16px] text-dark-5">Título do Imóvel*</Text>
             <TextInput
               placeholder="Ex: Casa com 3 quartos"
