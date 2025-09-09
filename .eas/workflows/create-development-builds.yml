@@ -1,0 +1,10 @@
+name: Create development builds
+
+workflows:
+  android:
+    name: Android Development Build
+    jobs:
+      build:
+        type: build
+        platform: android
+        profile: development
