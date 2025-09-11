@@ -29,7 +29,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.devazulciano.imobifacil"
@@ -46,6 +48,12 @@
         "projectId": "d3c97ce7-a258-477a-ab64-c3223946c60b"
       }
     },
-    "owner": "imobifacil"
+    "owner": "imobifacil",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d3c97ce7-a258-477a-ab64-c3223946c60b"
+    }
   }
 }
