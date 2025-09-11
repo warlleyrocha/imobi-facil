@@ -45,7 +45,7 @@ export default function SignIn() {
         <Text
           className="text-center font-mulish-medium text-[#111928]"
           style={{
-            fontSize: width > 400 ? 14 : 12,
+            fontSize: width > 400 ? 16 : 14,
             lineHeight: width > 400 ? 22 : 18,
             paddingHorizontal: width * 0.05,
             maxWidth: 400,
