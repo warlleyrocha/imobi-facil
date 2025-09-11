@@ -1,14 +1,13 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-import { useRouter } from "expo-router";
-import { useForm } from "react-hook-form";
+import { useRouter } from 'expo-router';
+import { useForm } from 'react-hook-form';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-import { BasicInfoSection } from "~/components/Sections/BasicInfoSection";
-import { LocationSection } from "~/components/Sections/LocationSection";
-import { MediaSection } from "~/components/Sections/MediaSection";
-import { FormData } from "@/types/formProperty";
+import { FormData } from '@/types/formProperty';
+import { BasicInfoSection } from '~/components/Sections/BasicInfoSection';
+import { LocationSection } from '~/components/Sections/LocationSection';
+import { MediaSection } from '~/components/Sections/MediaSection';
 
-const setaEsquerda = require("~/assets/arrow-left.png");
-
+const setaEsquerda = require('~/assets/arrow-left.png');
 
 export default function FormProperty() {
   const router = useRouter();
@@ -19,25 +18,25 @@ export default function FormProperty() {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      titulo: "",
-      finalidade: "",
-      tipo: "",
-      preco: "",
-      area: "",
-      descricao: "",
-      cep: "",
-      rua: "",
-      numero: "",
-      bairro: "",
-      complemento: "",
-      cidade: "",
-      estado: "",
+      titulo: '',
+      finalidade: '',
+      tipo: '',
+      preco: '',
+      area: '',
+      descricao: '',
+      cep: '',
+      rua: '',
+      numero: '',
+      bairro: '',
+      complemento: '',
+      cidade: '',
+      estado: '',
       midias: [], // <- inicializa vazio
     },
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("Enviando para API:", data);
+    console.log('Enviando para API:', data);
   };
 
   return (
@@ -45,20 +44,14 @@ export default function FormProperty() {
       <ScrollView
         className="px-[16px] pt-[55px]"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 64 }}
-      >
+        contentContainerStyle={{ paddingBottom: 64 }}>
         {/* Header */}
         <View className="relative flex-row items-center justify-center pb-[35px]">
-          <TouchableOpacity
-            onPress={() => router.back()}
-            className="absolute left-0 top-1"
-          >
+          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
 
-          <Text className="text-[20px] font-mulish-bold text-dark">
-            Novo Imóvel
-          </Text>
+          <Text className="font-mulish-bold text-[20px] text-dark">Novo Imóvel</Text>
         </View>
 
         {/* Basic infos */}
@@ -72,21 +65,16 @@ export default function FormProperty() {
 
         {/* Botão final */}
         <TouchableOpacity
-          className={`w-full h-[44px] flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
-            Object.keys(errors).length > 0
-              ? "bg-gray-400"
-              : "bg-cor-primaria"
+          className={`h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
+            Object.keys(errors).length > 0 ? 'bg-gray-400' : 'bg-cor-primaria'
           }`}
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Text className="font-mulish-medium text-[16px] text-white">
-            Cadastrar imóvel
-          </Text>
+          onPress={handleSubmit(onSubmit)}>
+          <Text className="font-mulish-medium text-[16px] text-white">Cadastrar imóvel</Text>
         </TouchableOpacity>
 
         {/* Mensagem de erro geral */}
         {Object.keys(errors).length > 0 && (
-          <Text className="text-red-500 text-center mt-2">
+          <Text className="mt-2 text-center text-red-500">
             Preencha todos os campos obrigatórios antes de continuar
           </Text>
         )}

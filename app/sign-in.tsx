@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { Dimensions, Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import Auth from '../components/Auth';
 
 const { width, height } = Dimensions.get('window');
@@ -47,7 +47,7 @@ export default function SignIn() {
           style={{
             fontSize: width > 400 ? 16 : 14,
             lineHeight: width > 400 ? 22 : 18,
-            paddingHorizontal: width * 0.05,
+            paddingHorizontal: width * 0.04,
             maxWidth: 400,
           }}>
           Faça login de forma rápida e segura usando sua conta Google. Assim você acessa o

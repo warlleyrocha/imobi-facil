@@ -1,22 +1,22 @@
-import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Href, useRouter } from 'expo-router';
 import { FC } from 'react';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgProps } from 'react-native-svg';
-import { useRouter, Href } from 'expo-router';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import TextSlider from '@/components/TextSlider';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import TabBar from '~/components/TabBar';
 
 import ImagePro from '@/assets/bg.png';
+import Calendar from '@/assets/icons-svg/calendar.svg';
+import Circle from '@/assets/icons-svg/circle.svg';
+import Eyes from '@/assets/icons-svg/eyes.svg';
 import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
-import Calendar from '@/assets/icons-svg/calendar.svg';
-import Users from '@/assets/icons-svg/users.svg';
-import Eyes from '@/assets/icons-svg/eyes.svg';
-import Circle from '@/assets/icons-svg/circle.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
+import Users from '@/assets/icons-svg/users.svg';
 
 interface CardQuickAccess {
   id: string;
@@ -126,7 +126,7 @@ export default function HomeCorretor() {
     <SafeAreaView className="flex-1 bg-neutral-100">
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 16 }}>
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}>
         {/*Header*/}
         <View className="relative flex-row items-center justify-center ">
           <Text className="font-mulish-bold text-[20px]">ImobiFácil</Text>
