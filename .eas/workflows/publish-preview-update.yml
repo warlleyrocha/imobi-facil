@@ -8,5 +8,6 @@ jobs:
   preview-android:
     name: Android Preview Build
     type: build
-    platform: android
-    profile: preview
+    params:
+      platform: android
+      profile: preview

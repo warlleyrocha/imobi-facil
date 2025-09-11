@@ -8,5 +8,6 @@ jobs:
   android:
     name: Android Development Build
     type: build
-    platform: android
-    profile: development
+    params:
+      platform: android
+      profile: development
