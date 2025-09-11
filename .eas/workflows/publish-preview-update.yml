@@ -1,0 +1,13 @@
+name: Android QA Preview Build
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  preview-android:
+    name: Android Preview Build
+    type: build
+    params:
+      platform: android
+      profile: preview
