@@ -21,7 +21,7 @@ export const RadioGroup: FC<RadioGroupProps> = ({
   layout = 'row',
 }) => {
   return (
-    <View className={layout === 'row' ? 'flex-row gap-[20px]' : 'flex-col'}>
+    <View className={layout === 'row' ? 'flex-row pb-[10px] gap-[20px]' : 'flex-col'}>
       {options.map((option) => (
         <RadioButton
           key={option.value}
