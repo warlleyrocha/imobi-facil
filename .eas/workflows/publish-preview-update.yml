@@ -1,12 +1,12 @@
-name: Publish preview update
+name: Android QA Preview Build
 
 on:
   push:
-    branches: ["*"]
+    branches: ["master"]
 
 jobs:
-  publish_preview_update:
-    name: Publish preview update
-    type: update
-    params:
-      branch: ${{ github.ref || test}}
+  preview-android:
+    name: Android Preview Build
+    type: build
+    platform: android
+    profile: preview

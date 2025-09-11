@@ -1,10 +1,12 @@
-name: Create development builds
+name: Android Development Build
 
-workflows:
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
   android:
     name: Android Development Build
-    jobs:
-      build:
-        type: build
-        platform: android
-        profile: development
+    type: build
+    platform: android
+    profile: development
