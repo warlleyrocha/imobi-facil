@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { Dimensions, Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import Auth from '../components/Auth';
 
 const { width, height } = Dimensions.get('window');

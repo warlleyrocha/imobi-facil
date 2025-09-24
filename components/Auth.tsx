@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useGoogleAuth } from '../hooks/useGoogleAuth';
+import { useEffect } from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { useGoogleAuth } from '../hooks/useGoogleAuth';
 
 // Componente do ícone do Google
 const GoogleIcon = ({ size = 20 }) => (
@@ -28,7 +28,7 @@ const GoogleIcon = ({ size = 20 }) => (
 
 const Auth = () => {
   const router = useRouter();
-  const { promptAsync, response, isLoading, error } = useGoogleAuth();
+  const { response, isLoading, error } = useGoogleAuth(); // após integração com a api, retornar *promptAsync*, para usar no onPress
 
   useEffect(() => {
     if (response?.type === 'success') {
@@ -38,11 +38,16 @@ const Auth = () => {
     }
   }, [response, router]);
 
+  const loginQATestTemporary = () => {
+    // Função temporária para testes QA, simula login sem autenticação real
+    router.replace('/(auth)/feedback/success/page');
+  };
+
   return (
     <View>
       <TouchableOpacity
         disabled={isLoading}
-        onPress={() => promptAsync()}
+        onPress={() => loginQATestTemporary()} //mudar para promptAsync()
         className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
         {isLoading ? (

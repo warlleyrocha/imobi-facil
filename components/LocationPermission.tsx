@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, Modal, Alert, Image, Platform } from 'react-native';
-import { useState } from 'react';
 import * as Location from 'expo-location'; // Biblioteca para lidar com localização em apps Expo
 import { useRouter } from 'expo-router'; // Navegação programática
+import { useState } from 'react';
+import { Alert, Image, Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
 import LocationSVG from './Icons/Location'; // Ícone SVG customizado para localização
 
 // Props esperadas pelo modal de permissão de localização
@@ -122,7 +122,7 @@ export default function LocationPermissionModal({
         <View className="h-auto w-[306px] items-center gap-5 rounded-[26px] bg-white p-5">
           <LocationSVG /> {/* Ícone de localização */}
           <Text className="text-center font-mulish text-base text-black">
-            Permitir que o ImobiFácil acesse a localização desse dispositivo?{' '}
+            Permitir que o ImobiFácil acesse a localização desse dispositivo?
           </Text>
           {/* Explicação visual das opções de localização */}
           <View className="flex-row gap-[30px]">

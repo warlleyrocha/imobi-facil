@@ -1,10 +1,10 @@
-import { View, TouchableOpacity } from 'react-native';
-import { SvgProps } from 'react-native-svg';
-import HomeIcon from '@/assets/icons-svg/home.svg';
-import HouseAltIcon from '@/assets/icons-svg/house-alt-black.svg';
 import CalendarTabIcon from '@/assets/icons-svg/calendar-tab.svg';
 import ChatIcon from '@/assets/icons-svg/chat.svg';
+import HomeIcon from '@/assets/icons-svg/home.svg';
+import HouseAltIcon from '@/assets/icons-svg/house-alt-black.svg';
 import UserIcon from '@/assets/icons-svg/user.svg';
+import { TouchableOpacity, View } from 'react-native';
+import { SvgProps } from 'react-native-svg';
 
 interface IconsRoutesTypes {
   id: string;
@@ -22,7 +22,22 @@ const iconsRoutes: IconsRoutesTypes[] = [
 
 const TabBar = () => {
   return (
-    <View className="h-[60px] items-center justify-center rounded-[120px] bg-white bg-gradient-to-b from-white to-slate-100 px-4 shadow-[0px_4px_24px_-4px_rgba(0,0,0,0.16)]">
+    <View
+      className="h-[60px] items-center justify-center rounded-[30px] px-4"
+      style={{
+        backgroundColor: '#FAFAFA', // Fundo semi-transparente
+
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.2)', // Borda sutil
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
+        elevation: 2, // Sombra para Android
+      }}>
       <View className="w-full flex-row justify-around">
         {iconsRoutes.map((route, index) => {
           const IconComponent = route.icon;
