@@ -43,10 +43,11 @@ module.exports = {
         'cor-primaria-10': 'rgba(55, 88, 249, 0.1)', // 10% opacity
         'cor-secundaria': '#13C296',
         stroke: '#DFE4EA',
-        'dark': '#111928',
+        dark: '#111928',
         'dark-2': '#1F2A37',
         'dark-5': '#6B7280',
         'dark-6': '#9CA3AF',
+        'gray-3': '#E5E7EB',
         white: '#FAFAFA',
         laranja: '#F27430',
         'texto-c-primario': '#637381',
