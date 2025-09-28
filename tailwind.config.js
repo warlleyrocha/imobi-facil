@@ -45,6 +45,7 @@ module.exports = {
         stroke: '#DFE4EA',
         dark: '#111928',
         'dark-2': '#1F2A37',
+        'dark-3': '#374151',
         'dark-5': '#6B7280',
         'dark-6': '#9CA3AF',
         'gray-3': '#E5E7EB',
