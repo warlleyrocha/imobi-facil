@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -29,14 +29,16 @@ const imovelImage = require('../../../../assets/img-imovel-cadastrado.png');
 
 export default function SuccessForm() {
   const router = useRouter();
+  const { propertyId } = useLocalSearchParams<{ propertyId: string }>();
 
   const handleNewProperty = () => {
     console.log('Cadastrar outro imóvel');
     router.push('/(auth)/corretor/imoveis/new');
   };
 
-  const handleViewProperty = () => {
-    router.push('/(auth)/corretor/imoveis/[id]');
+  const handleViewProperty = (id: string) => {
+    if (!id) return;
+    router.push(`/(auth)/corretor/imoveis/${id}`);
   };
 
   return (
@@ -79,7 +81,7 @@ export default function SuccessForm() {
               <View className="w-full items-center gap-[6px]">
                 <TouchableOpacity
                   className="rounded-[50px] border border-cor-primaria bg-transparent px-[28px] py-[12px] "
-                  onPress={handleViewProperty}>
+                  onPress={() => handleViewProperty(propertyId)}>
                   <Text className="text-center font-mulish text-[16px] leading-[18px] text-cor-primaria ">
                     Ver meu imóvel
                   </Text>
