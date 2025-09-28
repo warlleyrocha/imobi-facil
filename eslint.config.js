@@ -7,9 +7,12 @@ module.exports = defineConfig([
   {
     ignores: ['dist/*'],
   },
+  'plugins'['simple-import-sort'],
   {
     rules: {
       'react/display-name': 'off',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
     },
   },
 ]);
