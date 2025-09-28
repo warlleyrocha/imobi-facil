@@ -15,19 +15,19 @@ export default function FormProperty() {
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
-      titulo: 'Apartamento amplo',
+      titulo: 'Apartamento com 2 quartos e varanda',
       finalidade: 'venda',
       tipo: 'Apartamento',
-      preco: '500000',
-      area: '30',
-      descricao: 'Apt amplo e arejado',
-      cep: '36570043',
-      rua: 'Rua Floriano Peixoto',
-      numero: '151',
-      bairro: 'Centro',
-      complemento: 'Ap 101',
-      cidade: 'Viçosa',
-      estado: 'MG',
+      preco: '72000000',
+      area: '74',
+      descricao: 'Apartamento térreo com excelente iluminação natural.',
+      cep: '01001-000',
+      rua: 'Praça da Sé',
+      numero: '35',
+      bairro: 'Sé',
+      complemento: 'Apto 101',
+      cidade: 'São Paulo',
+      estado: 'SP',
       midias: [], // <- inicializa vazio
     },
   });
