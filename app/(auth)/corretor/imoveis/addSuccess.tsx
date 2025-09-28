@@ -45,7 +45,7 @@ export default function SuccessForm() {
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
-          onPress={() => router.push('/(auth)/corretor/imoveis')}>
+          onPress={() => router.replace('/(auth)/corretor/imoveis')}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
 
