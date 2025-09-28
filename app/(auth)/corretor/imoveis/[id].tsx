@@ -1,30 +1,30 @@
 import CreateFolderIcon from '@/assets/icons-svg/create_new_folder.svg';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState, useRef } from 'react';
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  Alert,
-  Button,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { Image, Text, TouchableOpacity, View, Alert, ScrollView, Dimensions } from 'react-native';
 import { FormDataWithId } from '@/types/formProperty';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SlideIndicators from '@/components/SlideIndicator';
+import Pencil from '@/assets/icons-svg/pencil.svg';
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 
 export default function DetailsImovel() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>(); // ⚠ usar exatamente "id"
+  const { id } = useLocalSearchParams<{ id: string }>();
   const [propertyData, setPropertyData] = useState<FormDataWithId | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollViewRef = useRef<ScrollView>(null);
   const isScrollingProgrammatically = useRef(false);
   const { width: screenWidth } = Dimensions.get('window');
 
+  const handleScroll = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offsetX / (screenWidth * 0.85 + 15)); // 0.85 largura da tela + marginRight
+    setCurrentIndex(index);
+  };
+
+  //Carregar dados do AsyncStorage sempre que iniciar a página
   useEffect(() => {
     if (id) {
       loadPropertyData(id);
@@ -81,7 +81,13 @@ export default function DetailsImovel() {
         {/*Media Section View */}
         {propertyData?.midias && propertyData?.midias.length > 0 && (
           <View className="mb-3 mt-6 ">
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView
+              ref={scrollViewRef}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              pagingEnabled>
               {propertyData?.midias.map((imageUri: string, index: number) => (
                 <Image
                   key={index}
@@ -103,18 +109,23 @@ export default function DetailsImovel() {
               totalItems={propertyData?.midias.length}
               currentIndex={currentIndex}
               onIndicatorPress={(index) => {
-                isScrollingProgrammatically.current = true;
+                scrollViewRef.current?.scrollTo({
+                  x: index * (screenWidth * 0.85 + 15),
+                  animated: true,
+                });
+
                 setCurrentIndex(index);
               }}
             />
           </View>
         )}
 
-        <Text className="font-mulish-semibold text-[24px] leading-[31px] text-dark">
+        {/*Property Title and Price */}
+        <Text className="pb-[2px] font-mulish-semibold text-[24px] leading-[31px] text-dark">
           {propertyData?.titulo}
         </Text>
 
-        <Text className="items-end pt-[10px] text-right font-inter-semibold text-[20px] text-cor-primaria">
+        <Text className="items-end pb-[32px] text-right font-inter-semibold text-[20px] text-cor-primaria">
           {new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
@@ -122,49 +133,121 @@ export default function DetailsImovel() {
         </Text>
 
         {/*Detalhes */}
-        <View className="flex">
-          <View className="flex-row justify-between">
-            <Text>Finalidade</Text>
-            <Text>{propertyData?.finalidade}</Text>
+        <View className="flex border-b border-t border-gray-200">
+          <View className="flex-row justify-between py-[12px]">
+            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Finalidade</Text>
+            <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+              {propertyData?.finalidade
+                ? propertyData.finalidade.charAt(0).toUpperCase() +
+                  propertyData.finalidade.slice(1).toLowerCase()
+                : ''}
+            </Text>
           </View>
 
-          <View className="flex-row justify-between">
-            <Text>Tipo</Text>
-            <Text>{propertyData?.tipo}</Text>
+          <View className="flex-row justify-between py-[12px]">
+            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Tipo</Text>
+            <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+              {propertyData?.tipo}
+            </Text>
           </View>
 
-          <View className="flex-row justify-between">
-            <Text>Área útil</Text>
-            <Text>{propertyData?.area}</Text>
+          <View className="flex-row justify-between py-[12px]">
+            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Área útil</Text>
+            <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+              {propertyData?.area} m²
+            </Text>
           </View>
 
-          <View className="flex-row justify-between">
-            <Text>ID</Text>
-            <Text>{propertyData?.id}</Text>
+          <View className="flex-row justify-between py-[12px]">
+            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">ID</Text>
+            <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+              {propertyData?.id}
+            </Text>
           </View>
         </View>
 
-        <Text>Descrição</Text>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>
-          {propertyData?.descricao}
-        </Text>
-
-        <View>
-          <Text>CEP</Text>
-          <Text>{propertyData?.cep}</Text>
-          <Text>Rua</Text>
-          <Text>{propertyData?.rua}</Text>
-          <Text>Número</Text>
-          <Text>{propertyData?.numero}</Text>
-          <Text>Bairro</Text>
-          <Text>{propertyData?.bairro}</Text>
-          <Text>Cidade</Text>
-          <Text>{propertyData?.cidade}</Text>
-          <Text>Estado</Text>
-          <Text>{propertyData?.estado}</Text>
+        {/*Description */}
+        <View className="gap-[16px] py-[32px]">
+          <Text className="text-dark-3 font-inter-medium text-[18px] leading-[22px]">
+            Descrição
+          </Text>
+          <Text className="font-mulish text-[16px] leading-[18px] text-dark-2">
+            {propertyData?.descricao}
+          </Text>
         </View>
 
-        <Button title="Editar"></Button>
+        {/*Location */}
+        <View className="flex py-[12px]">
+          <Text className="text-dark-3 mb-4 font-inter-medium text-[18px] leading-[22px]">
+            Localização
+          </Text>
+
+          <View className="-mx-2 flex-row flex-wrap">
+            {/* CEP */}
+            <View className="w-1/2 gap-[12px] px-3 py-[12px]">
+              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">CEP</Text>
+              <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+                {propertyData?.cep}
+              </Text>
+            </View>
+
+            {/* Rua */}
+            <View className="w-1/2 gap-[12px] px-3 py-[12px]">
+              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Rua</Text>
+              <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+                {propertyData?.rua}
+              </Text>
+            </View>
+
+            <View className="h-[1px] w-full bg-gray-200" />
+
+            {/* Número */}
+            <View className="w-1/2 gap-[12px] px-3 py-[12px]">
+              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Número</Text>
+              <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+                {propertyData?.numero}
+              </Text>
+            </View>
+
+            {/* Bairro */}
+            <View className="w-1/2 gap-[12px] px-3 py-[12px]">
+              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Bairro</Text>
+              <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+                {propertyData?.bairro}
+              </Text>
+            </View>
+
+            <View className="h-[1px] w-full bg-gray-200" />
+
+            {/* Cidade */}
+            <View className="w-1/2 gap-[12px] px-3 py-[12px]">
+              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Cidade</Text>
+              <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+                {propertyData?.cidade}
+              </Text>
+            </View>
+
+            {/* Estado */}
+            <View className="w-1/2 gap-[12px] px-3 py-[12px]">
+              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Estado</Text>
+              <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
+                {propertyData?.estado}
+              </Text>
+            </View>
+
+            <View className="h-[1px] w-full bg-gray-200" />
+          </View>
+        </View>
+
+        {/*Button edit */}
+        <View className="w-full flex-row justify-end pb-[40px] pt-[32px]">
+          <TouchableOpacity className="h-[44px] w-[128px] flex-row items-center justify-center gap-[10px] rounded-[50px] bg-cor-primaria px-[24px] py-[12]">
+            <Pencil />
+            <Text className="text-center font-mulish-medium text-[16px] leading-[18px] text-white">
+              Editar
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
