@@ -1,6 +1,7 @@
-import { FormData } from '@/types/formProperty';
+import { FormData, FormDataWithId } from '@/types/formProperty';
 import { useRouter } from 'expo-router';
 import { useForm, useWatch } from 'react-hook-form';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { BasicInfoSection } from '~/components/Sections/BasicInfoSection';
 import { LocationSection } from '~/components/Sections/LocationSection';
@@ -37,23 +38,48 @@ export default function FormProperty() {
   // Verifica se o formulário está válido
   const formIsValid = isFormValid(watchedValues);
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
+    // Validação antes do envio
     if (!isFormValid(data)) {
       Alert.alert('Formulário incompleto');
       return;
     }
 
-    console.log('Enviando para API:', data);
+    // Salvar os dados no AsyncStorage
+    try {
+      const propertySaves = await AsyncStorage.getItem('formPropertyData');
+      let listPropertys: FormDataWithId[] = [];
 
-    // Simular que o backend retornou um ID para o imóvel cadastrado
-    const novoImovelId = Date.now().toString(); // ou qualquer lógica para gerar ID
+      if (propertySaves) {
+        const parsedData = JSON.parse(propertySaves);
 
-    // Navegar para addSuccess passando o ID como parâmetro
-    router.push({
-      pathname: '/(auth)/corretor/imoveis/addSuccess',
-      params: { propertyId: novoImovelId, ...data }, // passando todos os dados do imóvel
-    });
+        // Garantir que parsedData é um array
+        if (Array.isArray(parsedData)) {
+          listPropertys = parsedData;
+        } else {
+          // Se for um objeto único salvo antes, transforma em lista
+          listPropertys = [parsedData];
+        }
+      }
+      const novoImovelId = (listPropertys.length + 1).toString();
+      const dataComId = { id: novoImovelId, ...data };
+
+      listPropertys.push(dataComId);
+
+      await AsyncStorage.setItem('formPropertyData', JSON.stringify(listPropertys));
+
+      console.log('Enviando para API:', dataComId);
+
+      // Navegar para addSuccess passando o ID como parâmetro
+      router.replace({
+        pathname: '/(auth)/corretor/imoveis/addSuccess',
+        params: { propertyId: novoImovelId, ...dataComId }, // passando todos os dados do imóvel
+      });
+    } catch (error) {
+      console.error('Erro ao salvar os dados do formulário:', error);
+    }
   };
+
   return (
     <View className="flex-1 bg-[#F6F6F6]">
       <ScrollView
