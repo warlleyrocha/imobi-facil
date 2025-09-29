@@ -1,5 +1,7 @@
-Rodar build para instalar no emulador
+# Rodar build para instalar no emulador
+
 npx expo run:android
 
-Rodar dev client
+## Rodar dev client
+
 npx expo start --dev-client
