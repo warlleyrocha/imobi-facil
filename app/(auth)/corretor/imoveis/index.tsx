@@ -1,16 +1,7 @@
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import { useRouter } from 'expo-router';
-import {
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-  Modal,
-  Pressable,
-  Alert,
-} from 'react-native';
+import { Image, Text, TouchableOpacity, View, ScrollView, Modal, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormDataWithId } from '@/types/formProperty';
@@ -25,9 +16,10 @@ export default function MyProperties() {
   const setaEsquerda = require('~/assets/arrow-left.png');
 
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
-  const [menuVisible, setMenuVisible] = useState<string | null>(null); // ID do imóvel com menu aberto
+  const [menuVisible, setMenuVisible] = useState<string | null>(null);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Carregar imóveis do AsyncStorage sempre que a tela for focada
   useEffect(() => {
@@ -38,7 +30,6 @@ export default function MyProperties() {
 
         if (savedData) {
           let parsedList: FormDataWithId[] = JSON.parse(savedData);
-
           // Se não for array (cadastrado antes como único), transforma em array
           if (!Array.isArray(parsedList)) {
             parsedList = [parsedList];
@@ -83,11 +74,15 @@ export default function MyProperties() {
       await AsyncStorage.setItem('formPropertyData', JSON.stringify(updatedList));
       setPropertyList(updatedList);
       console.log('Imóvel deletado:', propertyToDelete);
-    } catch (error) {
-      console.error('Erro ao deletar imóvel:', error);
-    } finally {
       setDeleteConfirmVisible(false);
       setPropertyToDelete(null);
+      setShowSuccessMessage(true);
+
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Erro ao deletar imóvel:', error);
     }
   };
 
@@ -120,7 +115,7 @@ export default function MyProperties() {
                   params: { id: property.id },
                 })
               }
-              className="flex-row gap-4 rounded-[8px]  border border-stroke bg-white shadow-md">
+              className="flex-row gap-4 rounded-[8px] border border-stroke bg-white shadow-md">
               {/* Imagem */}
               {property.midias?.[0] && (
                 <Image
@@ -193,7 +188,7 @@ export default function MyProperties() {
                 if (menuVisible) handleEdit(menuVisible);
                 setMenuVisible(null);
               }}
-              className="flex-row gap-[10px] px-[16px] py-[14px] ">
+              className="flex-row gap-[10px] px-[16px] py-[14px]">
               <EditIcon />
               <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
                 Editar Imóvel
@@ -236,23 +231,21 @@ export default function MyProperties() {
         animationType="fade"
         onRequestClose={cancelDelete}>
         <View className="flex-1 items-center justify-center bg-black/50">
-          <View className="mx-[24px] h-[222px] w-[343px]  rounded-2xl bg-white p-[24px]">
+          <View className="mx-[24px] h-[222px] w-[343px] rounded-2xl bg-white p-[24px]">
             {/* Título */}
             <Text className="font-inter-medium text-[18px] leading-[22px] text-dark">
               Deseja excluir este imóvel?
             </Text>
 
-            {/* Mensagem */}
             <Text className="mt-[24px] font-mulish text-[16px] leading-[18px] text-dark-5">
               Ao excluir, todos as informações sobre o imóvel serão removidos.
             </Text>
-
             {/* Botões */}
             <View className="mt-[24px] flex-row gap-[12px]">
               {/* Cancelar */}
               <TouchableOpacity
                 onPress={cancelDelete}
-                className="flex-1 items-center justify-center rounded-lg  px-[24px] py-[12px]">
+                className="flex-1 items-center justify-center rounded-lg px-[24px] py-[12px]">
                 <Text className="font-mulish-semibold text-[16px] leading-[18px] text-cor-primaria">
                   Cancelar
                 </Text>
@@ -268,6 +261,17 @@ export default function MyProperties() {
           </View>
         </View>
       </Modal>
+
+      {/* Mensagem de Sucesso */}
+      {showSuccessMessage && (
+        <View className="absolute bottom-[80px] left-[16px] right-[16px]">
+          <View className="flex-row items-center gap-[12px] rounded-lg bg-[#212B361A]/10 px-[16px] py-[16px] shadow-lg">
+            <Text className="flex-1 font-mulish text-[16px] leading-[18px] text-dark">
+              Imóvel excluído com sucesso!
+            </Text>
+          </View>
+        </View>
+      )}
     </ScrollView>
   );
 }
