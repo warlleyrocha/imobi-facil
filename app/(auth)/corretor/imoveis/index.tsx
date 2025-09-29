@@ -1,16 +1,26 @@
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import { useRouter } from 'expo-router';
-import { Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Image, Text, TouchableOpacity, View, ScrollView, Modal, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormDataWithId } from '@/types/formProperty';
+import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
+import OptionIcon from '@/assets/icons-svg/option.svg';
+import EditIcon from '@/assets/icons-svg/pencil-alt.svg';
+import TrashIcon from '@/assets/icons-svg/trash.svg';
+import NewFolderIcon from '@/assets/icons-svg/create_new_folder_black.svg';
 
 export default function MyProperties() {
   const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
 
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
+  const [menuVisible, setMenuVisible] = useState<string | null>(null);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Carregar imóveis do AsyncStorage sempre que a tela for focada
   useEffect(() => {
@@ -21,7 +31,6 @@ export default function MyProperties() {
 
         if (savedData) {
           let parsedList: FormDataWithId[] = JSON.parse(savedData);
-
           // Se não for array (cadastrado antes como único), transforma em array
           if (!Array.isArray(parsedList)) {
             parsedList = [parsedList];
@@ -39,6 +48,50 @@ export default function MyProperties() {
     loadProperties();
   }, []); // Você pode adicionar dependência para re-carregar quando voltar da tela de detalhes
 
+  const handleEdit = (propertyId: string) => {
+    console.log('Editar imóvel:', propertyId);
+    // Navegar para tela de edição
+    router.push({
+      pathname: '/(auth)/corretor/imoveis/new',
+      params: { id: propertyId },
+    });
+  };
+
+  const handleAddToFolder = (propertyId: string) => {
+    console.log('Adicionar à pasta:', propertyId);
+    // Implementar lógica de adicionar à pasta
+  };
+
+  const handleDeleteClick = (propertyId: string) => {
+    setPropertyToDelete(propertyId);
+    setDeleteConfirmVisible(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!propertyToDelete) return;
+
+    try {
+      const updatedList = propertyList.filter((p) => p.id !== propertyToDelete);
+      await AsyncStorage.setItem('formPropertyData', JSON.stringify(updatedList));
+      setPropertyList(updatedList);
+      console.log('Imóvel deletado:', propertyToDelete);
+      setDeleteConfirmVisible(false);
+      setPropertyToDelete(null);
+      setShowSuccessMessage(true);
+
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Erro ao deletar imóvel:', error);
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteConfirmVisible(false);
+    setPropertyToDelete(null);
+  };
+
   return (
     <ScrollView className="flex-1 bg-white">
       <View className="px-[16px] pt-[55px]">
@@ -50,22 +103,9 @@ export default function MyProperties() {
           <Text className="font-mulish-bold text-[20px] text-dark">Meus Imóveis</Text>
         </View>
 
-        <View className="mb-6 items-center gap-[32px]">
-          <ForSaleImage />
-
-          <TouchableOpacity
-            className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
-            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
-            <CirclePlusIcon />
-            <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Lista de imóveis */}
         <View className="gap-[16px]">
-          {propertyList.length === 0 && (
-            <Text className="text-center text-gray-400">Nenhum imóvel cadastrado.</Text>
-          )}
+          {propertyList.length === 0 && <ForSaleImage />}
 
           {propertyList.map((property) => (
             <TouchableOpacity
@@ -76,30 +116,182 @@ export default function MyProperties() {
                   params: { id: property.id },
                 })
               }
-              className="flex-row items-center gap-4 rounded-lg bg-gray-100 p-4">
+              className="flex-row gap-4 rounded-[8px] border border-stroke bg-white shadow-md">
+              {/* Imagem */}
               {property.midias?.[0] && (
                 <Image
                   source={{ uri: property.midias[0] }}
-                  style={{ width: 60, height: 60, borderRadius: 8 }}
+                  style={{ width: 132, height: 136, borderRadius: 8 }}
                 />
               )}
-              <View className="flex-1">
-                <Text className="font-mulish-bold text-[16px]">{property.titulo}</Text>
-                <Text className="text-gray-600">
-                  {property.tipo} - {property.finalidade}
-                </Text>
-                <Text className="text-gray-600">ID: {property.id}</Text>
-                <Text className="font-inter-semibold text-cor-primaria">
+
+              {/* Conteúdo */}
+              <View className="flex-1 flex-col justify-between py-[8px] pr-[12px]">
+                <View className="flex-row justify-between">
+                  <Text
+                    className="flex-shrink font-inter-semibold text-[12px] text-dark"
+                    numberOfLines={2}>
+                    {property.titulo}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={(e) => {
+                      e.stopPropagation(); // Evita abrir os detalhes do imóvel
+                    }}
+                    onPressIn={(event) => {
+                      const target = event.currentTarget as any;
+                      target.measure(
+                        (
+                          x: number,
+                          y: number,
+                          width: number,
+                          height: number,
+                          pageX: number,
+                          pageY: number
+                        ) => {
+                          setMenuPosition({ x: pageX, y: pageY + height });
+                          setMenuVisible(property.id);
+                        }
+                      );
+                    }}>
+                    <OptionIcon />
+                  </TouchableOpacity>
+                </View>
+
+                {/* Localização */}
+                <View className="flex-row items-center justify-start gap-[4px] pt-[14px]">
+                  <LocationOnIcon />
+                  <Text className="w-[92px] font-inter text-[12px] text-dark">
+                    {property.cidade}, {property.estado}
+                  </Text>
+                  <View className="h-[24px] items-center justify-center rounded-full bg-green-light px-[10px]">
+                    <Text className="font-inter-medium text-[10px] text-green-dark">
+                      {property.finalidade}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* Preço */}
+                <Text className="mt-auto font-inter-semibold text-[16px] text-cor-primaria">
                   {new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
                   }).format(Number(property.preco))}
                 </Text>
               </View>
+
+              {/* Modal do Menu Suspenso */}
+              <Modal
+                visible={menuVisible === property.id}
+                transparent
+                animationType="fade"
+                onRequestClose={() => setMenuVisible(null)}>
+                <Pressable className="flex-1 bg-black/30" onPress={() => setMenuVisible(null)}>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: 28,
+                      top: menuPosition.y, // posição Y calculada do item
+                    }}
+                    className="w-[200px] rounded-[8px] bg-white shadow-2xl">
+                    {/* Editar Imóvel */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleEdit(property.id);
+                        setMenuVisible(null);
+                      }}
+                      className="flex-row gap-[10px] px-[16px] py-[14px]">
+                      <EditIcon />
+                      <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
+                        Editar Imóvel
+                      </Text>
+                    </TouchableOpacity>
+
+                    {/* Adicionar à pasta */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleAddToFolder(property.id);
+                        setMenuVisible(null);
+                      }}
+                      className="flex-row gap-[10px] px-[16px] py-[14px]">
+                      <NewFolderIcon />
+                      <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
+                        Adicionar a pasta
+                      </Text>
+                    </TouchableOpacity>
+
+                    {/* Deletar */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleDeleteClick(property.id);
+                        setMenuVisible(null);
+                      }}
+                      className="flex-row gap-[10px] px-[16px] py-[14px]">
+                      <TrashIcon />
+                      <Text className="font-mulish-medium text-[16px] leading-[18px] text-red-dark">
+                        Excluir imóvel
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Pressable>
+              </Modal>
             </TouchableOpacity>
           ))}
+
+          {/* Mensagem de Sucesso */}
+          {showSuccessMessage && (
+            <View className="h-[34px] w-[343px] items-center justify-center rounded-[4px] bg-[#E1E2E3] py-[8px]">
+              <Text className="font-mulish text-[16px] leading-[18px] text-dark">
+                Imóvel excluído com sucesso!
+              </Text>
+            </View>
+          )}
+
+          <TouchableOpacity
+            className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
+            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+            <CirclePlusIcon />
+            <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
+          </TouchableOpacity>
         </View>
       </View>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <Modal
+        visible={deleteConfirmVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={cancelDelete}>
+        <View className="flex-1 items-center justify-center bg-black/50">
+          <View className="mx-[24px] h-[222px] w-[343px] rounded-2xl bg-white p-[24px]">
+            {/* Título */}
+            <Text className="font-inter-medium text-[18px] leading-[22px] text-dark">
+              Deseja excluir este imóvel?
+            </Text>
+
+            <Text className="mt-[24px] font-mulish text-[16px] leading-[18px] text-dark-5">
+              Ao excluir, todos as informações sobre o imóvel serão removidos.
+            </Text>
+            {/* Botões */}
+            <View className="mt-[24px] flex-row gap-[12px]">
+              {/* Cancelar */}
+              <TouchableOpacity
+                onPress={cancelDelete}
+                className="flex-1 items-center justify-center rounded-lg px-[24px] py-[12px]">
+                <Text className="font-mulish-semibold text-[16px] leading-[18px] text-cor-primaria">
+                  Cancelar
+                </Text>
+              </TouchableOpacity>
+
+              {/* Confirmar */}
+              <TouchableOpacity
+                onPress={confirmDelete}
+                className="flex-1 items-center justify-center rounded-lg bg-[#F23030] px-[28px] py-[13px]">
+                <Text className="font-mulish-semibold text-[16px] text-white">Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
