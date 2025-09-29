@@ -17,19 +17,19 @@ export default function FormProperty() {
 
   const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
-      titulo: '',
-      finalidade: '',
-      tipo: '',
-      preco: '',
-      area: '',
-      descricao: '',
-      cep: '',
-      rua: '',
-      numero: '',
-      bairro: '',
-      complemento: '',
-      cidade: '',
-      estado: '',
+      titulo: 'Apartamento com 2 quartos e varanda',
+      finalidade: 'venda',
+      tipo: 'Apartamento',
+      preco: '72000000',
+      area: '74',
+      descricao: 'Apartamento térreo com excelente iluminação natural.',
+      cep: '01001-000',
+      rua: 'Praça da Sé',
+      numero: '35',
+      bairro: 'Sé',
+      complemento: 'Apto 101',
+      cidade: 'São Paulo',
+      estado: 'SP',
       midias: [], // <- inicializa vazio
     },
   });
