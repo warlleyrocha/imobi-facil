@@ -1,18 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
-import SearchIcon from '@/assets/icons-svg/search-alt.svg';
+import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import ArrowLeftIcon from '@/assets/icons-svg/arrow-left.svg';
 import CloudUploadIcon from '@/assets/icons-svg/cloud-upload.svg';
 import OptionIcon from '@/assets/icons-svg/option-primary-color.svg';
 import PencilIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
+import SearchIcon from '@/assets/icons-svg/search-alt.svg';
+import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '@/components/Icons/TabGroup';
+
+interface TabItem {
+  id: string;
+  label: string;
+  icon: React.ReactElement;
+}
+
+const TabItemData: TabItem[] = [
+  { id: '1', icon: <GridAltIcon />, label: 'Reduzido' },
+  { id: '2', icon: <LayoutAltSecondIcon />, label: 'Médio' },
+  { id: '3', icon: <LayoutAltIcon />, label: 'Ampliado' },
+];
 
 export default function App() {
   const insets = useSafeAreaInsets();
+  const [activeTab, setActiveTab] = useState('1');
+
+  const renderTabItem = ({ item }: { item: TabItem }) => {
+    const isActive = item.id === activeTab;
+
+    return (
+      <View>
+        <TouchableOpacity
+          className={`flex-row gap-[10px] py-[15px] ${isActive ? 'border-b-2 border-b-cor-primaria' : ''}`}
+          onPress={() => setActiveTab(item.id)}>
+          {item.icon}
+          <Text className="font-mulish-medium text-[16px] leading-[18px] text-texto-c-primario">
+            {item.label}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <View className="flex-1">
       <StatusBar style="light" translucent backgroundColor="transparent" />
 
       <ImageBackground
@@ -42,9 +83,7 @@ export default function App() {
       </ImageBackground>
 
       {/* Card de Perfil que sobrepõe */}
-      <View
-        className="-mt-16 rounded-2xl bg-white px-[16px] pt-[14px] shadow-lg"
-        style={{ elevation: 8 }}>
+      <View className="-mt-16 rounded-t-2xl bg-white px-[16px] pt-[14px]" style={{ elevation: 8 }}>
         <View className="flex-row">
           {/* Foto de Perfil */}
           <Image
@@ -86,7 +125,17 @@ export default function App() {
       </View>
 
       {/* Tabs */}
-      <View className="mt-6 flex-1 px-4">{/* Adicione o restante do conteúdo aqui */}</View>
+      <View className="flex-row px-[20px] pt-[28px]">
+        <FlatList
+          data={TabItemData}
+          renderItem={renderTabItem}
+          keyExtractor={(item) => item.id}
+          scrollEnabled={false}
+          numColumns={3}
+          showsVerticalScrollIndicator={false}
+          columnWrapperStyle={{ gap: 24 }}
+        />
+      </View>
     </View>
   );
 }
