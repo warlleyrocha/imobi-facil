@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+
 import { useGoogleAuth } from '../hooks/useGoogleAuth';
 
 // Componente do ícone do Google
@@ -40,7 +41,7 @@ const Auth = () => {
 
   const loginQATestTemporary = () => {
     // Função temporária para testes QA, simula login sem autenticação real
-    router.replace('/(auth)/feedback/success/page');
+    router.replace('/(auth)/corretor/home');
   };
 
   return (

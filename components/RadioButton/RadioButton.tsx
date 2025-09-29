@@ -1,5 +1,5 @@
-import { TouchableOpacity, View, Text } from 'react-native';
 import { FC } from 'react';
+import { Text,TouchableOpacity, View } from 'react-native';
 
 interface RadioButtonProps {
   label: string;

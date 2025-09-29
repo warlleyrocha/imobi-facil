@@ -1,4 +1,4 @@
-import { Text, TextInput, View, TextInputProps } from "react-native";
+import { Text, TextInput, TextInputProps,View } from "react-native";
 
 type FormInputProps = {
   label: string;

@@ -2,6 +2,7 @@ import * as Location from 'expo-location'; // Biblioteca para lidar com localiza
 import { useRouter } from 'expo-router'; // Navegação programática
 import { useState } from 'react';
 import { Alert, Image, Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
+
 import LocationSVG from './Icons/Location'; // Ícone SVG customizado para localização
 
 // Props esperadas pelo modal de permissão de localização

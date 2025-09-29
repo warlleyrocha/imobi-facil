@@ -1,5 +1,4 @@
 import { Stack } from 'expo-router';
-
 import { Text, TouchableOpacity, View } from 'react-native';
 
 export default function NotFoundScreen() {

@@ -1,9 +1,10 @@
-import { TouchableOpacity, View, Text, FlatList } from 'react-native';
-import ImageSlide from '../../components/ImageSlide';
-import Svg, { Path } from 'react-native-svg';
-import { onboardImages } from '../../assets/onboard';
-import { useState, useRef } from 'react';
 import { useRouter } from 'expo-router';
+import { useRef,useState } from 'react';
+import { FlatList,Text, TouchableOpacity, View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+
+import { onboardImages } from '../../assets/onboard';
+import ImageSlide from '../../components/ImageSlide';
 
 export default function Onboard() {
   const [currentIndex, setCurrentIndex] = useState(0);

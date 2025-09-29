@@ -1,3 +1,7 @@
+// Hook para gerenciar estado local
+import { useRouter } from 'expo-router';
+// Importa componentes básicos do React Native para estrutura, imagem, toque, etc.
+import { useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -7,14 +11,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// Importa componentes básicos do React Native para estrutura, imagem, toque, etc.
 
-import { useState } from 'react';
-// Hook para gerenciar estado local
-
-import { useRouter } from 'expo-router';
 // Hook para navegação programática com Expo Router
-
 import LocationPermissionModal from '../../components/LocationPermission';
 // Componente modal customizado para solicitar permissão de localização
 

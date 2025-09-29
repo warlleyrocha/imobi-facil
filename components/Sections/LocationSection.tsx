@@ -1,5 +1,6 @@
+import { Control,Controller } from "react-hook-form";
 import { View } from "react-native";
-import { Controller, Control } from "react-hook-form";
+
 import { FormInput } from "@/components/Form/FormInput";
 import { FormSectionTitle } from "@/components/Form/FormSectionTitle";
 import { FormData } from "@/types/formProperty";

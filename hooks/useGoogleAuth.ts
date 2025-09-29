@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import * as AuthSession from 'expo-auth-session'; // Utilitários para auth session do Expo
 import * as Google from 'expo-auth-session/providers/google'; // Provider de autenticação Google do Expo
 import * as WebBrowser from 'expo-web-browser'; // Para lidar com fluxo de autenticação via navegador
-import * as AuthSession from 'expo-auth-session'; // Utilitários para auth session do Expo
+import { useEffect,useState } from 'react';
+
 import { useAuth } from '../contexts/authContext'; // Contexto de autenticação da aplicação
-import { fetchUserInfo, decodeGoogleIdToken, isTokenValid } from '../utils/tokenUtils';
+import { decodeGoogleIdToken, fetchUserInfo, isTokenValid } from '../utils/tokenUtils';
 // Funções utilitárias para lidar com token e dados do usuário
 
 // Completa sessão de autenticação, especialmente para web (fix de problema comum)

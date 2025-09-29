@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { Image,Text, TouchableOpacity, View } from 'react-native';
 import Svg from 'react-native-svg';
 
 // Add componente SVG customizado do Figma

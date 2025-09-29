@@ -1,15 +1,16 @@
-import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
-import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
-import { useRouter } from 'expo-router';
-import { Image, Text, TouchableOpacity, View, ScrollView, Modal, Pressable } from 'react-native';
-import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FormDataWithId } from '@/types/formProperty';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Image, Modal, Pressable,ScrollView, Text, TouchableOpacity, View } from 'react-native';
+
+import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
+import NewFolderIcon from '@/assets/icons-svg/create_new_folder_black.svg';
+import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
 import OptionIcon from '@/assets/icons-svg/option.svg';
 import EditIcon from '@/assets/icons-svg/pencil-alt.svg';
 import TrashIcon from '@/assets/icons-svg/trash.svg';
-import NewFolderIcon from '@/assets/icons-svg/create_new_folder_black.svg';
+import { FormDataWithId } from '@/types/formProperty';
 
 export default function MyProperties() {
   const router = useRouter();

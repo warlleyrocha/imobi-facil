@@ -1,11 +1,12 @@
-import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import { Control, Controller } from "react-hook-form";
-import { FormSectionTitle } from "@/components/Form/FormSectionTitle";
+import { Alert,Image, Text, TouchableOpacity, View } from "react-native";
+
 import AddImage from "@/assets/icons-svg/add-images.svg";
 import UploadIcon from "@/assets/icons-svg/upload-photos.svg";
+import { FormSectionTitle } from "@/components/Form/FormSectionTitle";
 import CloseIcon from "@/components/Icons/Close";
 import { FormData } from "@/types/formProperty";
-import * as ImagePicker from "expo-image-picker";
 
 type Props = {
   control: Control<FormData>;

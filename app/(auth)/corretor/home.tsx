@@ -1,13 +1,10 @@
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Href, useRouter } from 'expo-router';
 import { FC } from 'react';
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgProps } from 'react-native-svg';
-
-import TextSlider from '@/components/TextSlider';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import TabBar from '~/components/TabBar';
 
 import ImagePro from '@/assets/bg.png';
 import Calendar from '@/assets/icons-svg/calendar.svg';
@@ -17,6 +14,8 @@ import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
 import Users from '@/assets/icons-svg/users.svg';
+import TextSlider from '@/components/TextSlider';
+import TabBar from '~/components/TabBar';
 
 interface CardQuickAccess {
   id: string;

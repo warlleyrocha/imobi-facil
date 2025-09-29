@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// AsyncStorage é usado para armazenar dados persistentes localmente (ex: sessão do usuário)
+import React, { createContext, useContext, useEffect, useMemo,useState } from 'react';
 
+// AsyncStorage é usado para armazenar dados persistentes localmente (ex: sessão do usuário)
 import { AuthContextData, User } from '../types/authTypes';
 // Tipos TypeScript para o contexto e o objeto User
 

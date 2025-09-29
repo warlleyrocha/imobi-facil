@@ -1,13 +1,13 @@
 import React from 'react';
 import {
+  Dimensions,
   FlatList,
   Image,
-  Dimensions,
-  View,
-  Text,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 
 type ImageData = {

@@ -1,11 +1,12 @@
+import { Href, useRouter } from 'expo-router';
+import { TouchableOpacity, View } from 'react-native';
+import { SvgProps } from 'react-native-svg';
+
 import CalendarTabIcon from '@/assets/icons-svg/calendar-tab.svg';
 import ChatIcon from '@/assets/icons-svg/chat.svg';
 import HomeIcon from '@/assets/icons-svg/home.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt-black.svg';
 import UserIcon from '@/assets/icons-svg/user.svg';
-import { Href, useRouter } from 'expo-router';
-import { TouchableOpacity, View } from 'react-native';
-import { SvgProps } from 'react-native-svg';
 
 interface IconsRoutesTypes {
   id: string;

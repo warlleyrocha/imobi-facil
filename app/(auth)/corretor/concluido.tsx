@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Svg, Path } from 'react-native-svg';
 import { useEffect } from 'react';
+import { Text, TouchableOpacity,View } from 'react-native';
+import { Path,Svg } from 'react-native-svg';
 
 // Componente SVG customizado do Figma
 const CustomSuccessIcon = ({ width = 44, height = 44 }) => (

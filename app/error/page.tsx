@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { Svg, Path } from 'react-native-svg';
+import { Text, TouchableOpacity,View } from 'react-native';
+import { Path,Svg } from 'react-native-svg';
 
 // Componente SVG customizado do Figma
 const CustomErrorIcon = ({ width = 44, height = 44 }) => (

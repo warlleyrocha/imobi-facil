@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
-import { Container } from '~/components/Container';
+import { Image, Text, TextInput,TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+
+import { Container } from '~/components/Container';
 
 export default function Verificacao() {
   const setaEsquerda = require('~/assets/arrow-left.png');
