@@ -1,43 +1,119 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-import { useRouter } from "expo-router";
-import { useForm } from "react-hook-form";
+import { FormData, FormDataWithId } from '@/types/formProperty';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useForm, useWatch } from 'react-hook-form';
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { BasicInfoSection } from '~/components/Sections/BasicInfoSection';
+import { LocationSection } from '~/components/Sections/LocationSection';
+import { MediaSection } from '~/components/Sections/MediaSection';
+import { isFormValid } from '~/utils/validationsFormProperty'; // ajuste o caminho
 
-import { BasicInfoSection } from "~/components/Sections/BasicInfoSection";
-import { LocationSection } from "~/components/Sections/LocationSection";
-import { MediaSection } from "~/components/Sections/MediaSection";
-import { FormData } from "@/types/formProperty";
-
-const setaEsquerda = require("~/assets/arrow-left.png");
-
+const setaEsquerda = require('~/assets/arrow-left.png');
 
 export default function FormProperty() {
   const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>(); // <-- aqui você obtém o ID
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
-      titulo: "",
-      finalidade: "",
-      tipo: "",
-      preco: "",
-      area: "",
-      descricao: "",
-      cep: "",
-      rua: "",
-      numero: "",
-      bairro: "",
-      complemento: "",
-      cidade: "",
-      estado: "",
+      titulo: '',
+      finalidade: '',
+      tipo: '',
+      preco: '',
+      area: '',
+      descricao: '',
+      cep: '',
+      rua: '',
+      numero: '',
+      bairro: '',
+      complemento: '',
+      cidade: '',
+      estado: '',
       midias: [], // <- inicializa vazio
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Enviando para API:", data);
+  // Preencher o formulário caso seja edição
+  useEffect(() => {
+    if (!id) return; // Novo cadastro
+
+    const loadPropertyForEdit = async () => {
+      try {
+        const savedData = await AsyncStorage.getItem('formPropertyData');
+        if (!savedData) return;
+
+        let list: FormDataWithId[] = JSON.parse(savedData);
+        if (!Array.isArray(list)) list = [list];
+
+        const selected = list.find((item) => item.id === id);
+        if (!selected) {
+          Alert.alert('Erro', 'Imóvel não encontrado');
+          return;
+        }
+
+        // Atualiza o react-hook-form com os valores do imóvel
+        reset(selected);
+      } catch (error) {
+        console.error('Erro ao carregar imóvel para edição:', error);
+      }
+    };
+
+    loadPropertyForEdit();
+  }, [id, reset]);
+
+  // Observa mudanças nos campos em tempo real
+  const watchedValues = useWatch({ control });
+
+  // Verifica se o formulário está válido
+  const formIsValid = isFormValid(watchedValues);
+
+  const onSubmit = async (data: FormData) => {
+    // Validação antes do envio
+    if (!isFormValid(data)) {
+      Alert.alert('Formulário incompleto');
+      return;
+    }
+
+    try {
+      const propertySaves = await AsyncStorage.getItem('formPropertyData');
+      let listPropertys: FormDataWithId[] = [];
+
+      if (propertySaves) {
+        const parsedData = JSON.parse(propertySaves);
+        listPropertys = Array.isArray(parsedData) ? parsedData : [parsedData];
+      }
+
+      let dataComId: FormDataWithId;
+
+      if (id) {
+        // Edição: usa o mesmo ID
+        dataComId = { id, ...data };
+        const index = listPropertys.findIndex((item) => item.id === id);
+        if (index >= 0) {
+          listPropertys[index] = dataComId;
+        } else {
+          listPropertys.push(dataComId);
+        }
+      } else {
+        // Novo cadastro
+        const novoImovelId = (listPropertys.length + 1).toString();
+        dataComId = { id: novoImovelId, ...data };
+        listPropertys.push(dataComId);
+      }
+
+      await AsyncStorage.setItem('formPropertyData', JSON.stringify(listPropertys));
+
+      console.log('Enviando para API:', dataComId);
+
+      // Navegar para addSuccess ou lista de imóveis
+      router.replace({
+        pathname: '/(auth)/corretor/imoveis/addSuccess',
+        params: { propertyId: dataComId.id, ...dataComId },
+      });
+    } catch (error) {
+      console.error('Erro ao salvar os dados do formulário:', error);
+    }
   };
 
   return (
@@ -45,19 +121,15 @@ export default function FormProperty() {
       <ScrollView
         className="px-[16px] pt-[55px]"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 64 }}
-      >
+        contentContainerStyle={{ paddingBottom: 64 }}>
         {/* Header */}
         <View className="relative flex-row items-center justify-center pb-[35px]">
-          <TouchableOpacity
-            onPress={() => router.back()}
-            className="absolute left-0 top-1"
-          >
+          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
 
-          <Text className="text-[20px] font-mulish-bold text-dark">
-            Novo Imóvel
+          <Text className="font-mulish-bold text-[20px] text-dark">
+            {id ? 'Editar Imóvel' : 'Novo Imóvel'}
           </Text>
         </View>
 
@@ -72,24 +144,18 @@ export default function FormProperty() {
 
         {/* Botão final */}
         <TouchableOpacity
-          className={`w-full h-[44px] flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
-            Object.keys(errors).length > 0
-              ? "bg-gray-400"
-              : "bg-cor-primaria"
+          className={`h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
+            !formIsValid ? 'bg-gray-3' : 'bg-cor-primaria'
           }`}
           onPress={handleSubmit(onSubmit)}
-        >
-          <Text className="font-mulish-medium text-[16px] text-white">
-            Cadastrar imóvel
+          disabled={!formIsValid}>
+          <Text
+            className={`font-mulish-medium text-[16px] ${
+              !formIsValid ? 'text-dark-5' : 'text-white'
+            }`}>
+            {id ? 'Salvar alterações' : 'Cadastrar imóvel'}
           </Text>
         </TouchableOpacity>
-
-        {/* Mensagem de erro geral */}
-        {Object.keys(errors).length > 0 && (
-          <Text className="text-red-500 text-center mt-2">
-            Preencha todos os campos obrigatórios antes de continuar
-          </Text>
-        )}
       </ScrollView>
     </View>
   );

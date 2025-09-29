@@ -16,3 +16,7 @@ export type FormData = {
 
   midias?: string[]; // pode ser vazio, mas deve existir
 };
+
+export interface FormDataWithId extends FormData {
+  id: string; // ID do imóvel
+}

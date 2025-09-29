@@ -1,22 +1,22 @@
-import { View, Text, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Href, useRouter } from 'expo-router';
 import { FC } from 'react';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgProps } from 'react-native-svg';
-import { useRouter, Href } from 'expo-router';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import TextSlider from '@/components/TextSlider';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import TabBar from '~/components/TabBar';
 
 import ImagePro from '@/assets/bg.png';
+import Calendar from '@/assets/icons-svg/calendar.svg';
+import Circle from '@/assets/icons-svg/circle.svg';
+import Eyes from '@/assets/icons-svg/eyes.svg';
 import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
-import Calendar from '@/assets/icons-svg/calendar.svg';
-import Users from '@/assets/icons-svg/users.svg';
-import Eyes from '@/assets/icons-svg/eyes.svg';
-import Circle from '@/assets/icons-svg/circle.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
+import Users from '@/assets/icons-svg/users.svg';
 
 interface CardQuickAccess {
   id: string;
@@ -74,7 +74,7 @@ export default function HomeCorretor() {
 
     return (
       <TouchableOpacity
-        className="m-2 min-h-[72px] flex-1 flex-row items-center gap-4 rounded-lg border border-cor-primaria bg-cor-primaria/10 p-4"
+        className="min-h-[72px] flex-1 flex-row items-center gap-4 rounded-lg border border-cor-primaria bg-cor-primaria/10 p-4"
         onPress={() => router.push(item.route)}>
         <Icon width={24} height={24} />
         <Text className="flex-1 text-center font-mulish-bold text-[16px] text-cor-primaria">
@@ -128,7 +128,7 @@ export default function HomeCorretor() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16 }}>
         {/*Header*/}
-        <View className="relative flex-row items-center justify-center ">
+        <View className="relative top-9 flex-row items-center justify-center ">
           <Text className="font-mulish-bold text-[20px]">ImobiFácil</Text>
           <View className="absolute right-4">
             <Ionicons name="notifications-outline" size={24} color="black" />
@@ -136,7 +136,7 @@ export default function HomeCorretor() {
         </View>
 
         {/*Acesso rápido*/}
-        <View className=" pt-[40px]">
+        <View className="pb-[10px] pt-[62px]">
           <Text className="pb-[16px] font-mulish-bold text-[20px]">Bem-Vindo, Corretor</Text>
           <FlatList
             data={cardData}
@@ -145,6 +145,8 @@ export default function HomeCorretor() {
             scrollEnabled={false}
             numColumns={2}
             showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+            columnWrapperStyle={{ gap: 21 }} // Espaçamento horizontal entre colunas
             contentContainerStyle={{ paddingBottom: 20 }}
           />
         </View>
@@ -181,7 +183,15 @@ export default function HomeCorretor() {
       </ScrollView>
 
       {/*TabBar*/}
-      <View className="px-[16px]">
+      <View
+        className="absolute bottom-7 left-4 right-4 z-50"
+        style={{
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.15,
+          shadowRadius: 20,
+          elevation: 10,
+        }}>
         <TabBar />
       </View>
     </SafeAreaView>

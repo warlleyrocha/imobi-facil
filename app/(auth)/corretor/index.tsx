@@ -1,37 +1,33 @@
-import React, { useState } from 'react';
+import { useRouter } from 'expo-router'; // ✅ Hook correto
+import { useState } from 'react';
 import {
-  View,
-  Text,
   Image,
+  KeyboardAvoidingView,
+  Linking,
+  Platform,
+  ScrollView,
+  Text,
   TextInput,
   TouchableOpacity,
-  Linking,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
+  View,
 } from 'react-native';
 import Svg, { Polyline } from 'react-native-svg';
 import { Container } from '~/components/Container';
-import { router } from 'expo-router';
 
 export default function Corretor() {
+  const router = useRouter(); // ✅ Use o hook
+
   interface SignUpFormState {
     firstname: string;
     lastname: string;
-    birthdate: string | number; // Pode ser string ou number dependendo do formato
-    // Se for string, pode ser uma data no formato ISO ou outro formato de data
-    // Se for number, pode ser um timestamp ou outro formato numérico
-    // Aqui, estou usando string | number para permitir ambos os formatos
-    cpf: string | number; // CPF pode ser string ou number dependendo do formato
-    // Se for string, pode ser um CPF formatado com pontos e traços
-    // Se for number, pode ser um CPF numérico sem formatação
+    birthdate: string | number;
+    cpf: string | number;
     creci: string;
   }
 
   const setaEsquerda = require('~/assets/arrow-left.png');
 
   const [formData, setFormData] = useState<SignUpFormState>({
-    // Estado inicial do formulário
     firstname: '',
     lastname: '',
     birthdate: '',
@@ -51,6 +47,18 @@ export default function Corretor() {
       router.push('/(auth)/corretor/verificacao' as any);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  // ✅ Função melhorada para voltar
+  const handleGoBack = () => {
+    console.log('Tentando voltar...'); // Debug
+    if (router.canGoBack()) {
+      console.log('Pode voltar - usando router.back()');
+      router.back();
+    } else {
+      console.log('Não pode voltar - redirecionando para select-profile');
+      router.push('/(auth)/select-profile' as any);
     }
   };
 
@@ -74,7 +82,11 @@ export default function Corretor() {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
             <View className="mt-10 w-full flex-row items-center justify-between px-5">
-              <TouchableOpacity onPress={() => router.back()}>
+              {/* ✅ TouchableOpacity melhorado */}
+              <TouchableOpacity
+                onPress={handleGoBack}
+                style={{ padding: 8 }} // Área de toque maior
+                activeOpacity={0.7}>
                 <Image source={setaEsquerda} className="h-6 w-6" />
               </TouchableOpacity>
 

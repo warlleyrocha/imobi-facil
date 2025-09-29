@@ -1,11 +1,11 @@
 import {
-  View,
-  Text,
-  ImageBackground,
   Dimensions,
   Image,
-  TouchableOpacity,
+  ImageBackground,
   Platform,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 // Importa componentes básicos do React Native para estrutura, imagem, toque, etc.
 
@@ -56,7 +56,7 @@ export default function SelectProfile() {
         {/* ImageBackground com a imagem de seleção de perfil */}
         <ImageBackground
           source={require('../../assets/select-profile.png')}
-          style={{ width: imageWidth, height: imageWidth * IMAGE_RATIO }} // Mantém proporção da imagem
+          style={{ top: -20, width: imageWidth, height: imageWidth * IMAGE_RATIO }} // Mantém proporção da imagem
           resizeMode="contain" // Ajusta a imagem para caber dentro do espaço disponível, sem cortar
           imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
           // Bordas arredondadas somente na parte inferior da imagem
@@ -74,16 +74,16 @@ export default function SelectProfile() {
       </View>
 
       {/* Texto de instrução e título centralizados */}
-      <View className="items-center justify-center gap-6 px-4 pt-[50px]">
-        <Text className="font-inter-semibold text-[26px]">Selecione seu perfil</Text>
-        <Text className="text-center font-inter-light text-base">
+      <View className="items-center justify-center gap-6 px-4 pt-[24px]">
+        <Text className="font-inter-semibold text-[26px] text-dark">Selecione seu perfil</Text>
+        <Text className="text-center font-inter-light text-base text-dark-5">
           Ao selecionar o seu perfil, você poderá visualizar as principais funcionalidades que você
           terá acesso ao concluir o cadastro.
         </Text>
       </View>
 
       {/* Área dos botões com espaçamento e padding */}
-      <View className="flex-1 gap-[15px] px-4 pt-[18vh]">
+      <View className="flex-1 gap-[15px] px-4 pt-[15vh]">
         {/* Botão "Corretor" com borda e background leve, que ao ser clicado abre o modal de permissão */}
         <TouchableOpacity
           className="h-14 flex-row items-center justify-center gap-2 rounded-lg border border-cor-primaria bg-cor-primaria/5 px-6"
