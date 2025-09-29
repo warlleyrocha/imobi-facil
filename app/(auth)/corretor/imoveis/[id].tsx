@@ -15,7 +15,6 @@ export default function DetailsImovel() {
   const [propertyData, setPropertyData] = useState<FormDataWithId | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView>(null);
-  const isScrollingProgrammatically = useRef(false);
   const { width: screenWidth } = Dimensions.get('window');
 
   const handleScroll = (event: any) => {
@@ -53,6 +52,15 @@ export default function DetailsImovel() {
     } catch (error) {
       console.error('Erro ao carregar imóvel:', error);
     }
+  };
+
+  //Função para editar
+  const handleEdit = () => {
+    if (!propertyData) return;
+    router.push({
+      pathname: '/(auth)/corretor/imoveis/new',
+      params: { id: propertyData.id },
+    });
   };
 
   return (
@@ -241,7 +249,9 @@ export default function DetailsImovel() {
 
         {/*Button edit */}
         <View className="w-full flex-row justify-end pb-[40px] pt-[32px]">
-          <TouchableOpacity className="h-[44px] w-[128px] flex-row items-center justify-center gap-[10px] rounded-[50px] bg-cor-primaria px-[24px] py-[12]">
+          <TouchableOpacity
+            onPress={handleEdit}
+            className="h-[44px] w-[128px] flex-row items-center justify-center gap-[10px] rounded-[50px] bg-cor-primaria px-[24px] py-[12]">
             <Pencil />
             <Text className="text-center font-mulish-medium text-[16px] leading-[18px] text-white">
               Editar

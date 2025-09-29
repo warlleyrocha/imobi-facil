@@ -1,6 +1,7 @@
 import { FormData, FormDataWithId } from '@/types/formProperty';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useForm, useWatch } from 'react-hook-form';
+import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { BasicInfoSection } from '~/components/Sections/BasicInfoSection';
@@ -12,25 +13,54 @@ const setaEsquerda = require('~/assets/arrow-left.png');
 
 export default function FormProperty() {
   const router = useRouter();
+  const { id } = useLocalSearchParams<{ id: string }>(); // <-- aqui você obtém o ID
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
-      titulo: 'Apartamento com 2 quartos e varanda',
-      finalidade: 'venda',
-      tipo: 'Apartamento',
-      preco: '72000000',
-      area: '74',
-      descricao: 'Apartamento térreo com excelente iluminação natural.',
-      cep: '01001-000',
-      rua: 'Praça da Sé',
-      numero: '35',
-      bairro: 'Sé',
-      complemento: 'Apto 101',
-      cidade: 'São Paulo',
-      estado: 'SP',
+      titulo: '',
+      finalidade: '',
+      tipo: '',
+      preco: '',
+      area: '',
+      descricao: '',
+      cep: '',
+      rua: '',
+      numero: '',
+      bairro: '',
+      complemento: '',
+      cidade: '',
+      estado: '',
       midias: [], // <- inicializa vazio
     },
   });
+
+  // Preencher o formulário caso seja edição
+  useEffect(() => {
+    if (!id) return; // Novo cadastro
+
+    const loadPropertyForEdit = async () => {
+      try {
+        const savedData = await AsyncStorage.getItem('formPropertyData');
+        if (!savedData) return;
+
+        let list: FormDataWithId[] = JSON.parse(savedData);
+        if (!Array.isArray(list)) list = [list];
+
+        const selected = list.find((item) => item.id === id);
+        if (!selected) {
+          Alert.alert('Erro', 'Imóvel não encontrado');
+          return;
+        }
+
+        // Atualiza o react-hook-form com os valores do imóvel
+        reset(selected);
+      } catch (error) {
+        console.error('Erro ao carregar imóvel para edição:', error);
+      }
+    };
+
+    loadPropertyForEdit();
+  }, [id, reset]);
 
   // Observa mudanças nos campos em tempo real
   const watchedValues = useWatch({ control });
@@ -45,35 +75,41 @@ export default function FormProperty() {
       return;
     }
 
-    // Salvar os dados no AsyncStorage
     try {
       const propertySaves = await AsyncStorage.getItem('formPropertyData');
       let listPropertys: FormDataWithId[] = [];
 
       if (propertySaves) {
         const parsedData = JSON.parse(propertySaves);
-
-        // Garantir que parsedData é um array
-        if (Array.isArray(parsedData)) {
-          listPropertys = parsedData;
-        } else {
-          // Se for um objeto único salvo antes, transforma em lista
-          listPropertys = [parsedData];
-        }
+        listPropertys = Array.isArray(parsedData) ? parsedData : [parsedData];
       }
-      const novoImovelId = (listPropertys.length + 1).toString();
-      const dataComId = { id: novoImovelId, ...data };
 
-      listPropertys.push(dataComId);
+      let dataComId: FormDataWithId;
+
+      if (id) {
+        // Edição: usa o mesmo ID
+        dataComId = { id, ...data };
+        const index = listPropertys.findIndex((item) => item.id === id);
+        if (index >= 0) {
+          listPropertys[index] = dataComId;
+        } else {
+          listPropertys.push(dataComId);
+        }
+      } else {
+        // Novo cadastro
+        const novoImovelId = (listPropertys.length + 1).toString();
+        dataComId = { id: novoImovelId, ...data };
+        listPropertys.push(dataComId);
+      }
 
       await AsyncStorage.setItem('formPropertyData', JSON.stringify(listPropertys));
 
       console.log('Enviando para API:', dataComId);
 
-      // Navegar para addSuccess passando o ID como parâmetro
+      // Navegar para addSuccess ou lista de imóveis
       router.replace({
         pathname: '/(auth)/corretor/imoveis/addSuccess',
-        params: { propertyId: novoImovelId, ...dataComId }, // passando todos os dados do imóvel
+        params: { propertyId: dataComId.id, ...dataComId },
       });
     } catch (error) {
       console.error('Erro ao salvar os dados do formulário:', error);
@@ -92,7 +128,9 @@ export default function FormProperty() {
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
 
-          <Text className="font-mulish-bold text-[20px] text-dark">Novo Imóvel</Text>
+          <Text className="font-mulish-bold text-[20px] text-dark">
+            {id ? 'Editar Imóvel' : 'Novo Imóvel'}
+          </Text>
         </View>
 
         {/* Basic infos */}
@@ -115,7 +153,7 @@ export default function FormProperty() {
             className={`font-mulish-medium text-[16px] ${
               !formIsValid ? 'text-dark-5' : 'text-white'
             }`}>
-            Cadastrar imóvel
+            {id ? 'Salvar alterações' : 'Cadastrar imóvel'}
           </Text>
         </TouchableOpacity>
       </ScrollView>
