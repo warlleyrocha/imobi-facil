@@ -165,6 +165,15 @@ export default function MyProperties() {
             </TouchableOpacity>
           ))}
 
+          {/* Mensagem de Sucesso */}
+          {showSuccessMessage && (
+            <View className="h-[34px] w-[343px] items-center justify-center rounded-[4px] bg-[#E1E2E3] py-[8px]">
+              <Text className="font-mulish text-[16px] leading-[18px] text-dark">
+                Imóvel excluído com sucesso!
+              </Text>
+            </View>
+          )}
+
           <TouchableOpacity
             className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
             onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
@@ -216,7 +225,7 @@ export default function MyProperties() {
               }}
               className="flex-row gap-[10px] px-[16px] py-[14px]">
               <TrashIcon />
-              <Text className="text-red-dark font-mulish-medium text-[16px] leading-[18px]">
+              <Text className="font-mulish-medium text-[16px] leading-[18px] text-red-dark">
                 Excluir imóvel
               </Text>
             </TouchableOpacity>
@@ -261,17 +270,6 @@ export default function MyProperties() {
           </View>
         </View>
       </Modal>
-
-      {/* Mensagem de Sucesso */}
-      {showSuccessMessage && (
-        <View className="absolute bottom-[80px] left-[16px] right-[16px]">
-          <View className="flex-row items-center gap-[12px] rounded-lg bg-[#212B361A]/10 px-[16px] py-[16px] shadow-lg">
-            <Text className="flex-1 font-mulish text-[16px] leading-[18px] text-dark">
-              Imóvel excluído com sucesso!
-            </Text>
-          </View>
-        </View>
-      )}
     </ScrollView>
   );
 }
