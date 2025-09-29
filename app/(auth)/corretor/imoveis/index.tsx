@@ -1,7 +1,16 @@
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import { useRouter } from 'expo-router';
-import { Image, Text, TouchableOpacity, View, ScrollView, Modal, Pressable } from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Modal,
+  Pressable,
+  Alert,
+} from 'react-native';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormDataWithId } from '@/types/formProperty';
@@ -17,6 +26,8 @@ export default function MyProperties() {
 
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
   const [menuVisible, setMenuVisible] = useState<string | null>(null); // ID do imóvel com menu aberto
+  const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
 
   // Carregar imóveis do AsyncStorage sempre que a tela for focada
   useEffect(() => {
@@ -59,15 +70,30 @@ export default function MyProperties() {
     // Implementar lógica de adicionar à pasta
   };
 
-  const handleDelete = async (propertyId: string) => {
+  const handleDeleteClick = (propertyId: string) => {
+    setPropertyToDelete(propertyId);
+    setDeleteConfirmVisible(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!propertyToDelete) return;
+
     try {
-      const updatedList = propertyList.filter((p) => p.id !== propertyId);
+      const updatedList = propertyList.filter((p) => p.id !== propertyToDelete);
       await AsyncStorage.setItem('formPropertyData', JSON.stringify(updatedList));
       setPropertyList(updatedList);
-      console.log('Imóvel deletado:', propertyId);
+      console.log('Imóvel deletado:', propertyToDelete);
     } catch (error) {
       console.error('Erro ao deletar imóvel:', error);
+    } finally {
+      setDeleteConfirmVisible(false);
+      setPropertyToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setDeleteConfirmVisible(false);
+    setPropertyToDelete(null);
   };
 
   return (
@@ -190,7 +216,7 @@ export default function MyProperties() {
             {/* Deletar */}
             <TouchableOpacity
               onPress={() => {
-                if (menuVisible) handleDelete(menuVisible);
+                if (menuVisible) handleDeleteClick(menuVisible);
                 setMenuVisible(null);
               }}
               className="flex-row gap-[10px] px-[16px] py-[14px]">
@@ -201,6 +227,46 @@ export default function MyProperties() {
             </TouchableOpacity>
           </View>
         </Pressable>
+      </Modal>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <Modal
+        visible={deleteConfirmVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={cancelDelete}>
+        <View className="flex-1 items-center justify-center bg-black/50">
+          <View className="mx-[24px] h-[222px] w-[343px]  rounded-2xl bg-white p-[24px]">
+            {/* Título */}
+            <Text className="font-inter-medium text-[18px] leading-[22px] text-dark">
+              Deseja excluir este imóvel?
+            </Text>
+
+            {/* Mensagem */}
+            <Text className="mt-[24px] font-mulish text-[16px] leading-[18px] text-dark-5">
+              Ao excluir, todos as informações sobre o imóvel serão removidos.
+            </Text>
+
+            {/* Botões */}
+            <View className="mt-[24px] flex-row gap-[12px]">
+              {/* Cancelar */}
+              <TouchableOpacity
+                onPress={cancelDelete}
+                className="flex-1 items-center justify-center rounded-lg  px-[24px] py-[12px]">
+                <Text className="font-mulish-semibold text-[16px] leading-[18px] text-cor-primaria">
+                  Cancelar
+                </Text>
+              </TouchableOpacity>
+
+              {/* Confirmar */}
+              <TouchableOpacity
+                onPress={confirmDelete}
+                className="flex-1 items-center justify-center rounded-lg bg-[#F23030] px-[28px] py-[13px]">
+                <Text className="font-mulish-semibold text-[16px] text-white">Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </Modal>
     </ScrollView>
   );
