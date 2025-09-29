@@ -1,12 +1,12 @@
-import { Control,Controller } from "react-hook-form";
-import { View } from "react-native";
+import { Control, Controller } from 'react-hook-form';
+import { View } from 'react-native';
 
-import { FormInput } from "@/components/Form/FormInput";
-import { FormSectionTitle } from "@/components/Form/FormSectionTitle";
-import { FormData } from "@/types/formProperty";
+import { FormInput } from '@/components/Form/FormInput';
+import { FormSectionTitle } from '@/components/Form/FormSectionTitle';
+import { FormData } from '@/types/formProperty';
 
 type Props = {
-  control: Control<FormData>;
+  readonly control: Control<FormData>;
 };
 
 export function LocationSection({ control }: Props) {
