@@ -51,6 +51,7 @@ module.exports = {
         'gray-3': '#E5E7EB',
         'green-dark': '#1A8245',
         'green-light': '#C2F3D6',
+        'red-dark': '#E10E0E',
         white: '#FAFAFA',
         laranja: '#F27430',
         'texto-c-primario': '#637381',

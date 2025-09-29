@@ -1,18 +1,22 @@
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import { useRouter } from 'expo-router';
-import { Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Image, Text, TouchableOpacity, View, ScrollView, Modal, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormDataWithId } from '@/types/formProperty';
 import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
 import OptionIcon from '@/assets/icons-svg/option.svg';
+import EditIcon from '@/assets/icons-svg/pencil-alt.svg';
+import TrashIcon from '@/assets/icons-svg/trash.svg';
+import NewFolderIcon from '@/assets/icons-svg/create_new_folder_black.svg';
 
 export default function MyProperties() {
   const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
 
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
+  const [menuVisible, setMenuVisible] = useState<string | null>(null); // ID do imóvel com menu aberto
 
   // Carregar imóveis do AsyncStorage sempre que a tela for focada
   useEffect(() => {
@@ -40,6 +44,31 @@ export default function MyProperties() {
 
     loadProperties();
   }, []); // Você pode adicionar dependência para re-carregar quando voltar da tela de detalhes
+
+  const handleEdit = (propertyId: string) => {
+    console.log('Editar imóvel:', propertyId);
+    // Navegar para tela de edição
+    router.push({
+      pathname: '/(auth)/corretor/imoveis/new',
+      params: { id: propertyId },
+    });
+  };
+
+  const handleAddToFolder = (propertyId: string) => {
+    console.log('Adicionar à pasta:', propertyId);
+    // Implementar lógica de adicionar à pasta
+  };
+
+  const handleDelete = async (propertyId: string) => {
+    try {
+      const updatedList = propertyList.filter((p) => p.id !== propertyId);
+      await AsyncStorage.setItem('formPropertyData', JSON.stringify(updatedList));
+      setPropertyList(updatedList);
+      console.log('Imóvel deletado:', propertyId);
+    } catch (error) {
+      console.error('Erro ao deletar imóvel:', error);
+    }
+  };
 
   return (
     <ScrollView className="flex-1 bg-white">
@@ -82,7 +111,13 @@ export default function MyProperties() {
                     numberOfLines={2}>
                     {property.titulo}
                   </Text>
-                  <OptionIcon />
+                  <TouchableOpacity
+                    onPress={(e) => {
+                      e.stopPropagation(); // Evita abrir os detalhes do imóvel
+                      setMenuVisible(property.id);
+                    }}>
+                    <OptionIcon />
+                  </TouchableOpacity>
                 </View>
 
                 {/* Localização */}
@@ -117,6 +152,56 @@ export default function MyProperties() {
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Modal do Menu Suspenso */}
+      <Modal
+        visible={menuVisible !== null}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setMenuVisible(null)}>
+        <Pressable className="flex-1 bg-black/30" onPress={() => setMenuVisible(null)}>
+          <View className="absolute right-[28px] top-[150px] w-[200px] rounded-[8px] bg-white shadow-2xl">
+            {/* Editar Imóvel */}
+            <TouchableOpacity
+              onPress={() => {
+                if (menuVisible) handleEdit(menuVisible);
+                setMenuVisible(null);
+              }}
+              className="flex-row gap-[10px] px-[16px] py-[14px] ">
+              <EditIcon />
+              <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
+                Editar Imóvel
+              </Text>
+            </TouchableOpacity>
+
+            {/* Adicionar à pasta */}
+            <TouchableOpacity
+              onPress={() => {
+                if (menuVisible) handleAddToFolder(menuVisible);
+                setMenuVisible(null);
+              }}
+              className="flex-row gap-[10px] px-[16px] py-[14px]">
+              <NewFolderIcon />
+              <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
+                Adicionar a pasta
+              </Text>
+            </TouchableOpacity>
+
+            {/* Deletar */}
+            <TouchableOpacity
+              onPress={() => {
+                if (menuVisible) handleDelete(menuVisible);
+                setMenuVisible(null);
+              }}
+              className="flex-row gap-[10px] px-[16px] py-[14px]">
+              <TrashIcon />
+              <Text className="text-red-dark font-mulish-medium text-[16px] leading-[18px]">
+                Excluir imóvel
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
     </ScrollView>
   );
 }
