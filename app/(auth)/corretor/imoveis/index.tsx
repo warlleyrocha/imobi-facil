@@ -17,6 +17,7 @@ export default function MyProperties() {
 
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
   const [menuVisible, setMenuVisible] = useState<string | null>(null);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
   const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -135,7 +136,22 @@ export default function MyProperties() {
                   <TouchableOpacity
                     onPress={(e) => {
                       e.stopPropagation(); // Evita abrir os detalhes do imóvel
-                      setMenuVisible(property.id);
+                    }}
+                    onPressIn={(event) => {
+                      const target = event.currentTarget as any;
+                      target.measure(
+                        (
+                          x: number,
+                          y: number,
+                          width: number,
+                          height: number,
+                          pageX: number,
+                          pageY: number
+                        ) => {
+                          setMenuPosition({ x: pageX, y: pageY + height });
+                          setMenuVisible(property.id);
+                        }
+                      );
                     }}>
                     <OptionIcon />
                   </TouchableOpacity>
@@ -162,6 +178,62 @@ export default function MyProperties() {
                   }).format(Number(property.preco))}
                 </Text>
               </View>
+
+              {/* Modal do Menu Suspenso */}
+              <Modal
+                visible={menuVisible === property.id}
+                transparent
+                animationType="fade"
+                onRequestClose={() => setMenuVisible(null)}>
+                <Pressable className="flex-1 bg-black/30" onPress={() => setMenuVisible(null)}>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: 28,
+                      top: menuPosition.y, // posição Y calculada do item
+                    }}
+                    className="w-[200px] rounded-[8px] bg-white shadow-2xl">
+                    {/* Editar Imóvel */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleEdit(property.id);
+                        setMenuVisible(null);
+                      }}
+                      className="flex-row gap-[10px] px-[16px] py-[14px]">
+                      <EditIcon />
+                      <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
+                        Editar Imóvel
+                      </Text>
+                    </TouchableOpacity>
+
+                    {/* Adicionar à pasta */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleAddToFolder(property.id);
+                        setMenuVisible(null);
+                      }}
+                      className="flex-row gap-[10px] px-[16px] py-[14px]">
+                      <NewFolderIcon />
+                      <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
+                        Adicionar a pasta
+                      </Text>
+                    </TouchableOpacity>
+
+                    {/* Deletar */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleDeleteClick(property.id);
+                        setMenuVisible(null);
+                      }}
+                      className="flex-row gap-[10px] px-[16px] py-[14px]">
+                      <TrashIcon />
+                      <Text className="font-mulish-medium text-[16px] leading-[18px] text-red-dark">
+                        Excluir imóvel
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Pressable>
+              </Modal>
             </TouchableOpacity>
           ))}
 
@@ -182,56 +254,6 @@ export default function MyProperties() {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* Modal do Menu Suspenso */}
-      <Modal
-        visible={menuVisible !== null}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setMenuVisible(null)}>
-        <Pressable className="flex-1 bg-black/30" onPress={() => setMenuVisible(null)}>
-          <View className="absolute right-[28px] top-[150px] w-[200px] rounded-[8px] bg-white shadow-2xl">
-            {/* Editar Imóvel */}
-            <TouchableOpacity
-              onPress={() => {
-                if (menuVisible) handleEdit(menuVisible);
-                setMenuVisible(null);
-              }}
-              className="flex-row gap-[10px] px-[16px] py-[14px]">
-              <EditIcon />
-              <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
-                Editar Imóvel
-              </Text>
-            </TouchableOpacity>
-
-            {/* Adicionar à pasta */}
-            <TouchableOpacity
-              onPress={() => {
-                if (menuVisible) handleAddToFolder(menuVisible);
-                setMenuVisible(null);
-              }}
-              className="flex-row gap-[10px] px-[16px] py-[14px]">
-              <NewFolderIcon />
-              <Text className="font-mulish-medium text-[16px] leading-[18px] text-dark">
-                Adicionar a pasta
-              </Text>
-            </TouchableOpacity>
-
-            {/* Deletar */}
-            <TouchableOpacity
-              onPress={() => {
-                if (menuVisible) handleDeleteClick(menuVisible);
-                setMenuVisible(null);
-              }}
-              className="flex-row gap-[10px] px-[16px] py-[14px]">
-              <TrashIcon />
-              <Text className="font-mulish-medium text-[16px] leading-[18px] text-red-dark">
-                Excluir imóvel
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </Pressable>
-      </Modal>
 
       {/* Modal de Confirmação de Exclusão */}
       <Modal
