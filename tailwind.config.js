@@ -49,6 +49,8 @@ module.exports = {
         'dark-5': '#6B7280',
         'dark-6': '#9CA3AF',
         'gray-3': '#E5E7EB',
+        'green-dark': '#1A8245',
+        'green-light': '#C2F3D6',
         white: '#FAFAFA',
         laranja: '#F27430',
         'texto-c-primario': '#637381',

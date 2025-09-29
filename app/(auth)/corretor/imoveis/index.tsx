@@ -5,6 +5,8 @@ import { Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FormDataWithId } from '@/types/formProperty';
+import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
+import OptionIcon from '@/assets/icons-svg/option.svg';
 
 export default function MyProperties() {
   const router = useRouter();
@@ -50,22 +52,9 @@ export default function MyProperties() {
           <Text className="font-mulish-bold text-[20px] text-dark">Meus Imóveis</Text>
         </View>
 
-        <View className="mb-6 items-center gap-[32px]">
-          <ForSaleImage />
-
-          <TouchableOpacity
-            className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
-            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
-            <CirclePlusIcon />
-            <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Lista de imóveis */}
         <View className="gap-[16px]">
-          {propertyList.length === 0 && (
-            <Text className="text-center text-gray-400">Nenhum imóvel cadastrado.</Text>
-          )}
+          {propertyList.length === 0 && <ForSaleImage />}
 
           {propertyList.map((property) => (
             <TouchableOpacity
@@ -76,20 +65,41 @@ export default function MyProperties() {
                   params: { id: property.id },
                 })
               }
-              className="flex-row items-center gap-4 rounded-lg bg-gray-100 p-4">
+              className="flex-row gap-4 rounded-[8px]  border border-stroke bg-white shadow-md">
+              {/* Imagem */}
               {property.midias?.[0] && (
                 <Image
                   source={{ uri: property.midias[0] }}
-                  style={{ width: 60, height: 60, borderRadius: 8 }}
+                  style={{ width: 132, height: 136, borderRadius: 8 }}
                 />
               )}
-              <View className="flex-1">
-                <Text className="font-mulish-bold text-[16px]">{property.titulo}</Text>
-                <Text className="text-gray-600">
-                  {property.tipo} - {property.finalidade}
-                </Text>
-                <Text className="text-gray-600">ID: {property.id}</Text>
-                <Text className="font-inter-semibold text-cor-primaria">
+
+              {/* Conteúdo */}
+              <View className="flex-1 flex-col justify-between py-[8px] pr-[12px]">
+                <View className="flex-row justify-between">
+                  <Text
+                    className="flex-shrink font-inter-semibold text-[12px] text-dark"
+                    numberOfLines={2}>
+                    {property.titulo}
+                  </Text>
+                  <OptionIcon />
+                </View>
+
+                {/* Localização */}
+                <View className="flex-row items-center justify-start gap-[4px] pt-[14px]">
+                  <LocationOnIcon />
+                  <Text className="w-[92px] font-inter text-[12px] text-dark">
+                    {property.cidade}, {property.estado}
+                  </Text>
+                  <View className="h-[24px] items-center justify-center rounded-full bg-green-light px-[10px]">
+                    <Text className="font-inter-medium text-[10px] text-green-dark">
+                      {property.finalidade}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* Preço */}
+                <Text className="mt-auto font-inter-semibold text-[16px] text-cor-primaria">
                   {new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
@@ -98,6 +108,13 @@ export default function MyProperties() {
               </View>
             </TouchableOpacity>
           ))}
+
+          <TouchableOpacity
+            className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
+            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+            <CirclePlusIcon />
+            <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
