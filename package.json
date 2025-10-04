@@ -29,6 +29,7 @@
     "axios": "^1.11.0",
     "expo": "^53.0.22",
     "expo-auth-session": "^6.2.1",
+    "expo-blur": "~14.1.5",
     "expo-constants": "~17.1.4",
     "expo-crypto": "~14.1.5",
     "expo-dev-client": "~5.2.4",
@@ -56,8 +57,7 @@
     "react-native-svg": "15.11.2",
     "react-native-web": "^0.20.0",
     "react-redux": "^9.2.0",
-    "zod": "^3.25.67",
-    "expo-blur": "~14.1.5"
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
