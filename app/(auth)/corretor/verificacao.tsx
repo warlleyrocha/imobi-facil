@@ -1,8 +1,6 @@
 import { useRouter } from 'expo-router';
-import { Image, Text, TextInput,TouchableOpacity, View } from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-
-import { Container } from '~/components/Container';
 
 export default function Verificacao() {
   const setaEsquerda = require('~/assets/arrow-left.png');
@@ -13,10 +11,10 @@ export default function Verificacao() {
   }
 
   return (
-    <View className="m-0 flex-1 bg-[#F6F6F6] p-0">
-      <Container>
+    <View className="flex-1 bg-[#F6F6F6] px-[16px]">
+      <View className="flex-1">
         <View className="w-full flex-1 items-start justify-center">
-          <View className="mt-10 flex-row items-center justify-between gap-12">
+          <View className="flex-row items-center justify-between gap-12">
             <TouchableOpacity onPress={() => router.back()}>
               <Image
                 source={setaEsquerda}
@@ -25,11 +23,11 @@ export default function Verificacao() {
               />
             </TouchableOpacity>
 
-            <Text className="text-center text-xl font-bold">Verificação do Corretor</Text>
+            <Text className="text-center text-[20px] font-bold">Verificação do Corretor</Text>
           </View>
 
           {/* Círculo com check centralizado */}
-          <View className="mt-10 w-full items-center">
+          <View className=" mt-[20px] w-full items-center">
             <View
               className="relative items-center justify-center"
               style={{ width: 96, height: 96 }}>
@@ -106,7 +104,7 @@ export default function Verificacao() {
             </TouchableOpacity>
           </View>
         </View>
-      </Container>
+      </View>
     </View>
   );
 }
