@@ -1,4 +1,4 @@
-import { View, Image, ActivityIndicator, Dimensions } from "react-native";
+import { ActivityIndicator, Dimensions,Image, View } from "react-native";
 
 export default function Splash() {
   const { height } = Dimensions.get("window");

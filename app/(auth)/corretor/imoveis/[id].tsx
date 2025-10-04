@@ -1,11 +1,12 @@
-import CreateFolderIcon from '@/assets/icons-svg/create_new_folder.svg';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState, useRef } from 'react';
-import { Image, Text, TouchableOpacity, View, Alert, ScrollView, Dimensions } from 'react-native';
-import { FormDataWithId } from '@/types/formProperty';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import SlideIndicators from '@/components/SlideIndicator';
+import { useLocalSearchParams,useRouter } from 'expo-router';
+import { useEffect, useRef,useState } from 'react';
+import { Alert, Dimensions,Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+
+import CreateFolderIcon from '@/assets/icons-svg/create_new_folder.svg';
 import Pencil from '@/assets/icons-svg/pencil.svg';
+import SlideIndicators from '@/components/SlideIndicator';
+import { FormDataWithId } from '@/types/formProperty';
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 

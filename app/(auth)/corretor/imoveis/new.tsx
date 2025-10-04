@@ -1,9 +1,10 @@
-import { FormData, FormDataWithId } from '@/types/formProperty';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useForm, useWatch } from 'react-hook-form';
-import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLocalSearchParams,useRouter } from 'expo-router';
+import { useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+
+import { FormData, FormDataWithId } from '@/types/formProperty';
 import { BasicInfoSection } from '~/components/Sections/BasicInfoSection';
 import { LocationSection } from '~/components/Sections/LocationSection';
 import { MediaSection } from '~/components/Sections/MediaSection';

@@ -1,23 +1,16 @@
-import * as React from "react";
-import Svg, { Rect, Mask, G, Path } from "react-native-svg";
+import * as React from 'react';
+import Svg, { G, Mask, Path, Rect } from 'react-native-svg';
 
 type Props = {
-  width?: number;
-  height?: number;
+  readonly width?: number;
+  readonly height?: number;
 };
 
 export default function CloseIcon({ width = 20, height = 20 }: Props) {
   return (
     <Svg width={width} height={height} viewBox="0 0 12 12" fill="none">
       <Rect width="12" height="12" rx="6" fill="white" fillOpacity="0.1" />
-      <Mask
-        id="mask0_1612_8324"
-        maskUnits="userSpaceOnUse"
-        x="1"
-        y="1"
-        width="10"
-        height="10"
-      >
+      <Mask id="mask0_1612_8324" maskUnits="userSpaceOnUse" x="1" y="1" width="10" height="10">
         <Rect x="1" y="1" width="10" height="10" fill="#D9D9D9" />
       </Mask>
       <G mask="url(#mask0_1612_8324)">

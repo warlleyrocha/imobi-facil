@@ -1,4 +1,7 @@
-import { Dimensions, Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+
+import CompanyIcon from '@/assets/icons-svg/company.svg';
+
 import Auth from '../components/Auth';
 
 const { width, height } = Dimensions.get('window');
@@ -14,12 +17,15 @@ export default function SignIn() {
         }}
         className="items-center justify-center"
         resizeMode="cover">
-        <View className="flex-1 items-center justify-center">
-          <Image className="mb-4" source={require('../assets/splash.png')} resizeMode="contain" />
+        <View className="flex-1 items-center justify-center gap-[24px]">
+          <View className="h-[81px] w-[81px] items-center justify-center rounded-full bg-[#111928]">
+            <CompanyIcon />
+          </View>
+
           <Text
             className="text-center font-inter-bold text-white"
             style={{
-              fontSize: width > 400 ? 24 : 22,
+              fontSize: width > 400 ? 25 : 24,
               lineHeight: width > 400 ? 28 : 24,
               paddingHorizontal: width * 0.1,
             }}>
@@ -33,12 +39,12 @@ export default function SignIn() {
         className="flex-1 items-center rounded-t-[24px] bg-white px-4 pb-4"
         style={{
           marginTop: -40, // Sobreposição sobre o background
-          paddingTop: 50, // Espaço para compensar a sobreposição
+          paddingTop: 48, // Espaço para compensar a sobreposição
           minHeight: height * 0.5, // Mínimo 50% da altura
         }}>
         <Text
           className="pb-4 font-inter-bold text-[#111928]"
-          style={{ fontSize: width > 400 ? 20 : 18 }}>
+          style={{ fontSize: width > 400 ? 22 : 20 }}>
           Conheça nosso APP
         </Text>
 
@@ -46,8 +52,8 @@ export default function SignIn() {
           className="text-center font-mulish-medium text-[#111928]"
           style={{
             fontSize: width > 400 ? 16 : 14,
-            lineHeight: width > 400 ? 22 : 18,
-            paddingHorizontal: width * 0.05,
+            lineHeight: width > 400 ? 24 : 22,
+            paddingHorizontal: width * 0.03,
             maxWidth: 400,
           }}>
           Faça login de forma rápida e segura usando sua conta Google. Assim você acessa o
@@ -62,7 +68,7 @@ export default function SignIn() {
             width: Math.min(width * 0.9, 345), // 90% da largura ou máximo 345px
             gap: 23,
             marginTop: 'auto',
-            marginBottom: 40,
+            marginBottom: 52,
           }}>
           <Auth />
         </TouchableOpacity>

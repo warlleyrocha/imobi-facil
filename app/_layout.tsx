@@ -1,20 +1,5 @@
-// _layout.tsx
-import { Slot, useRouter, useSegments } from 'expo-router';
-// Slot: placeholder para renderizar as telas filhas (rotas aninhadas)
-// useRouter: hook para navegação programática
-// useSegments: hook para obter segmentos da rota atual
-
 import 'global.css'; // Importa estilos globais
 
-import { useEffect, useState } from 'react'; // React hooks básicos
-import { useFonts } from 'expo-font'; // Hook para carregar fontes customizadas
-import { ActivityIndicator, View, Text } from 'react-native'; // Componentes básicos UI
-
-import Splash from './splash'; // Componente Splash screen exibido durante carregamento
-import { AuthContextProvider, useAuth } from '../contexts/authContext';
-// Contexto para autenticação (provider e hook para usar o contexto)
-
-// Importação de fontes do Google Fonts (Inter e Mulish, várias variantes)
 import {
   Inter_300Light,
   Inter_400Regular,
@@ -31,6 +16,13 @@ import {
   Mulish_700Bold,
   Mulish_900Black,
 } from '@expo-google-fonts/mulish';
+import { useFonts } from 'expo-font'; // Hook para carregar fontes customizadas
+import { Slot, useRouter, useSegments } from 'expo-router';
+import { useEffect, useState } from 'react'; // React hooks básicos
+import { ActivityIndicator, Text, View } from 'react-native'; // Componentes básicos UI
+
+import { AuthContextProvider, useAuth } from '../contexts/authContext';
+import Splash from './splash'; // Componente Splash screen exibido durante carregamento
 
 // Componente raiz do layout, envolve o app no AuthContextProvider para fornecer estado de autenticação a todos os componentes filhos
 export default function RootLayout() {

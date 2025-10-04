@@ -1,5 +1,6 @@
-import { useRouter } from 'expo-router'; // ✅ Hook correto
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import {
   Image,
   KeyboardAvoidingView,
@@ -7,33 +8,32 @@ import {
   Platform,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Svg, { Polyline } from 'react-native-svg';
-import { Container } from '~/components/Container';
+
+import { FormInput } from '@/components/Form/FormInput';
+import { SignUpFormState } from '@/types/corretorTypes';
+import { corretorFormFields, isFormValid } from '@/utils/corretorFields';
 
 export default function Corretor() {
-  const router = useRouter(); // ✅ Use o hook
-
-  interface SignUpFormState {
-    firstname: string;
-    lastname: string;
-    birthdate: string | number;
-    cpf: string | number;
-    creci: string;
-  }
-
+  const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
 
-  const [formData, setFormData] = useState<SignUpFormState>({
-    firstname: '',
-    lastname: '',
-    birthdate: '',
-    cpf: '',
-    creci: '',
+  const { control, handleSubmit } = useForm<SignUpFormState>({
+    defaultValues: {
+      firstname: '',
+      lastname: '',
+      birthdate: '',
+      cpf: '',
+      creci: '',
+    },
   });
+
+  const watchedValues = useWatch<SignUpFormState>({ control });
+
+  const formIsValid = isFormValid(watchedValues);
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -41,8 +41,8 @@ export default function Corretor() {
     setIsChecked(!isChecked);
   };
 
-  const handleSubmit = async () => {
-    console.log('Dados:', formData);
+  const onSubmit = async (data: SignUpFormState) => {
+    console.log('Dados:', data);
     try {
       router.push('/(auth)/corretor/verificacao' as any);
     } catch (error) {
@@ -50,9 +50,8 @@ export default function Corretor() {
     }
   };
 
-  // ✅ Função melhorada para voltar
   const handleGoBack = () => {
-    console.log('Tentando voltar...'); // Debug
+    console.log('Tentando voltar...');
     if (router.canGoBack()) {
       console.log('Pode voltar - usando router.back()');
       router.back();
@@ -72,7 +71,7 @@ export default function Corretor() {
 
   return (
     <View className="m-0 flex-1 bg-[#F6F6F6] p-0">
-      <Container>
+      <View className="flex-1">
         <KeyboardAvoidingView
           className="flex-1"
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -81,103 +80,41 @@ export default function Corretor() {
             contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
-            <View className="mt-10 w-full flex-row items-center justify-between px-5">
-              {/* ✅ TouchableOpacity melhorado */}
-              <TouchableOpacity
-                onPress={handleGoBack}
-                style={{ padding: 8 }} // Área de toque maior
-                activeOpacity={0.7}>
+            {/* Header */}
+            <View className="mt-[80px] w-full flex-row items-center justify-between px-5">
+              <TouchableOpacity onPress={handleGoBack} style={{ padding: 8 }} activeOpacity={0.7}>
                 <Image source={setaEsquerda} className="h-6 w-6" />
               </TouchableOpacity>
 
-              <Text className="-ml-6 flex-1 text-center font-inter-bold text-xl">
+              <Text className="-ml-6 flex-1 text-center font-inter-bold text-[20px] leading-[22px]">
                 Cadastro do Corretor
               </Text>
             </View>
 
+            {/* Form Fields */}
             <View className="w-full flex-1 px-5">
-              <View className="mt-8 w-full">
-                <View>
-                  <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
-                    Nome*
-                  </Text>
-
-                  <TextInput
-                    value={formData.firstname}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, firstname: value }))
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-mulish text-black"
-                    placeholder="Digite o seu Nome"
-                    placeholderTextColor="#9CA3AF"
+              <View className="mt-6 w-full">
+                {corretorFormFields.map((field) => (
+                  <Controller
+                    key={field.name}
+                    control={control}
+                    name={field.name}
+                    rules={{ required: `${field.label} é obrigatório` }}
+                    render={({ field: { onChange, value }, fieldState: { error } }) => (
+                      <FormInput
+                        label={field.label}
+                        placeholder={field.placeholder}
+                        value={value}
+                        onChangeText={onChange}
+                        keyboardType={field.keyboardType}
+                      />
+                    )}
                   />
-                </View>
-
-                <View className="mt-4">
-                  <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
-                    Sobrenome*
-                  </Text>
-
-                  <TextInput
-                    value={formData.lastname}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, lastname: value }))
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
-                    placeholder="Digite o seu Sobrenome"
-                    placeholderTextColor="#9CA3AF"
-                  />
-                </View>
-
-                <View className="mt-4">
-                  <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
-                    Data de Nascimento*
-                  </Text>
-                  <TextInput
-                    value={String(formData.birthdate)}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, birthdate: value }))
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
-                    placeholder="DD/MM/AAAA"
-                    placeholderTextColor="#9CA3AF"
-                    keyboardType="numeric"
-                  />
-                </View>
-
-                <View className="mt-4">
-                  <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
-                    CPF*
-                  </Text>
-                  <TextInput
-                    value={String(formData.cpf)}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, cpf: value }))
-                    }
-                    keyboardType="numeric"
-                    className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
-                    placeholder="000.000.000-00"
-                    placeholderTextColor="#9CA3AF"
-                  />
-                </View>
-
-                <View className="mt-4">
-                  <Text className="mb-2 block font-mulish text-sm font-medium text-gray-700">
-                    CRECI/Estado*
-                  </Text>
-                  <TextInput
-                    value={formData.creci}
-                    onChangeText={(value) =>
-                      setFormData((prevData) => ({ ...prevData, creci: value }))
-                    }
-                    className="w-full rounded-lg border border-gray-300 bg-white p-3 font-mulish text-black"
-                    placeholder="Digite o seu CRECI"
-                    placeholderTextColor="#9CA3AF"
-                  />
-                </View>
+                ))}
               </View>
 
-              <View className="mt-8 flex-1 justify-end pb-6">
+              {/* Terms and Submit */}
+              <View className="flex-1 justify-end pb-9">
                 <View className="mb-4 flex-row items-center pr-2">
                   <TouchableOpacity
                     onPress={handleCheckboxChange}
@@ -202,7 +139,7 @@ export default function Corretor() {
                   </TouchableOpacity>
 
                   <View className="flex-1">
-                    <Text className="font-mulish text-sm leading-5 text-gray-500">
+                    <Text className="font-mulish text-[14px] leading-[16px] text-gray-500">
                       Concordo com os{' '}
                       <Text className="font-mulish text-[#1C3FB7] underline" onPress={openTerms}>
                         Termos
@@ -217,15 +154,23 @@ export default function Corretor() {
                 </View>
 
                 <TouchableOpacity
-                  className="h-[44px] w-full items-center justify-center rounded-lg bg-cor-primaria px-[28px] py-[13px]"
-                  onPress={handleSubmit}>
-                  <Text className="font-mulish text-base text-white">Cadastrar</Text>
+                  disabled={!(formIsValid && isChecked)} // 🔥 desativa quando form inválido OU checkbox desmarcada
+                  className={`h-[44px] w-full items-center justify-center rounded-lg px-[28px] py-[13px] ${
+                    formIsValid && isChecked ? 'bg-cor-primaria' : 'bg-gray-3'
+                  }`}
+                  onPress={handleSubmit(onSubmit)}>
+                  <Text
+                    className={`font-mulish text-[16px] ${
+                      formIsValid && isChecked ? 'text-white' : 'text-dark-5'
+                    }`}>
+                    Cadastrar
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
-      </Container>
+      </View>
     </View>
   );
 }

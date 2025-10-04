@@ -2,6 +2,7 @@ import * as Location from 'expo-location'; // Biblioteca para lidar com localiza
 import { useRouter } from 'expo-router'; // Navegação programática
 import { useState } from 'react';
 import { Alert, Image, Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
+
 import LocationSVG from './Icons/Location'; // Ícone SVG customizado para localização
 
 // Props esperadas pelo modal de permissão de localização
@@ -114,12 +115,8 @@ export default function LocationPermissionModal({
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
-      <View
-        className="flex-1 items-center justify-center"
-        style={{
-          backgroundColor: 'rgba(17, 25, 40, 0.5)', // fundo semi-transparente escuro
-        }}>
-        <View className="h-auto w-[306px] items-center gap-5 rounded-[26px] bg-white p-5">
+      <View className="flex-1 items-center justify-end bg-dark/50 pb-[52px]">
+        <View className="z-10 h-auto w-[306px] items-center gap-5 rounded-[26px] bg-white p-5">
           <LocationSVG /> {/* Ícone de localização */}
           <Text className="text-center font-mulish text-base text-black">
             Permitir que o ImobiFácil acesse a localização desse dispositivo?
@@ -142,7 +139,7 @@ export default function LocationPermissionModal({
               className="h-[50px] items-center justify-center rounded-t-2xl bg-[#D2E4FC] px-4 py-2"
               onPress={handleAllowWhileUsingApp}
               disabled={loading}>
-              <Text className="text-center font-mulish-bold text-xs text-[#171C23]">
+              <Text className="text-center font-mulish-bold text-[12px] leading-[16px] text-[#171C23]">
                 {loading ? 'Carregando...' : 'Durante o uso do app'}
               </Text>
             </TouchableOpacity>
@@ -150,7 +147,7 @@ export default function LocationPermissionModal({
               className="h-[50px] justify-center bg-[#D2E4FC] px-4 py-2"
               onPress={handleAllowOnce}
               disabled={loading}>
-              <Text className="text-center font-mulish-bold text-xs text-[#171C23]">
+              <Text className="text-center font-mulish-bold text-[12px] leading-[16px] text-[#171C23]">
                 Apenas dessa vez
               </Text>
             </TouchableOpacity>
@@ -158,7 +155,7 @@ export default function LocationPermissionModal({
               className="h-[50px] justify-center rounded-b-2xl bg-[#D2E4FC] px-4 py-2"
               onPress={handleDeny}
               disabled={loading}>
-              <Text className="text-center font-mulish-bold text-xs text-[#171C23]">
+              <Text className="text-center font-mulish-bold text-[12px] leading-[16px] text-[#171C23]">
                 Não permitir
               </Text>
             </TouchableOpacity>

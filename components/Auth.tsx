@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+
 import { useGoogleAuth } from '../hooks/useGoogleAuth';
 
 // Componente do ícone do Google

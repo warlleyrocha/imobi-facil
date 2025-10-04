@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity,View } from 'react-native';
 
 // Tipos do componente
 interface SlideIndicatorsProps {

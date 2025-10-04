@@ -1,13 +1,10 @@
+import { FontAwesome } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Href, useRouter } from 'expo-router';
 import { FC } from 'react';
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgProps } from 'react-native-svg';
-
-import TextSlider from '@/components/TextSlider';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import TabBar from '~/components/TabBar';
 
 import ImagePro from '@/assets/bg.png';
 import Calendar from '@/assets/icons-svg/calendar.svg';
@@ -17,6 +14,8 @@ import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
 import Users from '@/assets/icons-svg/users.svg';
+import TextSlider from '@/components/TextSlider';
+import TabBar from '~/components/TabBar';
 
 interface CardQuickAccess {
   id: string;
@@ -123,7 +122,7 @@ export default function HomeCorretor() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-neutral-100">
+    <SafeAreaView className="flex-1 bg-neutral-100 pt-[6px]">
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16 }}>
@@ -172,8 +171,8 @@ export default function HomeCorretor() {
         <View className="gap-[16px] pb-[30px] pt-[40px]">
           <View className="flex-row items-center justify-between">
             <Text className="font-mulish-bold text-[18px]">Ver Estatísticas</Text>
-            <TouchableOpacity className="flex-row gap-[10px] rounded-lg bg-cor-primaria px-[24px] py-[12px]">
-              <AntDesign name="staro" size={24} color="white" />
+            <TouchableOpacity className="flex-row gap-[10px] rounded-lg bg-cor-primaria px-[24px] py-[10px]">
+              <FontAwesome name="star-o" size={24} color="white" />
               <Text className="font-mulish-medium text-[16px] text-white">Contratar Pro</Text>
             </TouchableOpacity>
           </View>
@@ -184,7 +183,7 @@ export default function HomeCorretor() {
 
       {/*TabBar*/}
       <View
-        className="absolute bottom-7 left-4 right-4 z-50"
+        className="absolute bottom-[47px] left-4 right-4 z-50"
         style={{
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 8 },

@@ -1,15 +1,14 @@
-import { View, Text } from "react-native";
-import { Controller, Control } from "react-hook-form";
+import { Control, Controller } from 'react-hook-form';
+import { Text, View } from 'react-native';
 
-import { FormInput } from "@/components/Form/FormInput";
-import { FormSelect } from "@/components/Form/FormSelect";
-import { FormSectionTitle } from "@/components/Form/FormSectionTitle";
-import { RadioGroup } from "~/components/RadioButton/RadioGroup";
-
-import { FormData } from "@/types/formProperty";
+import { FormInput } from '@/components/Form/FormInput';
+import { FormSectionTitle } from '@/components/Form/FormSectionTitle';
+import { FormSelect } from '@/components/Form/FormSelect';
+import { FormData } from '@/types/formProperty';
+import { RadioGroup } from '~/components/RadioButton/RadioGroup';
 
 type Props = {
-  control: Control<FormData>;
+  readonly control: Control<FormData>;
 };
 
 export function BasicInfoSection({ control }: Props) {
@@ -25,20 +24,18 @@ export function BasicInfoSection({ control }: Props) {
         render={({ field: { onChange, value } }) => (
           <View className="pt-[10px]">
             <FormInput
-            label="Título do Imóvel"
-            required
-            placeholder="Ex: Casa com 3 quartos"
-            value={value}
-            onChangeText={onChange}
+              label="Título do Imóvel"
+              required
+              placeholder="Ex: Casa com 3 quartos"
+              value={value}
+              onChangeText={onChange}
             />
           </View>
         )}
       />
 
       {/* Finalidade */}
-      <Text className="font-mulish-medium pb-[10px] text-[16px] text-dark-5">
-        Finalidade*
-      </Text>
+      <Text className="pb-[10px] font-mulish-medium text-[16px] text-dark-5">Finalidade*</Text>
       <Controller
         control={control}
         name="finalidade"
@@ -46,8 +43,8 @@ export function BasicInfoSection({ control }: Props) {
         render={({ field: { onChange, value } }) => (
           <RadioGroup
             options={[
-              { label: "Venda", value: "venda" },
-              { label: "Aluguel", value: "aluguel" },
+              { label: 'Venda', value: 'venda' },
+              { label: 'Aluguel', value: 'aluguel' },
             ]}
             selectedValue={value}
             onSelect={onChange}
@@ -66,11 +63,11 @@ export function BasicInfoSection({ control }: Props) {
             label="Tipo de Imóvel"
             required
             options={[
-              { label: "Apartamento", value: "Apartamento" },
-              { label: "Casa", value: "Casa" },
-              { label: "Terreno", value: "Terreno" },
-              { label: "Studio", value: "Studio" },
-              { label: "Comercial", value: "Comercial" },
+              { label: 'Apartamento', value: 'Apartamento' },
+              { label: 'Casa', value: 'Casa' },
+              { label: 'Terreno', value: 'Terreno' },
+              { label: 'Studio', value: 'Studio' },
+              { label: 'Comercial', value: 'Comercial' },
             ]}
             value={value}
             onChange={onChange}
@@ -125,7 +122,7 @@ export function BasicInfoSection({ control }: Props) {
             multiline
             containerClassName="gap-[7px] pb-[8px]"
             maxLength={50}
-            style={{ height: 120, textAlignVertical: "top" }}
+            style={{ height: 120, textAlignVertical: 'top' }}
             value={value}
             onChangeText={onChange}
           />

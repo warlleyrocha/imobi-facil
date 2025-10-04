@@ -1,5 +1,6 @@
-import { View } from 'react-native';
 import { FC } from 'react';
+import { View } from 'react-native';
+
 import { RadioButton } from './RadioButton';
 
 interface Option {
