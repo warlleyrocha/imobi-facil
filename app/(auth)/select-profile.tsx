@@ -54,7 +54,7 @@ export default function SelectProfile() {
         {/* ImageBackground com a imagem de seleção de perfil */}
         <ImageBackground
           source={require('../../assets/select-profile.png')}
-          style={{ top: -20, width: imageWidth, height: imageWidth * IMAGE_RATIO }} // Mantém proporção da imagem
+          style={{ top: -6, width: imageWidth, height: imageWidth * IMAGE_RATIO }} // Mantém proporção da imagem
           resizeMode="contain" // Ajusta a imagem para caber dentro do espaço disponível, sem cortar
           imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
           // Bordas arredondadas somente na parte inferior da imagem
@@ -72,9 +72,9 @@ export default function SelectProfile() {
       </View>
 
       {/* Texto de instrução e título centralizados */}
-      <View className="items-center justify-center gap-6 px-4 pt-[24px]">
-        <Text className="font-inter-semibold text-[26px] text-dark">Selecione seu perfil</Text>
-        <Text className="text-center font-inter-light text-base text-dark-5">
+      <View className="mt-[34px] items-center justify-center gap-[24px] px-4">
+        <Text className="font-inter-semibold text-[25px] text-dark">Selecione seu perfil</Text>
+        <Text className="text-center font-inter-light text-[14px] leading-[18.2px] text-dark-5">
           Ao selecionar o seu perfil, você poderá visualizar as principais funcionalidades que você
           terá acesso ao concluir o cadastro.
         </Text>
