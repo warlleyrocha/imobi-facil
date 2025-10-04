@@ -41,7 +41,7 @@ const Auth = () => {
 
   const loginQATestTemporary = () => {
     // Função temporária para testes QA, simula login sem autenticação real
-    router.replace('/(auth)/corretor/home');
+    router.replace('/(auth)/feedback/success/page');
   };
 
   return (
