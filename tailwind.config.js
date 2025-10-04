@@ -53,6 +53,7 @@ module.exports = {
         'green-light': '#C2F3D6',
         'blue-dark': '#2553D0',
         'blue-light': '#DEEAFC',
+        'blue-light-5': '#E1E8FF',
         'red-dark': '#E10E0E',
         white: '#FAFAFA',
         laranja: '#F27430',

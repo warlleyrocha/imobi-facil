@@ -15,6 +15,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ArrowLeftIcon from '@/assets/icons-svg/arrow-left.svg';
+import ChatBtnIcon from '@/assets/icons-svg/chat-btn.svg';
 import CloudUploadIcon from '@/assets/icons-svg/cloud-upload.svg';
 import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
 import OptionIconBlack from '@/assets/icons-svg/option.svg';
@@ -95,7 +96,7 @@ export default function Profile() {
         <BlurView
           intensity={40}
           tint="dark"
-          className="absolute bottom-0 left-0 right-0 h-[40px] justify-center overflow-hidden"
+          className="absolute bottom-0 left-0 right-0 h-[36px] justify-center overflow-hidden"
           style={{
             borderRadius: 8,
             borderWidth: 1,
@@ -117,7 +118,7 @@ export default function Profile() {
         className="h-full w-[140px]"
         resizeMode="cover"
       />
-      <View className="absolute left-4 top-4 h-[26px] justify-center rounded-[8px] bg-black/10 px-[4px]">
+      <View className="absolute left-3 top-2 h-[26px] min-w-[50px] justify-center rounded-[8px] bg-black/10 px-[4px]">
         <Text className="text-center font-mulish-black text-[14px] leading-[18.2px] text-white">
           ID: {item.id || '123456'}
         </Text>
@@ -165,7 +166,7 @@ export default function Profile() {
           resizeMode="cover"
         />
         {/* Overlay escuro com gradiente */}
-        <View className="absolute left-4 top-4 h-[26px] justify-center rounded-[8px] bg-black/10 px-[4px]">
+        <View className="absolute left-4 top-4 h-[26px] min-w-[50px] justify-center rounded-[8px] bg-black/10 px-[4px]">
           <Text className="text-center font-mulish-black text-[14px] leading-[18.2px] text-white">
             ID: {item.id || '123456'}
           </Text>
@@ -272,7 +273,7 @@ export default function Profile() {
                 <TextInput
                   placeholder="Busque por um imóvel"
                   placeholderTextColor="#FAFAFA"
-                  className="ml-2 flex-1 font-mulish-medium text-[16px] leading-[18px]"
+                  className="ml-2 flex-1 font-mulish-medium text-[16px] leading-[18px] text-white"
                 />
               </BlurView>
             </View>
@@ -281,7 +282,7 @@ export default function Profile() {
       </ImageBackground>
 
       {/* Card de Perfil que sobrepõe */}
-      <View className="-mt-16 rounded-t-2xl bg-white px-[16px] pt-[14px]">
+      <View className="-mt-[62px] rounded-t-2xl bg-white px-[16px] pt-[14px]">
         <View className="flex-row">
           {/* Foto de Perfil */}
           <Image
@@ -303,7 +304,7 @@ export default function Profile() {
               CRECI: 12345-F/SP
             </Text>
             <TouchableOpacity className="mt-1 flex-row items-center gap-[7px]">
-              <Text className="font-mulish text-[16px] leading-[18px] text-cor-primaria">
+              <Text className="font-mulish text-[16px] leading-[18px] text-cor-primaria underline">
                 Alterar Foto
               </Text>
               <CloudUploadIcon />
@@ -312,7 +313,7 @@ export default function Profile() {
         </View>
 
         {/* Botão Editar Perfil */}
-        <View className="ml-[22px] items-center">
+        <View className="ml-[22px] mt-[8px] items-center">
           <TouchableOpacity className="w-[163px] flex-row gap-[8px] rounded-[24px] border border-cor-primaria bg-cor-primaria/10 px-[24px] py-[10px]">
             <PencilIcon />
             <Text className="font-mulish-medium text-[16px] leading-[18px] text-cor-primaria">
@@ -323,7 +324,7 @@ export default function Profile() {
       </View>
 
       {/* Tabs */}
-      <View className="flex-row px-[20px] pt-[28px]">
+      <View className="flex-row px-[20px] pt-[18px]">
         <FlatList
           data={TabItemData}
           renderItem={renderTabItem}
@@ -337,6 +338,10 @@ export default function Profile() {
 
       {/* Lista de Imóveis */}
       <View className="flex-1 px-[16px] pt-4">{renderPropertyList()}</View>
+
+      <TouchableOpacity className="bg-blue-light-5 absolute bottom-10 right-[19px] rounded-[16px] p-[8px] shadow">
+        <ChatBtnIcon />
+      </TouchableOpacity>
     </View>
   );
 }
