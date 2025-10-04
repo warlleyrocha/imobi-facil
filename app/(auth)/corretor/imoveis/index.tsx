@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Image, Modal, Pressable,ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 import NewFolderIcon from '@/assets/icons-svg/create_new_folder_black.svg';
@@ -11,6 +11,7 @@ import OptionIcon from '@/assets/icons-svg/option.svg';
 import EditIcon from '@/assets/icons-svg/pencil-alt.svg';
 import TrashIcon from '@/assets/icons-svg/trash.svg';
 import { FormDataWithId } from '@/types/formProperty';
+import { PurposeBadge } from '~/components/PurposeBadge';
 
 export default function MyProperties() {
   const router = useRouter();
@@ -164,11 +165,7 @@ export default function MyProperties() {
                   <Text className="w-[92px] font-inter text-[12px] text-dark">
                     {property.cidade}, {property.estado}
                   </Text>
-                  <View className="h-[24px] items-center justify-center rounded-full bg-green-light px-[10px]">
-                    <Text className="font-inter-medium text-[10px] text-green-dark">
-                      {property.finalidade}
-                    </Text>
-                  </View>
+                  <PurposeBadge className="" finalidade={property.finalidade} />
                 </View>
 
                 {/* Preço */}
