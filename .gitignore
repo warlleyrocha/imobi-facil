@@ -1,6 +1,7 @@
 node_modules/
 .expo/
 dist/
+
 npm-debug.*
 *.jks
 *.p8
@@ -16,6 +17,10 @@ expo-env.d.ts
 *.env
 ios
 android
+.vscode
+
+.scannerwork
+.sonarlint
 
 # macOS
 .DS_Store
