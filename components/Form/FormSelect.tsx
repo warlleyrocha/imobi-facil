@@ -1,16 +1,16 @@
-import { Text, View } from "react-native";
-import { Dropdown } from "react-native-element-dropdown";
+import { Text, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 type Option = {
-  label: string;
-  value: string;
+  readonly label: string;
+  readonly value: string;
 };
 
 type FormSelectProps = {
-  label: string;
-  required?: boolean;
-  options: Option[];
-  value: string | null;
+  readonly label: string;
+  readonly required?: boolean;
+  readonly options: Option[];
+  readonly value: string | null;
   onChange: (val: string) => void;
 };
 
@@ -18,16 +18,17 @@ export function FormSelect({ label, required, options, value, onChange }: FormSe
   return (
     <View className="gap-[10px] pb-[12px]">
       <Text className="font-mulish-medium text-[16px] text-dark-5">
-        {label}{required && "*"}
+        {label}
+        {required && '*'}
       </Text>
       <Dropdown
         style={{
           height: 50,
-          borderColor: "#DFE4EA",
+          borderColor: '#DFE4EA',
           borderWidth: 1,
           borderRadius: 8,
           paddingHorizontal: 20,
-          backgroundColor: "#FAFAFA",
+          backgroundColor: '#FAFAFA',
           paddingVertical: 12,
         }}
         data={options}

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLocalSearchParams,useRouter } from 'expo-router';
-import { useEffect, useRef,useState } from 'react';
-import { Alert, Dimensions,Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import CreateFolderIcon from '@/assets/icons-svg/create_new_folder.svg';
 import Pencil from '@/assets/icons-svg/pencil.svg';
@@ -97,9 +97,9 @@ export default function DetailsImovel() {
               onScroll={handleScroll}
               scrollEventThrottle={16}
               pagingEnabled>
-              {propertyData?.midias.map((imageUri: string, index: number) => (
+              {propertyData?.midias.map((imageUri: string) => (
                 <Image
-                  key={index}
+                  key={imageUri}
                   source={{ uri: imageUri }}
                   style={{
                     width: screenWidth * 0.85, // % da tela
@@ -144,7 +144,7 @@ export default function DetailsImovel() {
         {/*Detalhes */}
         <View className="flex border-b border-t border-gray-200">
           <View className="flex-row justify-between py-[12px]">
-            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Finalidade</Text>
+            <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Finalidade</Text>
             <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
               {propertyData?.finalidade
                 ? propertyData.finalidade.charAt(0).toUpperCase() +
@@ -154,21 +154,21 @@ export default function DetailsImovel() {
           </View>
 
           <View className="flex-row justify-between py-[12px]">
-            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Tipo</Text>
+            <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Tipo</Text>
             <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
               {propertyData?.tipo}
             </Text>
           </View>
 
           <View className="flex-row justify-between py-[12px]">
-            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Área útil</Text>
+            <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Área útil</Text>
             <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
               {propertyData?.area} m²
             </Text>
           </View>
 
           <View className="flex-row justify-between py-[12px]">
-            <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">ID</Text>
+            <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">ID</Text>
             <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
               {propertyData?.id}
             </Text>
@@ -177,7 +177,7 @@ export default function DetailsImovel() {
 
         {/*Description */}
         <View className="gap-[16px] py-[32px]">
-          <Text className="text-dark-3 font-inter-medium text-[18px] leading-[22px]">
+          <Text className="font-inter-medium text-[18px] leading-[22px] text-dark-3">
             Descrição
           </Text>
           <Text className="font-mulish text-[16px] leading-[18px] text-dark-2">
@@ -187,14 +187,14 @@ export default function DetailsImovel() {
 
         {/*Location */}
         <View className="flex py-[12px]">
-          <Text className="text-dark-3 mb-4 font-inter-medium text-[18px] leading-[22px]">
+          <Text className="mb-4 font-inter-medium text-[18px] leading-[22px] text-dark-3">
             Localização
           </Text>
 
           <View className="-mx-2 flex-row flex-wrap">
             {/* CEP */}
             <View className="w-1/2 gap-[12px] px-3 py-[12px]">
-              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">CEP</Text>
+              <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">CEP</Text>
               <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
                 {propertyData?.cep}
               </Text>
@@ -202,7 +202,7 @@ export default function DetailsImovel() {
 
             {/* Rua */}
             <View className="w-1/2 gap-[12px] px-3 py-[12px]">
-              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Rua</Text>
+              <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Rua</Text>
               <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
                 {propertyData?.rua}
               </Text>
@@ -212,7 +212,7 @@ export default function DetailsImovel() {
 
             {/* Número */}
             <View className="w-1/2 gap-[12px] px-3 py-[12px]">
-              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Número</Text>
+              <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Número</Text>
               <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
                 {propertyData?.numero}
               </Text>
@@ -220,7 +220,7 @@ export default function DetailsImovel() {
 
             {/* Bairro */}
             <View className="w-1/2 gap-[12px] px-3 py-[12px]">
-              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Bairro</Text>
+              <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Bairro</Text>
               <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
                 {propertyData?.bairro}
               </Text>
@@ -230,7 +230,7 @@ export default function DetailsImovel() {
 
             {/* Cidade */}
             <View className="w-1/2 gap-[12px] px-3 py-[12px]">
-              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Cidade</Text>
+              <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Cidade</Text>
               <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
                 {propertyData?.cidade}
               </Text>
@@ -238,7 +238,7 @@ export default function DetailsImovel() {
 
             {/* Estado */}
             <View className="w-1/2 gap-[12px] px-3 py-[12px]">
-              <Text className="text-dark-3 font-mulish text-[14px] leading-[18px]">Estado</Text>
+              <Text className="font-mulish text-[14px] leading-[18px] text-dark-3">Estado</Text>
               <Text className="font-mulish-semibold text-[14px] leading-[18px] text-dark">
                 {propertyData?.estado}
               </Text>

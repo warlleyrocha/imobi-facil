@@ -1,3 +1,4 @@
+// src/screens/HomeCorretor.tsx
 import { FontAwesome } from '@expo/vector-icons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Href, useRouter } from 'expo-router';
@@ -19,7 +20,7 @@ import TabBar from '~/components/TabBar';
 
 interface CardQuickAccess {
   id: string;
-  icon: FC<SvgProps>; // Tipo para SVG
+  icon: FC<SvgProps>;
   title: string;
   route: Href;
 }
@@ -41,13 +42,7 @@ const cardData: CardQuickAccess[] = [
 ];
 
 const statsData: StatCardData[] = [
-  {
-    id: '1',
-    icon: Eyes,
-    title: 'Visitas Agendadas',
-    value: '24',
-    bgColor: '#EDE9FE',
-  },
+  { id: '1', icon: Eyes, title: 'Visitas Agendadas', value: '24', bgColor: '#EDE9FE' },
   {
     id: '2',
     icon: Stats,
@@ -56,77 +51,64 @@ const statsData: StatCardData[] = [
     statistics: '+11.01%',
     bgColor: '#DAF8E6',
   },
-  {
-    id: '3',
-    icon: Circle,
-    title: 'Documentos pendentes',
-    value: '8',
-    bgColor: '#D0F0FD',
-  },
+  { id: '3', icon: Circle, title: 'Documentos pendentes', value: '8', bgColor: '#D0F0FD' },
 ];
 
-export default function HomeCorretor() {
+const QuickAccessCard: FC<{ item: CardQuickAccess }> = ({ item }) => {
   const router = useRouter();
+  const Icon = item.icon;
+  return (
+    <TouchableOpacity
+      className="min-h-[72px] flex-1 flex-row items-center gap-4 rounded-lg border border-cor-primaria bg-cor-primaria/10 p-4"
+      onPress={() => router.push(item.route)}>
+      <Icon width={24} height={24} />
+      <Text className="flex-1 text-center font-mulish-bold text-[16px] text-cor-primaria">
+        {item.title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
-  const renderCard = ({ item }: { item: CardQuickAccess }) => {
-    const Icon = item.icon; // Pega o componente SVG
+const StatCard: FC<{ item: StatCardData }> = ({ item }) => {
+  const Icon = item.icon;
+  const isSpecial = item.id === '2';
+  const isValueRight = item.id === '3';
 
-    return (
-      <TouchableOpacity
-        className="min-h-[72px] flex-1 flex-row items-center gap-4 rounded-lg border border-cor-primaria bg-cor-primaria/10 p-4"
-        onPress={() => router.push(item.route)}>
-        <Icon width={24} height={24} />
-        <Text className="flex-1 text-center font-mulish-bold text-[16px] text-cor-primaria">
-          {item.title}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderStatCard = ({ item }: { item: StatCardData }) => {
-    const Icon = item.icon;
-    const isSpecial = item.id === '2'; // Card com statistics
-    const isValueRight = item.id === '3'; // Card com value ao lado do ícone
-
-    return (
-      <TouchableOpacity className="flex-1 pb-[16px]">
-        <View
-          style={{ backgroundColor: item.bgColor }}
-          className="min-h-[56px] flex-row items-center justify-between rounded-2xl p-4">
-          {/* Coluna esquerda */}
-          <View className="mr-3 flex-1">
-            {/* Para todos os cards, title + value ficam lado a lado */}
-            <View className="flex-row items-center gap-2">
-              <Text className="font-mulish-semibold text-[14px]" numberOfLines={2}>
-                {item.title}
-              </Text>
-
-              {/* Só mostra value aqui se não for o item 3 */}
-              {!isValueRight && (
-                <Text className="font-inter-semibold text-[18px]">{item.value}</Text>
-              )}
-            </View>
-          </View>
-
-          {/* Coluna direita */}
+  return (
+    <TouchableOpacity className="flex-1 pb-[16px]">
+      <View
+        style={{ backgroundColor: item.bgColor }}
+        className="min-h-[56px] flex-row items-center justify-between rounded-2xl p-4">
+        <View className="mr-3 flex-1">
           <View className="flex-row items-center gap-2">
-            {isSpecial && item.statistics && (
-              <Text className="font-inter-medium text-[12px]">{item.statistics}</Text>
-            )}
-            {isValueRight && <Text className="font-inter-semibold text-[18px]">{item.value}</Text>}
-            <Icon width={isSpecial ? 16 : 24} height={isSpecial ? 16 : 24} />
+            <Text className="font-mulish-semibold text-[14px]" numberOfLines={2}>
+              {item.title}
+            </Text>
+            {!isValueRight && <Text className="font-inter-semibold text-[18px]">{item.value}</Text>}
           </View>
         </View>
-      </TouchableOpacity>
-    );
-  };
 
+        <View className="flex-row items-center gap-2">
+          {isSpecial && item.statistics && (
+            <Text className="font-inter-medium text-[12px]">{item.statistics}</Text>
+          )}
+          {isValueRight && <Text className="font-inter-semibold text-[18px]">{item.value}</Text>}
+          <Icon width={isSpecial ? 16 : 24} height={isSpecial ? 16 : 24} />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+/* ----------------------------- MAIN PAGE ----------------------------- */
+
+export default function HomeCorretor() {
   return (
     <SafeAreaView className="flex-1 bg-neutral-100 pt-[6px]">
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 16 }}>
-        {/*Header*/}
+        {/* Header */}
         <View className="relative top-9 flex-row items-center justify-center ">
           <Text className="font-mulish-bold text-[20px]">ImobiFácil</Text>
           <View className="absolute right-4">
@@ -134,28 +116,28 @@ export default function HomeCorretor() {
           </View>
         </View>
 
-        {/*Acesso rápido*/}
+        {/* Acesso rápido */}
         <View className="pb-[10px] pt-[62px]">
           <Text className="pb-[16px] font-mulish-bold text-[20px]">Bem-Vindo, Corretor</Text>
           <FlatList
             data={cardData}
-            renderItem={renderCard}
+            renderItem={({ item }) => <QuickAccessCard item={item} />}
             keyExtractor={(item) => item.id}
             scrollEnabled={false}
             numColumns={2}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-            columnWrapperStyle={{ gap: 21 }} // Espaçamento horizontal entre colunas
+            columnWrapperStyle={{ gap: 21 }}
             contentContainerStyle={{ paddingBottom: 20 }}
           />
         </View>
 
-        {/*Resumo Semanal*/}
+        {/* Resumo Semanal */}
         <View className="gap-[16px] ">
-          <Text className=" font-mulish-bold text-[18px]">Resumo Semanal</Text>
+          <Text className="font-mulish-bold text-[18px]">Resumo Semanal</Text>
           <FlatList
             data={statsData}
-            renderItem={renderStatCard}
+            renderItem={({ item }) => <StatCard item={item} />}
             keyExtractor={(item) => item.id}
             scrollEnabled={false}
             numColumns={1}
@@ -164,10 +146,9 @@ export default function HomeCorretor() {
           />
         </View>
 
-        {/*Slide animado*/}
         <TextSlider />
 
-        {/*Contratar PRO*/}
+        {/* Contratar PRO */}
         <View className="gap-[16px] pb-[30px] pt-[40px]">
           <View className="flex-row items-center justify-between">
             <Text className="font-mulish-bold text-[18px]">Ver Estatísticas</Text>
@@ -176,12 +157,11 @@ export default function HomeCorretor() {
               <Text className="font-mulish-medium text-[16px] text-white">Contratar Pro</Text>
             </TouchableOpacity>
           </View>
-
           <Image source={ImagePro} />
         </View>
       </ScrollView>
 
-      {/*TabBar*/}
+      {/* TabBar */}
       <View
         className="absolute bottom-[47px] left-4 right-4 z-50"
         style={{
