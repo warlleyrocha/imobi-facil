@@ -88,7 +88,7 @@ export default function Profile() {
     <TouchableOpacity className="w-[108px]">
       <View className="relative w-full">
         <Image
-          source={{ uri: item.midias?.[0] || 'https://via.placeholder.com/100' }}
+          source={{ uri: item.midias?.[0] ?? 'https://via.placeholder.com/100' }}
           className="h-[110px] w-full rounded-lg"
           resizeMode="cover"
         />
@@ -103,7 +103,7 @@ export default function Profile() {
             borderColor: 'rgba(255, 255, 255, 0.18)',
           }}>
           <Text className="text-center font-mulish-black text-[14px] leading-[18.2px] text-white">
-            ID: {item.id || '123456'}
+            ID: {item.id ?? '123456'}
           </Text>
         </BlurView>
       </View>
@@ -114,13 +114,13 @@ export default function Profile() {
     <TouchableOpacity className="mb-4 h-[140px] flex-row overflow-hidden rounded-xl border border-gray-200 bg-white">
       {/* Imagem à esquerda */}
       <Image
-        source={{ uri: item.midias?.[0] || 'https://via.placeholder.com/300' }}
+        source={{ uri: item.midias?.[0] ?? 'https://via.placeholder.com/300' }}
         className="h-full w-[140px]"
         resizeMode="cover"
       />
       <View className="absolute left-3 top-2 h-[26px] min-w-[50px] justify-center rounded-[8px] bg-black/10 px-[4px]">
         <Text className="text-center font-mulish-black text-[14px] leading-[18.2px] text-white">
-          ID: {item.id || '123456'}
+          ID: {item.id ?? '123456'}
         </Text>
       </View>
 
@@ -128,7 +128,7 @@ export default function Profile() {
       <View className="flex-1 justify-between p-[12px]">
         <View className="flex-row justify-between">
           <Text className="w-[160px] font-inter-semibold text-[12px] text-dark" numberOfLines={2}>
-            {item.titulo || 'Sem título'}
+            {item.titulo ?? 'Sem título'}
           </Text>
           <OptionIconBlack />
         </View>
@@ -161,14 +161,14 @@ export default function Profile() {
     <TouchableOpacity className="mb-4 h-[354px] w-[232px] overflow-hidden rounded-[8px] border border-stroke bg-white shadow">
       <View>
         <Image
-          source={{ uri: item.midias?.[0] || 'https://via.placeholder.com/400' }}
+          source={{ uri: item.midias?.[0] ?? 'https://via.placeholder.com/400' }}
           className="h-[189.5px] w-full"
           resizeMode="cover"
         />
         {/* Overlay escuro com gradiente */}
         <View className="absolute left-4 top-4 h-[26px] min-w-[50px] justify-center rounded-[8px] bg-black/10 px-[4px]">
           <Text className="text-center font-mulish-black text-[14px] leading-[18.2px] text-white">
-            ID: {item.id || '123456'}
+            ID: {item.id ?? '123456'}
           </Text>
         </View>
       </View>
@@ -176,7 +176,7 @@ export default function Profile() {
       <View className="px-[12px] pt-[10px]">
         <View className="flex-row justify-between">
           <Text className="w-[180px] font-inter-semibold text-[12px] text-dark" numberOfLines={2}>
-            {item.titulo || 'Sem título'}
+            {item.titulo ?? 'Sem título'}
           </Text>
           <OptionIconBlack />
         </View>
@@ -339,7 +339,7 @@ export default function Profile() {
       {/* Lista de Imóveis */}
       <View className="flex-1 px-[16px] pt-4">{renderPropertyList()}</View>
 
-      <TouchableOpacity className="bg-blue-light-5 absolute bottom-10 right-[19px] rounded-[16px] p-[8px] shadow">
+      <TouchableOpacity className="absolute bottom-10 right-[19px] rounded-[16px] bg-blue-light-5 p-[8px] shadow">
         <ChatBtnIcon />
       </TouchableOpacity>
     </View>

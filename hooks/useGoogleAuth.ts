@@ -1,7 +1,7 @@
 import * as AuthSession from 'expo-auth-session'; // Utilitários para auth session do Expo
 import * as Google from 'expo-auth-session/providers/google'; // Provider de autenticação Google do Expo
 import * as WebBrowser from 'expo-web-browser'; // Para lidar com fluxo de autenticação via navegador
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAuth } from '../contexts/authContext'; // Contexto de autenticação da aplicação
 import { decodeGoogleIdToken, fetchUserInfo, isTokenValid } from '../utils/tokenUtils';
@@ -10,7 +10,7 @@ import { decodeGoogleIdToken, fetchUserInfo, isTokenValid } from '../utils/token
 // Completa sessão de autenticação, especialmente para web (fix de problema comum)
 WebBrowser.maybeCompleteAuthSession();
 
-const CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID || 'SEU_CLIENT_ID_AQUI';
+const CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? 'SEU_CLIENT_ID_AQUI';
 // Client ID do Google OAuth, idealmente configurado via variável de ambiente
 
 export const useGoogleAuth = () => {
@@ -69,7 +69,7 @@ export const useGoogleAuth = () => {
       } else if (response?.type === 'error') {
         // Se houve erro na autenticação, atualiza o estado de erro
         console.log('Google Auth Error:', response.error);
-        setError(response.error?.message || 'Erro desconhecido');
+        setError(response.error?.message ?? 'Erro desconhecido');
       }
     }
 
