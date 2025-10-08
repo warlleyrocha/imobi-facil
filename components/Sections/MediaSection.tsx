@@ -1,4 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
+import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
@@ -42,8 +43,14 @@ export function MediaSection({ control }: Props) {
     (current: string[], onChange: (val: string[]) => void) => {
       if (current.length >= 10) return;
       Alert.alert('Adicionar mídia', 'Escolha uma opção', [
-        { text: '📷 Tirar foto', onPress: () => handleTakePhoto(current, onChange) },
-        { text: '🖼️ Escolher da galeria', onPress: () => handlePickImage(current, onChange) },
+        {
+          text: '📷 Tirar foto',
+          onPress: () => void handleTakePhoto(current, onChange),
+        },
+        {
+          text: '🖼️ Escolher da galeria',
+          onPress: () => void handlePickImage(current, onChange),
+        },
         { text: 'Cancelar', style: 'cancel' },
       ]);
     },
@@ -96,7 +103,7 @@ export function MediaSection({ control }: Props) {
                         </TouchableOpacity>
                       </View>
                     ))
-                  : Array.from({ length: 3 }).map((_, i) => <AddImage key={`placeholder-${i}`} />)}
+                  : Array.from({ length: 3 }, () => nanoid()).map((id) => <AddImage key={id} />)}
               </View>
 
               <View className="w-full items-end px-[8px] pb-[12px] pt-[10px]">

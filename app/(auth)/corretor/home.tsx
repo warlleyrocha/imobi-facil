@@ -126,8 +126,7 @@ export default function HomeCorretor() {
             scrollEnabled={false}
             numColumns={2}
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-            columnWrapperStyle={{ gap: 21 }}
+            columnWrapperStyle={{ gap: 21, marginBottom: 20 }}
             contentContainerStyle={{ paddingBottom: 20 }}
           />
         </View>

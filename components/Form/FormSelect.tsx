@@ -11,7 +11,7 @@ type FormSelectProps = {
   readonly required?: boolean;
   readonly options: Option[];
   readonly value: string | null;
-  onChange: (val: string) => void;
+  readonly onChange: (val: string) => void;
 };
 
 export function FormSelect({ label, required, options, value, onChange }: FormSelectProps) {
