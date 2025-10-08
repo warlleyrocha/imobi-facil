@@ -1,9 +1,9 @@
-import { useRouter } from 'expo-router';
-import { useEffect } from 'react';
+//import { useRouter } from 'expo-router';
+//import { useEffect } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-import { useGoogleAuth } from '../hooks/useGoogleAuth';
+import { useGoogleAuth } from '@/hooks/useGoogleAuth';
 
 // Componente do ícone do Google
 const GoogleIcon = ({ size = 20 }) => (
@@ -28,30 +28,34 @@ const GoogleIcon = ({ size = 20 }) => (
 );
 
 const Auth = () => {
-  const router = useRouter();
-  const { response, isLoading, error } = useGoogleAuth(); // após integração com a api, retornar *promptAsync*, para usar no onPress
+  //const router = useRouter();
+  const { getGoogleAuthUrl, loading, error } = useGoogleAuth();
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (response?.type === 'success') {
       router.replace('/(auth)/feedback/success/page');
     } else if (response?.type === 'error') {
       router.push('/error/page');
     }
-  }, [response, router]);
+  }, [response, router]);*/
 
-  const loginQATestTemporary = () => {
-    // Função temporária para testes QA, simula login sem autenticação real
-    router.replace('/(auth)/feedback/success/page');
+  const handleGoogleLogin = async () => {
+    const result = await getGoogleAuthUrl();
+
+    if (result) {
+      console.log('URL do Google:', result.url);
+      // Fazer algo com a URL
+    }
   };
 
   return (
     <View>
       <TouchableOpacity
-        disabled={isLoading}
-        onPress={() => loginQATestTemporary()} //mudar para promptAsync()
+        disabled={loading}
+        onPress={handleGoogleLogin} //mudar para promptAsync()
         className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
-        {isLoading ? (
+        {loading ? (
           <ActivityIndicator size="small" color="#111928" />
         ) : (
           <Text className="font-inter-light text-[#111928]">Continue com o Google</Text>

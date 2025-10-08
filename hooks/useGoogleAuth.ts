@@ -1,81 +1,73 @@
-import * as AuthSession from 'expo-auth-session'; // Utilitários para auth session do Expo
-import * as Google from 'expo-auth-session/providers/google'; // Provider de autenticação Google do Expo
-import * as WebBrowser from 'expo-web-browser'; // Para lidar com fluxo de autenticação via navegador
-import { useEffect, useState } from 'react';
+// src/hooks/useGoogleAuth.ts
+import { useState } from 'react';
 
-import { useAuth } from '../contexts/authContext'; // Contexto de autenticação da aplicação
-import { decodeGoogleIdToken, fetchUserInfo, isTokenValid } from '../utils/tokenUtils';
-// Funções utilitárias para lidar com token e dados do usuário
-
-// Completa sessão de autenticação, especialmente para web (fix de problema comum)
-WebBrowser.maybeCompleteAuthSession();
-
-const CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? 'SEU_CLIENT_ID_AQUI';
-// Client ID do Google OAuth, idealmente configurado via variável de ambiente
+import { api } from '@/services/api';
 
 export const useGoogleAuth = () => {
-  const { login } = useAuth(); // Função de login do contexto para armazenar usuário
-  const redirectUri = AuthSession.makeRedirectUri(); // URI de redirecionamento para o fluxo OAuth
-
-  // Configura o request de autenticação Google com clientId, redirectUri e escopos
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: CLIENT_ID,
-    redirectUri,
-    scopes: ['profile', 'email'],
-  });
-
-  // Estados locais para loading e erro
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Efeito que reage a mudanças na resposta da autenticação
-  useEffect(() => {
-    async function handleAuth() {
-      if (response?.type === 'success') {
-        // Se o login foi um sucesso, pega dados do token e do usuário
-        const authentication = response?.authentication;
-        const idToken = authentication?.idToken;
+  const getGoogleAuthUrl = async () => {
+    setLoading(true);
+    setError(null);
 
-        if (!authentication?.accessToken) return; // Se não tem accessToken, sai
+    console.log('========== INICIANDO REQUISIÇÃO ==========');
+    console.log('API URL:', process.env.EXPO_PUBLIC_API_URL);
+    console.log('Endpoint completo:', `${process.env.EXPO_PUBLIC_API_URL}/auth/google`);
 
-        setIsLoading(true);
-        setError(null);
+    try {
+      const response = await api.get('/auth/google', {
+        maxRedirects: 0,
+        headers: {
+          Accept: 'application/json',
+        },
+      });
 
-        try {
-          // Valida o ID Token (JWT) se disponível, para evitar token expirado
-          if (idToken) {
-            const decodedToken = decodeGoogleIdToken(idToken);
-            if (!isTokenValid(decodedToken)) {
-              throw new Error('Token expirado');
-            }
-          }
+      console.log('========== RESPOSTA (SUCCESS) ==========');
+      console.log('Status:', response.status);
+      console.log('Status Text:', response.statusText);
+      console.log('Headers:', JSON.stringify(response.headers, null, 2));
+      console.log('Data type:', typeof response.data);
+      console.log('Data length:', typeof response.data === 'string' ? response.data.length : 'N/A');
+      console.log(
+        'Data (primeiros 500 chars):',
+        typeof response.data === 'string'
+          ? response.data.substring(0, 500)
+          : JSON.stringify(response.data, null, 2)
+      );
 
-          // Busca dados do usuário usando o accessToken
-          const userData = await fetchUserInfo(authentication.accessToken);
+      return response.data;
+    } catch (err: any) {
+      console.log('========== RESPOSTA (ERROR/CATCH) ==========');
+      console.log('Erro message:', err.message);
+      console.log('Erro code:', err.code);
+      console.log('Response exists:', !!err.response);
 
-          // Faz login local salvando dados no contexto (inclui accessToken)
-          await login({
-            ...userData,
-            accessToken: authentication.accessToken,
-          });
-
-          // A navegação após login deve ser feita fora desse hook
-        } catch (err) {
-          console.error('Erro ao autenticar usuário:', err);
-          setError(String(err));
-        } finally {
-          setIsLoading(false);
-        }
-      } else if (response?.type === 'error') {
-        // Se houve erro na autenticação, atualiza o estado de erro
-        console.log('Google Auth Error:', response.error);
-        setError(response.error?.message ?? 'Erro desconhecido');
+      if (err.response) {
+        console.log('Response status:', err.response.status);
+        console.log('Response statusText:', err.response.statusText);
+        console.log('Response headers:', JSON.stringify(err.response.headers, null, 2));
+        console.log('Response data type:', typeof err.response.data);
+        console.log(
+          'Response data:',
+          typeof err.response.data === 'string'
+            ? err.response.data.substring(0, 500)
+            : JSON.stringify(err.response.data, null, 2)
+        );
       }
+
+      console.log('========== FIM ==========');
+
+      setError('Erro ao obter URL de autenticação');
+      return null;
+    } finally {
+      setLoading(false);
     }
+  };
 
-    handleAuth();
-  }, [response, login]);
-
-  // Retorna o objeto para controlar o login, incluindo o prompt para iniciar o fluxo
-  return { request, response, promptAsync, isLoading, error };
+  return {
+    getGoogleAuthUrl,
+    loading,
+    error,
+  };
 };
