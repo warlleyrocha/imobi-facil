@@ -31,14 +31,6 @@ const Auth = () => {
   //const router = useRouter();
   const { getGoogleAuthUrl, loading, error } = useGoogleAuth();
 
-  /*useEffect(() => {
-    if (response?.type === 'success') {
-      router.replace('/(auth)/feedback/success/page');
-    } else if (response?.type === 'error') {
-      router.push('/error/page');
-    }
-  }, [response, router]);*/
-
   const handleGoogleLogin = async () => {
     const result = await getGoogleAuthUrl();
 
@@ -48,11 +40,18 @@ const Auth = () => {
     }
   };
 
+  /*useEffect(() => {
+    if (response?.type === 'success') {
+      router.replace('/(auth)/feedback/success/page');
+    } else if (response?.type === 'error') {
+      router.push('/error/page');
+    }
+  }, [response, router]);*/
   return (
     <View>
       <TouchableOpacity
         disabled={loading}
-        onPress={handleGoogleLogin} //mudar para promptAsync()
+        onPress={handleGoogleLogin}
         className="h-[50px] w-[345px] flex-row items-center justify-center gap-[19px] rounded-[5px] bg-[#E6E6E6]">
         <GoogleIcon size={20} />
         {loading ? (

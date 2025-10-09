@@ -12,29 +12,12 @@ export const useGoogleAuth = () => {
     setError(null);
 
     console.log('========== INICIANDO REQUISIÇÃO ==========');
-    console.log('API URL:', process.env.EXPO_PUBLIC_API_URL);
-    console.log('Endpoint completo:', `${process.env.EXPO_PUBLIC_API_URL}/auth/google`);
 
     try {
-      const response = await api.get('/auth/google', {
-        maxRedirects: 0,
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      const response = await api.get('/auth/google', {});
 
       console.log('========== RESPOSTA (SUCCESS) ==========');
-      console.log('Status:', response.status);
-      console.log('Status Text:', response.statusText);
-      console.log('Headers:', JSON.stringify(response.headers, null, 2));
-      console.log('Data type:', typeof response.data);
-      console.log('Data length:', typeof response.data === 'string' ? response.data.length : 'N/A');
-      console.log(
-        'Data (primeiros 500 chars):',
-        typeof response.data === 'string'
-          ? response.data.substring(0, 500)
-          : JSON.stringify(response.data, null, 2)
-      );
+      console.log('Status:', response);
 
       return response.data;
     } catch (err: any) {
