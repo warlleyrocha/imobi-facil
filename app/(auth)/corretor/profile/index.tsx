@@ -251,6 +251,9 @@ export default function Profile() {
     );
   };
 
+  const handleEdit = () => {
+    router.push('/(auth)/corretor/profile/editProfile');
+  };
   return (
     <View className="flex-1">
       <StatusBar style="light" translucent backgroundColor="transparent" />
@@ -314,7 +317,9 @@ export default function Profile() {
 
         {/* Botão Editar Perfil */}
         <View className="ml-[22px] mt-[8px] items-center">
-          <TouchableOpacity className="w-[163px] flex-row gap-[8px] rounded-[24px] border border-cor-primaria bg-cor-primaria/10 px-[24px] py-[10px]">
+          <TouchableOpacity
+            className="w-[163px] flex-row gap-[8px] rounded-[24px] border border-cor-primaria bg-cor-primaria/10 px-[24px] py-[10px]"
+            onPress={handleEdit}>
             <PencilIcon />
             <Text className="font-mulish-medium text-[16px] leading-[18px] text-cor-primaria">
               Editar Perfil
