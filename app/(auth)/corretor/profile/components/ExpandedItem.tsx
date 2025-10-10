@@ -16,6 +16,7 @@ interface Props {
   onAddToFolder: (id: string) => void;
   onDelete: (id: string) => void;
 }
+
 export const ExpandedItem = ({
   item,
   menuVisible,
@@ -34,7 +35,6 @@ export const ExpandedItem = ({
           className="h-[189.5px] w-full"
           resizeMode="cover"
         />
-        {/* Overlay escuro com gradiente */}
         <View className="absolute left-4 top-4 h-[26px] min-w-[50px] justify-center rounded-[8px] bg-black/10 px-[4px]">
           <Text className="text-center font-mulish-black text-[14px] leading-[18.2px] text-white">
             ID: {item.id ?? '123456'}
@@ -49,24 +49,17 @@ export const ExpandedItem = ({
           </Text>
 
           <TouchableOpacity
-            onPress={(e) => {
-              e.stopPropagation();
-            }}
-            onPressIn={(event) => {
+            onPress={(event) => {
+              event.stopPropagation();
               const target = event.currentTarget as any;
-              target.measure(
-                (
-                  x: number,
-                  y: number,
-                  width: number,
-                  height: number,
-                  pageX: number,
-                  pageY: number
-                ) => {
-                  setMenuPosition({ x: pageX, y: pageY + height });
-                  setMenuVisible(item.id);
-                }
-              );
+              // measureInWindow funciona melhor com scroll
+              target.measureInWindow((x: number, y: number, width: number, height: number) => {
+                setMenuPosition({
+                  x: x + width, // Posição X do botão + largura
+                  y: y + height + 10, // Posição Y do botão + altura
+                });
+                setMenuVisible(item.id);
+              });
             }}>
             <OptionIconBlack />
           </TouchableOpacity>
@@ -91,11 +84,12 @@ export const ExpandedItem = ({
         </View>
       </View>
     </TouchableOpacity>
-    {/* Menu Options Modal */}
+
     <SuspenseMenuModal
       visible={menuVisible === item.id}
       onClose={() => setMenuVisible(null)}
       position={menuPosition}
+      alignRight={true}
       onEdit={() => onEdit(item.id)}
       onAddToFolder={() => onAddToFolder(item.id)}
       onDelete={() => onDelete(item.id)}

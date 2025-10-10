@@ -11,6 +11,8 @@ interface SuspenseMenuModalProps {
   onEdit: () => void;
   onAddToFolder: () => void;
   onDelete: () => void;
+  // Nova prop para alinhar à direita ou usar posição customizada
+  alignRight?: boolean;
 }
 
 export function SuspenseMenuModal({
@@ -20,17 +22,26 @@ export function SuspenseMenuModal({
   onEdit,
   onAddToFolder,
   onDelete,
+  alignRight = false,
 }: SuspenseMenuModalProps) {
+  // Calcula a posição considerando a largura do menu (200px)
+  const menuWidth = 200;
+  const menuStyle = alignRight
+    ? {
+        position: 'absolute' as const,
+        left: position.x - menuWidth, // Alinha à direita do botão
+        top: position.y,
+      }
+    : {
+        position: 'absolute' as const,
+        right: 28,
+        top: position.y,
+      };
+
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <Pressable className="flex-1 bg-black/30" onPress={onClose}>
-        <View
-          style={{
-            position: 'absolute',
-            right: 28,
-            top: position.y,
-          }}
-          className="w-[200px] rounded-[8px] bg-white shadow-2xl">
+        <View style={menuStyle} className="w-[200px] rounded-[8px] bg-white shadow-2xl">
           {/* Editar Imóvel */}
           <TouchableOpacity
             onPress={() => {

@@ -48,12 +48,21 @@ export const MediumItem = ({
           </Text>
 
           <TouchableOpacity
-            onPressIn={(event) => {
+            onPress={(event) => {
               const target = event.currentTarget as any;
-              target.measure((h: number, pageX: number, pageY: number) => {
-                setMenuPosition({ x: pageX, y: pageY + h });
-                setMenuVisible(item.id);
-              });
+              target.measure(
+                (
+                  x: number,
+                  y: number,
+                  width: number,
+                  height: number,
+                  pageX: number,
+                  pageY: number
+                ) => {
+                  setMenuPosition({ x: pageX, y: pageY + height });
+                  setMenuVisible(item.id);
+                }
+              );
             }}>
             <OptionIconBlack />
           </TouchableOpacity>
