@@ -1,4 +1,5 @@
 import 'global.css'; // Importa estilos globais
+import 'react-native-get-random-values';
 
 import {
   Inter_300Light,
