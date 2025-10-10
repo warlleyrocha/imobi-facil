@@ -23,6 +23,7 @@ import OptionIcon from '@/assets/icons-svg/option-primary-color.svg';
 import PencilIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
 import SearchIcon from '@/assets/icons-svg/search-alt.svg';
 import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '@/components/Icons/TabGroup';
+import { PhotoUploadModal } from '@/components/PhotoUploadModal';
 import { PurposeBadge } from '@/components/PurposeBadge';
 import { FormDataWithId } from '@/types/formProperty';
 
@@ -43,6 +44,8 @@ export default function Profile() {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState('1');
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState('https://i.pravatar.cc/150?img=12');
 
   // Carregar imóveis do AsyncStorage
   const loadProperties = async () => {
@@ -254,6 +257,18 @@ export default function Profile() {
   const handleEdit = () => {
     router.push('/(auth)/corretor/profile/editProfile');
   };
+
+  const handlePhotoSelected = async (uri: string) => {
+    if (uri === '') {
+      // Usuário excluiu a foto, usar imagem padrão
+      setProfilePhoto('https://i.pravatar.cc/150?img=12');
+    } else {
+      setProfilePhoto(uri);
+    }
+    // Aqui você pode salvar no AsyncStorage ou fazer upload para API
+    // await AsyncStorage.setItem('profilePhoto', uri);
+    // ou await api.uploadProfilePhoto(uri);
+  };
   return (
     <View className="flex-1">
       <StatusBar style="light" translucent backgroundColor="transparent" />
@@ -288,10 +303,7 @@ export default function Profile() {
       <View className="-mt-[62px] rounded-t-2xl bg-white px-[16px] pt-[14px]">
         <View className="flex-row">
           {/* Foto de Perfil */}
-          <Image
-            source={{ uri: 'https://i.pravatar.cc/150?img=12' }}
-            className="h-[114px] w-[115px] rounded-full"
-          />
+          <Image source={{ uri: profilePhoto }} className="h-[114px] w-[115px] rounded-full" />
 
           {/* Informações do Perfil */}
           <View className="ml-4 flex-1 pt-[14px]">
@@ -306,7 +318,9 @@ export default function Profile() {
             <Text className="font-mulish text-[16px] leading-[18px] text-dark-2">
               CRECI: 12345-F/SP
             </Text>
-            <TouchableOpacity className="mt-1 flex-row items-center gap-[7px]">
+            <TouchableOpacity
+              onPress={() => setShowPhotoModal(true)}
+              className="mt-1 flex-row items-center gap-[7px]">
               <Text className="font-mulish text-[16px] leading-[18px] text-cor-primaria underline">
                 Alterar Foto
               </Text>
@@ -347,6 +361,13 @@ export default function Profile() {
       <TouchableOpacity className="absolute bottom-10 right-[19px] rounded-[16px] bg-blue-light-5 p-[8px] shadow">
         <ChatBtnIcon />
       </TouchableOpacity>
+
+      <PhotoUploadModal
+        visible={showPhotoModal}
+        onClose={() => setShowPhotoModal(false)}
+        onPhotoSelected={handlePhotoSelected}
+        currentPhotoUri={profilePhoto}
+      />
     </View>
   );
 }
