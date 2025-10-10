@@ -23,6 +23,7 @@ import OptionIcon from '@/assets/icons-svg/option-primary-color.svg';
 import PencilIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
 import SearchIcon from '@/assets/icons-svg/search-alt.svg';
 import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '@/components/Icons/TabGroup';
+import { MyAccountModal } from '@/components/MyAccountModal';
 import { PhotoUploadModal } from '@/components/PhotoUploadModal';
 import { PurposeBadge } from '@/components/PurposeBadge';
 import { FormDataWithId } from '@/types/formProperty';
@@ -45,6 +46,7 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState('1');
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [showMyAccountModal, setShowMyAccountModal] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('https://i.pravatar.cc/150?img=12');
 
   // Carregar imóveis do AsyncStorage
@@ -311,19 +313,25 @@ export default function Profile() {
               <Text className="font-inter-bold text-[20px] leading-[22px] text-dark">
                 Carlos Souza
               </Text>
-              <TouchableOpacity className="rounded-full border-[1.2px] border-cor-primaria px-[6px] py-[10px]">
+
+              <TouchableOpacity
+                className="rounded-full border-[1.2px] border-cor-primaria px-[6px] py-[10px]"
+                onPress={() => setShowMyAccountModal(true)}>
                 <OptionIcon />
               </TouchableOpacity>
             </View>
+
             <Text className="font-mulish text-[16px] leading-[18px] text-dark-2">
               CRECI: 12345-F/SP
             </Text>
+
             <TouchableOpacity
               onPress={() => setShowPhotoModal(true)}
               className="mt-1 flex-row items-center gap-[7px]">
               <Text className="font-mulish text-[16px] leading-[18px] text-cor-primaria underline">
                 Alterar Foto
               </Text>
+
               <CloudUploadIcon />
             </TouchableOpacity>
           </View>
@@ -358,7 +366,9 @@ export default function Profile() {
       {/* Lista de Imóveis */}
       <View className="flex-1 px-[16px] pt-4">{renderPropertyList()}</View>
 
-      <TouchableOpacity className="absolute bottom-10 right-[19px] rounded-[16px] bg-blue-light-5 p-[8px] shadow">
+      <TouchableOpacity
+        className="absolute bottom-10 right-[19px] rounded-[16px] bg-blue-light-5 p-[8px] shadow"
+        onPress={() => console.log('Clicado')}>
         <ChatBtnIcon />
       </TouchableOpacity>
 
@@ -368,6 +378,8 @@ export default function Profile() {
         onPhotoSelected={handlePhotoSelected}
         currentPhotoUri={profilePhoto}
       />
+
+      <MyAccountModal visible={showMyAccountModal} onClose={() => setShowMyAccountModal(false)} />
     </View>
   );
 }
