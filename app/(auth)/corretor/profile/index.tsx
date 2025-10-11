@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Image,
@@ -21,26 +21,38 @@ import OptionIcon from '@/assets/icons-svg/option-primary-color.svg';
 import PencilIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
 import SearchIcon from '@/assets/icons-svg/search-alt.svg';
 import { DeleteConfirmModal } from '@/components/DeleteConfirmModal';
+import Header from '@/components/Header';
 import { MyAccountModal } from '@/components/MyAccountModal';
 import { PhotoUploadModal } from '@/components/PhotoUploadModal';
+import { PropertyList } from '@/components/Profile/PropertyList';
+import { TabList } from '@/components/Profile/TabList';
+import { usePropertyManagement } from '@/hooks/usePropertyManagement';
 import { FormDataWithId } from '@/types/formProperty';
-import Header from '~/components/Header';
-import { PropertyList } from '~/components/Profile/PropertyList';
-import { TabList } from '~/components/Profile/TabList';
 
 export default function Profile() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+
   const [activeTab, setActiveTab] = useState('1');
-  const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [showMyAccountModal, setShowMyAccountModal] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('https://i.pravatar.cc/150?img=12');
-  const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
-  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
-  const [menuVisible, setMenuVisible] = useState<string | null>(null);
-  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const [isViewingBio, setIsViewingBio] = useState(false);
+
+  const {
+    propertyList,
+    setPropertyList,
+    menuVisible,
+    setMenuVisible,
+    menuPosition,
+    setMenuPosition,
+    deleteConfirmVisible,
+    handleEditProperty,
+    handleAddToFolder,
+    handleDeleteClick,
+    confirmDelete,
+    cancelDelete,
+  } = usePropertyManagement();
 
   // Dados da bio (você pode buscar do AsyncStorage ou de uma API)
   const [bioData, setBioData] = useState({
@@ -54,66 +66,28 @@ export default function Profile() {
   const bioAnimation = useRef(new Animated.Value(0)).current;
 
   // Carregar imóveis do AsyncStorage
-  const loadProperties = async () => {
-    try {
-      const savedData = await AsyncStorage.getItem('formPropertyData');
-      if (savedData) {
-        let parsedList: FormDataWithId[] = JSON.parse(savedData);
-        if (!Array.isArray(parsedList)) parsedList = [parsedList];
-        setPropertyList(parsedList);
-      } else {
-        setPropertyList([]);
-      }
-    } catch (error) {
-      console.error('Erro ao carregar imóveis:', error);
-    }
-  };
-
   useEffect(() => {
+    const loadProperties = async () => {
+      try {
+        const savedData = await AsyncStorage.getItem('formPropertyData');
+        console.log('Carregando imóveis na tela PERFIL', savedData);
+
+        if (savedData) {
+          let parsedList: FormDataWithId[] = JSON.parse(savedData);
+          if (!Array.isArray(parsedList)) parsedList = [parsedList];
+          setPropertyList(parsedList);
+        } else {
+          setPropertyList([]);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar imóveis:', error);
+      }
+    };
     loadProperties();
-  }, []);
-
-  const handleDeleteClick = (propertyId: string) => {
-    setPropertyToDelete(propertyId);
-    setDeleteConfirmVisible(true);
-  };
-
-  const confirmDelete = async () => {
-    if (!propertyToDelete) return;
-
-    try {
-      const updatedList = propertyList.filter((p) => p.id !== propertyToDelete);
-      await AsyncStorage.setItem('formPropertyData', JSON.stringify(updatedList));
-      setPropertyList(updatedList);
-      console.log('Imóvel deletado:', propertyToDelete);
-      setDeleteConfirmVisible(false);
-      setPropertyToDelete(null);
-    } catch (error) {
-      console.error('Erro ao deletar imóvel:', error);
-    }
-  };
-
-  const cancelDelete = () => {
-    setDeleteConfirmVisible(false);
-    setPropertyToDelete(null);
-  };
+  }, [setPropertyList]);
 
   const handleEditProfile = () => {
     router.push('/(auth)/corretor/profile/editProfile');
-  };
-
-  const handleEditProperty = (propertyId: string) => {
-    console.log('Editar imóvel:', propertyId);
-    // Navegar para tela de edição
-    router.push({
-      pathname: '/(auth)/corretor/imoveis/new',
-      params: { id: propertyId },
-    });
-  };
-
-  const handleAddToFolder = (propertyId: string) => {
-    console.log('Adicionar à pasta:', propertyId);
-    // Implementar lógica de adicionar à pasta
   };
 
   const handlePhotoSelected = async (uri: string) => {

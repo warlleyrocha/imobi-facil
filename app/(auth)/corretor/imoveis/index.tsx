@@ -8,27 +8,45 @@ import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
 import OptionIcon from '@/assets/icons-svg/option.svg';
 import { DeleteConfirmModal } from '@/components/DeleteConfirmModal';
+import { PurposeBadge } from '@/components/PurposeBadge';
 import { SuspenseMenuModal } from '@/components/SuspenseMenuModal';
+import { usePropertyManagement } from '@/hooks/usePropertyManagement';
 import { FormDataWithId } from '@/types/formProperty';
-import { PurposeBadge } from '~/components/PurposeBadge';
 
 export default function MyProperties() {
   const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
 
-  const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
-  const [menuVisible, setMenuVisible] = useState<string | null>(null);
-  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
-  const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
-  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const {
+    propertyList,
+    setPropertyList,
+    menuVisible,
+    setMenuVisible,
+    menuPosition,
+    setMenuPosition,
+    deleteConfirmVisible,
+    handleEditProperty,
+    handleAddToFolder,
+    handleDeleteClick,
+    confirmDelete,
+    cancelDelete,
+  } = usePropertyManagement({
+    onDeleteSuccess: () => {
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+    },
+  });
 
   // Carregar imóveis do AsyncStorage sempre que a tela for focada
   useEffect(() => {
     const loadProperties = async () => {
       try {
         const savedData = await AsyncStorage.getItem('formPropertyData');
-        console.log('Raw do AsyncStorage:', savedData);
+        console.log('Carregando imóveis na tela MEUS IMÓVEIS', savedData);
 
         if (savedData) {
           let parsedList: FormDataWithId[] = JSON.parse(savedData);
@@ -47,51 +65,7 @@ export default function MyProperties() {
     };
 
     loadProperties();
-  }, []); // Você pode adicionar dependência para re-carregar quando voltar da tela de detalhes
-
-  const handleEdit = (propertyId: string) => {
-    console.log('Editar imóvel:', propertyId);
-    // Navegar para tela de edição
-    router.push({
-      pathname: '/(auth)/corretor/imoveis/new',
-      params: { id: propertyId },
-    });
-  };
-
-  const handleAddToFolder = (propertyId: string) => {
-    console.log('Adicionar à pasta:', propertyId);
-    // Implementar lógica de adicionar à pasta
-  };
-
-  const handleDeleteClick = (propertyId: string) => {
-    setPropertyToDelete(propertyId);
-    setDeleteConfirmVisible(true);
-  };
-
-  const confirmDelete = async () => {
-    if (!propertyToDelete) return;
-
-    try {
-      const updatedList = propertyList.filter((p) => p.id !== propertyToDelete);
-      await AsyncStorage.setItem('formPropertyData', JSON.stringify(updatedList));
-      setPropertyList(updatedList);
-      console.log('Imóvel deletado:', propertyToDelete);
-      setDeleteConfirmVisible(false);
-      setPropertyToDelete(null);
-      setShowSuccessMessage(true);
-
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-      }, 3000);
-    } catch (error) {
-      console.error('Erro ao deletar imóvel:', error);
-    }
-  };
-
-  const cancelDelete = () => {
-    setDeleteConfirmVisible(false);
-    setPropertyToDelete(null);
-  };
+  }, [setPropertyList]); // Você pode adicionar dependência para re-carregar quando voltar da tela de detalhes
 
   return (
     <ScrollView className="flex-1 bg-white">
@@ -181,7 +155,7 @@ export default function MyProperties() {
                 visible={menuVisible === property.id}
                 onClose={() => setMenuVisible(null)}
                 position={menuPosition}
-                onEdit={() => handleEdit(property.id)}
+                onEdit={() => handleEditProperty(property.id)}
                 onAddToFolder={() => handleAddToFolder(property.id)}
                 onDelete={() => handleDeleteClick(property.id)}
               />
