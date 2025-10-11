@@ -17,7 +17,7 @@ const TAB_ITEMS = [
 
 export function TabList({ selectedTab, onSelect }: Props) {
   return (
-    <View className="mb-4 flex-row justify-between">
+    <View className="flex-row justify-between">
       {TAB_ITEMS.map((item) => (
         <TabItem
           key={item.id}

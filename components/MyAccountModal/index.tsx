@@ -2,13 +2,13 @@ import { useRouter } from 'expo-router';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 import EyeIcon from '@/assets/icons-svg/eyes-primary-color.svg';
-// Importe seus ícones SVG aqui
 import PencilAltIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
 import Settings from '@/assets/icons-svg/settings.svg';
 
 interface MyAccountModalProps {
   visible: boolean;
   onClose: () => void;
+  onViewBio: () => void;
 }
 
 interface MenuOption {
@@ -18,12 +18,17 @@ interface MenuOption {
   onPress: () => void;
 }
 
-export function MyAccountModal({ visible, onClose }: MyAccountModalProps) {
+export function MyAccountModal({ visible, onClose, onViewBio }: MyAccountModalProps) {
   const router = useRouter();
 
   const handleEditBio = () => {
     handleClose(); // Fecha o modal primeiro
     router.push('/(auth)/corretor/profile/editBio'); // Navega para a tela
+  };
+
+  const handleViewBio = () => {
+    handleClose();
+    onViewBio();
   };
 
   const handleClose = () => {
@@ -41,7 +46,7 @@ export function MyAccountModal({ visible, onClose }: MyAccountModalProps) {
       id: '2',
       icon: EyeIcon,
       label: 'Visualizar Bio',
-      onPress: () => console.log('Visualizar Bio'),
+      onPress: handleViewBio,
     },
     {
       id: '3',
