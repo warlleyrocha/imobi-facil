@@ -1,5 +1,4 @@
 import { BlurView } from 'expo-blur';
-import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { FormDataWithId } from '@/types/formProperty';

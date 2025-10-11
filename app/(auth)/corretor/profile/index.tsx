@@ -16,9 +16,8 @@ import { DeleteConfirmModal } from '@/components/DeleteConfirmModal';
 import { MyAccountModal } from '@/components/MyAccountModal';
 import { PhotoUploadModal } from '@/components/PhotoUploadModal';
 import { FormDataWithId } from '@/types/formProperty';
-
-import { PropertyList } from './components/PropertyList';
-import { TabList } from './components/TabList';
+import { PropertyList } from '~/components/Profile/PropertyList';
+import { TabList } from '~/components/Profile/TabList';
 
 export default function Profile() {
   const router = useRouter();
