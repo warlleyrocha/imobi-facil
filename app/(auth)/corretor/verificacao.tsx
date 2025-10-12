@@ -8,7 +8,7 @@ export default function Verificacao() {
   const setaEsquerda = require('~/assets/arrow-left.png');
 
   // Estado para armazenar os 6 dígitos
-  const [code, setCode] = useState(Array(6).fill(''));
+  const [code, setCode] = useState(Array(6).fill('111111'));
 
   // Array de refs para inputs
   const inputRefs = useRef<(TextInput | null)[]>([]);

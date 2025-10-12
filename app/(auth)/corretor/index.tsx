@@ -23,11 +23,11 @@ export default function Corretor() {
 
   const { control, handleSubmit } = useForm<SignUpFormState>({
     defaultValues: {
-      firstname: '',
-      lastname: '',
-      birthdate: '',
-      cpf: '',
-      creci: '',
+      firstname: 'WARLL',
+      lastname: 'rodrigues',
+      birthdate: '16/08/1990',
+      cpf: '111.111.111-11',
+      creci: '123456',
     },
   });
 
@@ -35,7 +35,7 @@ export default function Corretor() {
 
   const formIsValid = isFormValid(watchedValues);
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);

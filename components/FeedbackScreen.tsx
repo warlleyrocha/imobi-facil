@@ -1,6 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
 import { ReactNode } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 interface FeedbackScreenProps {
   icon: ReactNode;
