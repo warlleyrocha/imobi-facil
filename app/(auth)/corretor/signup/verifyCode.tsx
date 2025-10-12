@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid/non-secure';
 import { useRef, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-export default function Verificacao() {
+export default function VerifyCode() {
   const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
 
@@ -34,7 +34,7 @@ export default function Verificacao() {
     const verificationCode = code.join('');
     console.log('Código digitado:', verificationCode);
     // Aqui você pode chamar sua API para validação
-    router.replace('/(auth)/corretor/concluido' as any);
+    router.replace('/(auth)/corretor/signup/feedback' as any);
   };
 
   return (

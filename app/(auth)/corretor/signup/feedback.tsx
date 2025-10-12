@@ -26,7 +26,7 @@ const CustomSuccessIcon = ({ width = 44, height = 44 }) => (
   </Svg>
 );
 
-export default function Concluido() {
+export default function FeedBack() {
   const router = useRouter();
 
   useEffect(() => {

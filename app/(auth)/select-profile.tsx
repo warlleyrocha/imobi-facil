@@ -103,7 +103,7 @@ export default function SelectProfile() {
       <LocationPermissionModal
         visible={showPermissionModal}
         onClose={() => setShowPermissionModal(false)}
-        redirectPath="/(auth)/corretor"
+        redirectPath="/(auth)/corretor/signup"
       />
     </View>
   );
