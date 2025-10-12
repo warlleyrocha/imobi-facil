@@ -78,7 +78,7 @@ export function usePropertyManagement(options: UsePropertyManagementOptions = {}
   const handleEditProperty = (propertyId: string) => {
     console.log('Editar imóvel:', propertyId);
     router.push({
-      pathname: '/(auth)/corretor/imoveis/new',
+      pathname: '/(auth)/corretor/(tabs)/imoveis/formProperty',
       params: { id: propertyId },
     });
   };

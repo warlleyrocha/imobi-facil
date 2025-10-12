@@ -109,7 +109,7 @@ export default function FormProperty() {
 
       // Navegar para addSuccess ou lista de imóveis
       router.replace({
-        pathname: '/(auth)/corretor/imoveis/addSuccess',
+        pathname: '/(auth)/corretor/(tabs)/imoveis/addSuccess',
         params: { propertyId: dataComId.id, ...dataComId },
       });
     } catch (error) {

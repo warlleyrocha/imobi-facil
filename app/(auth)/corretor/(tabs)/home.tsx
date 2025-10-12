@@ -35,7 +35,12 @@ interface StatCardData {
 }
 
 const cardData: CardQuickAccess[] = [
-  { id: '1', icon: HouseAddIcon, title: 'Cadastrar Imóvel', route: '/corretor/imoveis/new' },
+  {
+    id: '1',
+    icon: HouseAddIcon,
+    title: 'Cadastrar Imóvel',
+    route: '/corretor/imoveis/formProperty',
+  },
   { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/imoveis/' },
   { id: '3', icon: Calendar, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
   { id: '4', icon: Users, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta

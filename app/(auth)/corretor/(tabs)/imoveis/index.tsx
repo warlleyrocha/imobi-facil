@@ -95,7 +95,7 @@ export default function MyProperties() {
               key={property.id}
               onPress={() =>
                 router.push({
-                  pathname: '/(auth)/corretor/imoveis/[id]',
+                  pathname: '/(auth)/corretor/(tabs)/imoveis/[id]',
                   params: { id: property.id },
                 })
               }
@@ -181,7 +181,7 @@ export default function MyProperties() {
 
           <TouchableOpacity
             className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
-            onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+            onPress={() => router.push('/(auth)/corretor/(tabs)/imoveis/formProperty')}>
             <CirclePlusIcon />
             <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
           </TouchableOpacity>

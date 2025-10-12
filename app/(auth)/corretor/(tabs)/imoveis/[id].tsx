@@ -59,7 +59,7 @@ export default function DetailsImovel() {
   const handleEdit = () => {
     if (!propertyData) return;
     router.push({
-      pathname: '/(auth)/corretor/imoveis/new',
+      pathname: '/(auth)/corretor/(tabs)/imoveis/formProperty',
       params: { id: propertyData.id },
     });
   };
@@ -71,7 +71,7 @@ export default function DetailsImovel() {
         <View className="flex-row items-center  pt-[62px]">
           {/* Botão voltar */}
           <TouchableOpacity
-            onPress={() => router.replace('/(auth)/corretor/imoveis')}
+            onPress={() => router.replace('/(auth)/corretor/(tabs)/imoveis')}
             className="mr-[12px]">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
@@ -81,7 +81,7 @@ export default function DetailsImovel() {
 
           {/* Ícone à direita (empurrado com margin-left:auto) */}
           <TouchableOpacity
-            onPress={() => router.push('/(auth)/corretor/imoveis')}
+            onPress={() => router.push('/(auth)/corretor/(tabs)/imoveis')}
             className="ml-auto">
             <CreateFolderIcon width={24} height={24} fill="#000" />
           </TouchableOpacity>

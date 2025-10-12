@@ -33,12 +33,12 @@ export default function SuccessForm() {
 
   const handleNewProperty = () => {
     console.log('Cadastrar outro imóvel');
-    router.push('/(auth)/corretor/imoveis/new');
+    router.push('/(auth)/corretor/(tabs)/imoveis/formProperty');
   };
 
   const handleViewProperty = (id: string) => {
     if (!id) return;
-    router.push(`/(auth)/corretor/imoveis/${id}`);
+    router.push(`/(auth)/corretor/(tabs)/imoveis/${id}`);
   };
 
   return (

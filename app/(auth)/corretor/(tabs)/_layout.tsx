@@ -8,7 +8,7 @@ export default function TabsLayout() {
 
   // Oculta a TabBar em rotas internas
   const hideTabBar =
-    pathname.includes('/imoveis/new') ||
+    pathname.includes('/imoveis/formProperty') ||
     pathname.includes('/imoveis/addSuccess') ||
     (pathname.includes('/imoveis/') && pathname.match(/\/imoveis\/\d+/)); // ex: /imoveis/123
 

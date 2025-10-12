@@ -52,7 +52,7 @@ export default function SuccessForm() {
 
               <TouchableOpacity
                 className="my-2 w-[170px] rounded-[50px] border border-blue-500 bg-transparent px-4 py-2 hover:bg-blue-500"
-                onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+                onPress={() => router.push('/(auth)/corretor/(tabs)/imoveis/formProperty')}>
                 <Text className="text-center font-mulish text-[16px] text-blue-500 hover:text-white">
                   Tentar novamente
                 </Text>
@@ -60,7 +60,7 @@ export default function SuccessForm() {
 
               <TouchableOpacity
                 className="w-full bg-transparent px-4"
-                onPress={() => router.push('/(auth)/corretor/imoveis/new')}>
+                onPress={() => router.push('/(auth)/corretor/(tabs)/imoveis/formProperty')}>
                 <Text className="mb-2 mt-4 px-6 pb-6 text-center font-mulish text-[14px] text-[#6B7280] hover:text-blue-500">
                   Voltar ao formulário
                 </Text>

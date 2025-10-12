@@ -16,7 +16,7 @@ export default function ImoveisLayout() {
 
       {/* Telas internas: tab oculta */}
       <Stack.Screen
-        name="new"
+        name="formProperty"
         options={
           {
             href: null, // 🔥 oculta tabbar
