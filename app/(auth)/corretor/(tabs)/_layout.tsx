@@ -10,7 +10,7 @@ export default function TabsLayout() {
   const hideTabBar =
     pathname.includes('/imoveis/formProperty') ||
     pathname.includes('/imoveis/addSuccess') ||
-    (pathname.includes('/imoveis/') && pathname.match(/\/imoveis\/\d+/)); // ex: /imoveis/123
+    /\/imoveis\/\d+/.test(pathname); // Oculta na tela de detalhes (ex: /imoveis/123)
 
   return (
     <View style={styles.container}>

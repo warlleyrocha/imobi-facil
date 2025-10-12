@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Image,
@@ -55,7 +55,7 @@ export default function Profile() {
   } = usePropertyManagement();
 
   // Dados da bio (você pode buscar do AsyncStorage ou de uma API)
-  const [bioData, setBioData] = useState({
+  const [bioData] = useState({
     name: 'Carlos Souza',
     creci: '12345-F/SP',
     bio: 'Corretor especializado em imóveis residenciais e comerciais, com foco em entender as necessidades do cliente.',

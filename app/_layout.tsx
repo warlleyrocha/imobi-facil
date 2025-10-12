@@ -69,13 +69,11 @@ function RootLayoutInner() {
       // Se não autenticado, mas está em rota privada
       if (!user && inAuthGroup) {
         router.replace('/(public)/sign-in');
-        return;
       }
 
       // Se autenticado e está em rota pública
       if (user && inPublicGroup) {
         router.replace('/(auth)/select-profile');
-        return;
       }
 
       // Se nenhum caso anterior, segue fluxo normal
