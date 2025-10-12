@@ -9,8 +9,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Atualizar sistema e instalar dependências
-RUN apk update && apk upgrade && \
-    npm ci && npm cache clean --force
+RUN npm ci && npm cache clean --force
+
 
 # Copiar o restante do código
 COPY . .
