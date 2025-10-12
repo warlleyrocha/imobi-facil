@@ -1,15 +1,25 @@
-import { Slot } from 'expo-router';
+import { Slot, usePathname } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import TabBar from '@/components/TabBar';
 
 export default function TabsLayout() {
+  const pathname = usePathname();
+
+  // Oculta a TabBar em rotas internas
+  const hideTabBar =
+    pathname.includes('/imoveis/new') ||
+    pathname.includes('/imoveis/addSuccess') ||
+    (pathname.includes('/imoveis/') && pathname.match(/\/imoveis\/\d+/)); // ex: /imoveis/123
+
   return (
     <View style={styles.container}>
       <Slot />
-      <View style={styles.tabBarContainer}>
-        <TabBar />
-      </View>
+      {!hideTabBar && (
+        <View style={styles.tabBarContainer}>
+          <TabBar />
+        </View>
+      )}
     </View>
   );
 }
@@ -20,8 +30,8 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     position: 'absolute',
-    bottom: 40, // distância do bottom
-    left: 16, // margem lateral
-    right: 16, // margem lateral
+    bottom: 40,
+    left: 16,
+    right: 16,
   },
 });

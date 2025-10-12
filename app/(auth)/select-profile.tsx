@@ -40,7 +40,7 @@ export default function SelectProfile() {
   // Função chamada ao clicar no botão "Usuário"
   // Navega direto para a rota do usuário
   function handleUsuarioClick() {
-    router.push('/(auth)/usuario');
+    router.replace('/(auth)/usuario');
   }
 
   return (

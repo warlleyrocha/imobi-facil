@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useLocalSearchParams,useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -25,7 +25,7 @@ const CustomSuccessIcon = ({ width = 44, height = 44 }) => (
   </Svg>
 );
 
-const imovelImage = require('../../../../assets/img-imovel-cadastrado.png');
+const imovelImage = require('@/assets/img-imovel-cadastrado.png');
 
 export default function SuccessForm() {
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function SuccessForm() {
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
-          onPress={() => router.replace('/(auth)/corretor/imoveis')}>
+          onPress={() => router.replace('/(auth)/corretor/(tabs)/imoveis')}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
 

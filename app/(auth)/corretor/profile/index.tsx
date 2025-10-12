@@ -135,7 +135,14 @@ export default function Profile() {
             <View className="px-4" style={{ paddingTop: insets.top + 27 }}>
               <View className="flex-row items-center gap-5 pt-[20px]">
                 {/* Botão Voltar */}
-                <TouchableOpacity onPress={() => router.back()}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (router.canGoBack()) {
+                      router.back();
+                    } else {
+                      router.replace('/corretor/home'); // volta pra Home ou qualquer aba principal
+                    }
+                  }}>
                   <ArrowLeftIcon />
                 </TouchableOpacity>
 

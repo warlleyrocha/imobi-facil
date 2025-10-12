@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { Text, TouchableOpacity,View } from 'react-native';
-import { Path,Svg } from 'react-native-svg';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { Path, Svg } from 'react-native-svg';
 
 // Componente SVG customizado do Figma
 const CustomSuccessIcon = ({ width = 44, height = 44 }) => (
@@ -29,7 +29,7 @@ const CustomSuccessIcon = ({ width = 44, height = 44 }) => (
 export default function Concluido() {
   const router = useRouter();
 
-  useEffect(() => { 
+  useEffect(() => {
     const timer = setTimeout(() => {
       router.replace('/(auth)/onboard');
     }, 3000); // Redireciona após 3 segundos para a página de onboard
@@ -44,7 +44,7 @@ export default function Concluido() {
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
-          onPress={() => router.push('/(auth)/onboard')}>
+          onPress={() => router.replace('/(auth)/onboard')}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
 

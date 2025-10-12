@@ -71,7 +71,15 @@ export default function MyProperties() {
     <ScrollView className="flex-1 bg-white">
       <View className="px-[16px] pt-[55px]">
         <View className="relative flex-row items-center justify-center pb-[32px]">
-          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-1">
+          <TouchableOpacity
+            onPress={() => {
+              if (router.canGoBack()) {
+                router.back();
+              } else {
+                router.replace('/corretor/home'); // ou qualquer aba padrão
+              }
+            }}
+            className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
 

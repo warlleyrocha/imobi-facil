@@ -44,7 +44,7 @@ export default function Corretor() {
   const onSubmit = async (data: SignUpFormState) => {
     console.log('Dados:', data);
     try {
-      router.push('/(auth)/corretor/verificacao' as any);
+      router.replace('/(auth)/corretor/verificacao' as any);
     } catch (error) {
       console.error(error);
     }
@@ -57,7 +57,7 @@ export default function Corretor() {
       router.back();
     } else {
       console.log('Não pode voltar - redirecionando para select-profile');
-      router.push('/(auth)/select-profile' as any);
+      router.replace('/(auth)/select-profile' as any);
     }
   };
 

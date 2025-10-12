@@ -68,7 +68,7 @@ export default function LocationPermissionModal({
     } finally {
       setLoading(false);
       onClose(); // Fecha o modal
-      router.push(redirectPath as any); // Redireciona para a rota indicada
+      router.replace(redirectPath as any); // Redireciona para a rota indicada
     }
   }
 
@@ -103,14 +103,14 @@ export default function LocationPermissionModal({
     } finally {
       setLoading(false);
       onClose();
-      router.push(redirectPath as any);
+      router.replace(redirectPath as any);
     }
   }
 
   // Caso o usuário negue a permissão
   function handleDeny() {
     onClose();
-    router.push(redirectPath as any);
+    router.replace(redirectPath as any);
   }
 
   return (

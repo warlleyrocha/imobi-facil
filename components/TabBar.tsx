@@ -54,7 +54,7 @@ const TabBar = () => {
               className={`h-[48px] w-[48px] items-center justify-center ${
                 isActive ? 'rounded-full bg-gray-900' : 'bg-transparent'
               }`}
-              onPress={() => router.push(route.route)}>
+              onPress={() => router.replace(route.route)}>
               <IconComponent
                 width={24}
                 height={24}

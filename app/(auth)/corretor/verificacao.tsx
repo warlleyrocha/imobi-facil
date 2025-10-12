@@ -34,7 +34,7 @@ export default function Verificacao() {
     const verificationCode = code.join('');
     console.log('Código digitado:', verificationCode);
     // Aqui você pode chamar sua API para validação
-    router.push('/(auth)/corretor/concluido' as any);
+    router.replace('/(auth)/corretor/concluido' as any);
   };
 
   return (

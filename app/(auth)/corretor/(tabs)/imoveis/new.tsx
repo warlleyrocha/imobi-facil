@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLocalSearchParams,useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -125,7 +125,15 @@ export default function FormProperty() {
         contentContainerStyle={{ paddingBottom: 64 }}>
         {/* Header */}
         <View className="relative flex-row items-center justify-center pb-[35px]">
-          <TouchableOpacity onPress={() => router.back()} className="absolute left-0 top-1">
+          <TouchableOpacity
+            onPress={() => {
+              if (router.canGoBack()) {
+                router.back();
+              } else {
+                router.replace('/(auth)/corretor/(tabs)/imoveis'); // 🔙 força retorno pra aba correta
+              }
+            }}
+            className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
           </TouchableOpacity>
 

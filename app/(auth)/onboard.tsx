@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
-import { useRef,useState } from 'react';
-import { FlatList,Text, TouchableOpacity, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
 import { onboardImages } from '../../assets/onboard';
@@ -41,7 +41,7 @@ export default function Onboard() {
 
   // Função para ir para home do corretor
   const handleStart = () => {
-    router.push('/(auth)/corretor/home');
+    router.replace('/(auth)/corretor/(tabs)/home');
   };
 
   return (
