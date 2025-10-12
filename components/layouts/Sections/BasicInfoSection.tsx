@@ -1,11 +1,11 @@
 import { Control, Controller } from 'react-hook-form';
 import { Text, View } from 'react-native';
 
-import { FormInput } from '@/components/Form/FormInput';
-import { FormSectionTitle } from '@/components/Form/FormSectionTitle';
-import { FormSelect } from '@/components/Form/FormSelect';
 import { FormData } from '@/types/formProperty';
-import { RadioGroup } from '~/components/RadioButton/RadioGroup';
+import { FormInput } from '~/components/forms/FormInput';
+import { FormSectionTitle } from '~/components/forms/FormSectionTitle';
+import { FormSelect } from '~/components/forms/FormSelect';
+import { RadioGroup } from '~/components/forms/RadioButton/RadioGroup';
 
 type Props = {
   readonly control: Control<FormData>;

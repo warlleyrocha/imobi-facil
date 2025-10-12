@@ -2,11 +2,11 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
 
-import { ButtonOutline } from '@/components/ButtonOutline';
-import { FeedbackScreen } from '@/components/FeedbackScreen';
-import { FormInput } from '@/components/Form/FormInput';
-import Header from '@/components/Header';
-import { CustomSuccessIcon } from '@/components/Icons/CustomSuccessIcon';
+import { FeedbackScreen } from '~/components/feedbacks/FeedbackScreen';
+import { FormInput } from '~/components/forms/FormInput';
+import { CustomSuccessIcon } from '~/components/icons/CustomSuccessIcon';
+import Header from '~/components/layouts/Header';
+import { ButtonOutline } from '~/components/ui/buttons/ButtonOutline';
 
 export default function EditProfile() {
   const router = useRouter();

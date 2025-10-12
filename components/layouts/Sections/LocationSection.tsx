@@ -1,9 +1,9 @@
 import { Control, Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
-import { FormInput } from '@/components/Form/FormInput';
-import { FormSectionTitle } from '@/components/Form/FormSectionTitle';
 import { FormData } from '@/types/formProperty';
+import { FormInput } from '~/components/forms/FormInput';
+import { FormSectionTitle } from '~/components/forms/FormSectionTitle';
 
 type Props = {
   readonly control: Control<FormData>;

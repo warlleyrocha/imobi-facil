@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { CustomSuccessIcon } from '@/components/Icons/CustomSuccessIcon';
+import { CustomSuccessIcon } from '~/components/icons/CustomSuccessIcon';
 
 export default function Success() {
   const router = useRouter();

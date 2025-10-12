@@ -5,8 +5,8 @@ import { Alert, Dimensions, Image, ScrollView, Text, TouchableOpacity, View } fr
 
 import CreateFolderIcon from '@/assets/icons-svg/create_new_folder.svg';
 import Pencil from '@/assets/icons-svg/pencil.svg';
-import SlideIndicators from '@/components/SlideIndicator';
 import { FormDataWithId } from '@/types/formProperty';
+import SlideIndicators from '~/components/ui/SlideIndicator';
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 

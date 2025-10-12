@@ -7,11 +7,11 @@ import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
 import ForSaleImage from '@/assets/icons-svg/for-sale.svg';
 import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
 import OptionIcon from '@/assets/icons-svg/option.svg';
-import { DeleteConfirmModal } from '@/components/DeleteConfirmModal';
-import { PurposeBadge } from '@/components/PurposeBadge';
-import { SuspenseMenuModal } from '@/components/SuspenseMenuModal';
 import { usePropertyManagement } from '@/hooks/usePropertyManagement';
 import { FormDataWithId } from '@/types/formProperty';
+import { DeleteConfirmModal } from '~/components/modals/DeleteConfirmModal';
+import { SuspenseMenuModal } from '~/components/modals/SuspenseMenuModal';
+import { PurposeBadge } from '~/components/ui/PurposeBadge';
 
 export default function MyProperties() {
   const router = useRouter();

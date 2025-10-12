@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router'; // Navegação programática
 import { useState } from 'react';
 import { Alert, Image, Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
 
-import LocationSVG from './Icons/Location'; // Ícone SVG customizado para localização
+import LocationSVG from '~/components/icons/Location'; // Ícone SVG customizado para localização
 
 // Props esperadas pelo modal de permissão de localização
 interface LocationPermissionModalProps {
@@ -124,12 +124,12 @@ export default function LocationPermissionModal({
           {/* Explicação visual das opções de localização */}
           <View className="flex-row gap-[30px]">
             <View className="items-center gap-3">
-              <Image source={require('../assets/location-1.png')} resizeMode="contain" />
+              <Image source={require('@/assets/location-1.png')} resizeMode="contain" />
               <Text className="font-mulish">Exata</Text>
             </View>
 
             <View className="items-center gap-3">
-              <Image source={require('../assets/location-2.png')} resizeMode="contain" />
+              <Image source={require('@/assets/location-2.png')} resizeMode="contain" />
               <Text className="font-mulish">Aproximada</Text>
             </View>
           </View>

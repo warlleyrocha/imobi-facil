@@ -13,9 +13,9 @@ import {
 } from 'react-native';
 import Svg, { Polyline } from 'react-native-svg';
 
-import { FormInput } from '@/components/Form/FormInput';
 import { SignUpFormState } from '@/types/corretorTypes';
 import { corretorFormFields, isFormValid } from '@/utils/corretorFields';
+import { FormInput } from '~/components/forms/FormInput';
 
 export default function Corretor() {
   const router = useRouter();

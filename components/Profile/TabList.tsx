@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '@/components/Icons/TabGroup';
+import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '~/components/icons/TabGroup';
 
 import { TabItem } from './TabItem';
 

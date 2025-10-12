@@ -4,7 +4,7 @@ import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
 import { onboardImages } from '../../assets/onboard';
-import ImageSlide from '../../components/ImageSlide';
+import ImageSlide from '../../components/ui/ImageSlide';
 
 export default function Onboard() {
   const [currentIndex, setCurrentIndex] = useState(0);

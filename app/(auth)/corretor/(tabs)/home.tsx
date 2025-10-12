@@ -15,8 +15,8 @@ import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
 import Users from '@/assets/icons-svg/users.svg';
-import TextSlider from '@/components/TextSlider';
-import ImageWithShadow from '~/components/ImageShadow';
+import ImageWithShadow from '~/components/ui/ImageShadow';
+import TextSlider from '~/components/ui/TextSlider';
 
 interface CardQuickAccess {
   id: string;

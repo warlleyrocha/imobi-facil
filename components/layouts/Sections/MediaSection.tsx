@@ -6,8 +6,8 @@ import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 
 import AddImage from '@/assets/icons-svg/add-images.svg';
 import UploadIcon from '@/assets/icons-svg/upload-photos.svg';
-import { FormSectionTitle } from '@/components/Form/FormSectionTitle';
-import CloseIcon from '@/components/Icons/Close';
+import { FormSectionTitle } from '~/components/forms/FormSectionTitle';
+import CloseIcon from '~/components/icons/Close';
 import { FormData } from '@/types/formProperty';
 
 type Props = {

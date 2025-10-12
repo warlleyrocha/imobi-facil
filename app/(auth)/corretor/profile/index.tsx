@@ -20,14 +20,14 @@ import CloudUploadIcon from '@/assets/icons-svg/cloud-upload.svg';
 import OptionIcon from '@/assets/icons-svg/option-primary-color.svg';
 import PencilIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
 import SearchIcon from '@/assets/icons-svg/search-alt.svg';
-import { DeleteConfirmModal } from '@/components/DeleteConfirmModal';
-import Header from '@/components/Header';
-import { MyAccountModal } from '@/components/MyAccountModal';
-import { PhotoUploadModal } from '@/components/PhotoUploadModal';
-import { PropertyList } from '@/components/Profile/PropertyList';
-import { TabList } from '@/components/Profile/TabList';
 import { usePropertyManagement } from '@/hooks/usePropertyManagement';
 import { FormDataWithId } from '@/types/formProperty';
+import Header from '~/components/layouts/Header';
+import { DeleteConfirmModal } from '~/components/modals/DeleteConfirmModal';
+import { MyAccountModal } from '~/components/modals/MyAccountModal';
+import { PhotoUploadModal } from '~/components/modals/PhotoUploadModal';
+import { PropertyList } from '~/components/profile/PropertyList';
+import { TabList } from '~/components/profile/TabList';
 
 export default function Profile() {
   const router = useRouter();
@@ -278,7 +278,7 @@ export default function Profile() {
       )}
 
       {/* Tabs */}
-      <View className="px-[20px] pt-[16px]">
+      <View className="bg-white px-[20px] pt-[16px]">
         <TabList selectedTab={activeTab} onSelect={setActiveTab} />
       </View>
 

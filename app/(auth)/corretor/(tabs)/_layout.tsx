@@ -1,7 +1,7 @@
 import { Slot, usePathname } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
-import TabBar from '@/components/TabBar';
+import TabBar from '@/components/ui/TabBar';
 
 export default function TabsLayout() {
   const pathname = usePathname();

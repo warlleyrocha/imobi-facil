@@ -1,7 +1,7 @@
 import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
 import CompanyIcon from '@/assets/icons-svg/company.svg';
-import Auth from '@/components/Auth';
+import Auth from '~/components/ui/buttons/Auth';
 
 const { width, height } = Dimensions.get('window');
 

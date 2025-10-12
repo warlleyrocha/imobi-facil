@@ -5,9 +5,9 @@ import { useForm, useWatch } from 'react-hook-form';
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import { FormData, FormDataWithId } from '@/types/formProperty';
-import { BasicInfoSection } from '~/components/Sections/BasicInfoSection';
-import { LocationSection } from '~/components/Sections/LocationSection';
-import { MediaSection } from '~/components/Sections/MediaSection';
+import { BasicInfoSection } from '~/components/layouts/Sections/BasicInfoSection';
+import { LocationSection } from '~/components/layouts/Sections/LocationSection';
+import { MediaSection } from '~/components/layouts/Sections/MediaSection';
 import { isFormValid } from '~/utils/validationsFormProperty'; // ajuste o caminho
 
 const setaEsquerda = require('~/assets/arrow-left.png');

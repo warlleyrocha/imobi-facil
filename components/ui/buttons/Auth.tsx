@@ -1,6 +1,6 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 
-import { GoogleIcon } from '@/components/Icons/GoogleIcon';
+import { GoogleIcon } from '~/components/icons/GoogleIcon';
 import { useGoogleAuth } from '@/hooks/useGoogleAuth';
 
 const Auth = () => {

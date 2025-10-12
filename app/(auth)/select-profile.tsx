@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 // Hook para navegação programática com Expo Router
-import LocationPermissionModal from '../../components/LocationPermission';
+import LocationPermissionModal from '@/components/modals/LocationPermission';
 // Componente modal customizado para solicitar permissão de localização
 
 // Obtém a largura da tela do dispositivo

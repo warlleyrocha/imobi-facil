@@ -3,9 +3,9 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import LocationOnIcon from '@/assets/icons-svg/location_on.svg';
 import OptionIconBlack from '@/assets/icons-svg/option.svg';
-import { PurposeBadge } from '@/components/PurposeBadge';
-import { SuspenseMenuModal } from '@/components/SuspenseMenuModal';
 import { FormDataWithId } from '@/types/formProperty';
+import { SuspenseMenuModal } from '~/components/modals/SuspenseMenuModal';
+import { PurposeBadge } from '~/components/ui/PurposeBadge';
 
 interface Props {
   item: FormDataWithId;
