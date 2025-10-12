@@ -1,8 +1,7 @@
 import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
 import CompanyIcon from '@/assets/icons-svg/company.svg';
-
-import Auth from '../components/Auth';
+import Auth from '@/components/Auth';
 
 const { width, height } = Dimensions.get('window');
 
@@ -10,7 +9,7 @@ export default function SignIn() {
   return (
     <View className="flex-1 bg-white">
       <ImageBackground
-        source={require('../assets/background-login.png')}
+        source={require('@/assets/background-login.png')}
         style={{
           height: height * 0.5,
           width: '100%',
