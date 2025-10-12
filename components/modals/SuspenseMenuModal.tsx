@@ -5,14 +5,14 @@ import EditIcon from '@/assets/icons-svg/pencil-alt.svg';
 import TrashIcon from '@/assets/icons-svg/trash.svg';
 
 interface SuspenseMenuModalProps {
-  visible: boolean;
-  onClose: () => void;
-  position: { x: number; y: number };
-  onEdit: () => void;
-  onAddToFolder: () => void;
-  onDelete: () => void;
+  readonly visible: boolean;
+  readonly onClose: () => void;
+  readonly position: { x: number; y: number };
+  readonly onEdit: () => void;
+  readonly onAddToFolder: () => void;
+  readonly onDelete: () => void;
   // Nova prop para alinhar à direita ou usar posição customizada
-  alignRight?: boolean;
+  readonly alignRight?: boolean;
 }
 
 export function SuspenseMenuModal({

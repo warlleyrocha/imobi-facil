@@ -6,10 +6,10 @@ import CloseIcon from '@/assets/icons-svg/close.svg';
 import UploadIcon from '@/assets/icons-svg/upload-photo-profile.svg';
 
 interface PhotoUploadModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onPhotoSelected: (uri: string) => void;
-  currentPhotoUri?: string;
+  readonly visible: boolean;
+  readonly onClose: () => void;
+  readonly onPhotoSelected: (uri: string) => void;
+  readonly currentPhotoUri?: string;
 }
 
 export function PhotoUploadModal({

@@ -2,13 +2,13 @@ import { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 
 interface FeedbackScreenProps {
-  icon: ReactNode;
-  title: string;
-  description: string;
-  onClose?: () => void;
-  showCloseButton?: boolean;
-  autoRedirectMs?: number;
-  onAutoRedirect?: () => void;
+  readonly icon: ReactNode;
+  readonly title: string;
+  readonly description: string;
+  readonly onClose?: () => void;
+  readonly showCloseButton?: boolean;
+  readonly autoRedirectMs?: number;
+  readonly onAutoRedirect?: () => void;
 }
 
 export function FeedbackScreen({

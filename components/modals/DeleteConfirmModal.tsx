@@ -1,9 +1,9 @@
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 interface DeleteConfirmationModalProps {
-  visible: boolean;
-  onCancel: () => void;
-  onConfirm: () => void;
+  readonly visible: boolean;
+  readonly onCancel: () => void;
+  readonly onConfirm: () => void;
 }
 
 export function DeleteConfirmModal({ visible, onCancel, onConfirm }: DeleteConfirmationModalProps) {

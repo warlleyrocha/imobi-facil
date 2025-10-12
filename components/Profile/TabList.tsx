@@ -5,8 +5,8 @@ import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '~/components/ic
 import { TabItem } from './TabItem';
 
 interface Props {
-  selectedTab: string;
-  onSelect: (id: string) => void;
+  readonly selectedTab: string;
+  readonly onSelect: (id: string) => void;
 }
 
 const TAB_ITEMS = [

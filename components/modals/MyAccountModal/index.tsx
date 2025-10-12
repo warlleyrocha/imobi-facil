@@ -6,9 +6,9 @@ import PencilAltIcon from '@/assets/icons-svg/pencil-alt-primary-color.svg';
 import Settings from '@/assets/icons-svg/settings.svg';
 
 interface MyAccountModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onViewBio: () => void;
+  readonly visible: boolean;
+  readonly onClose: () => void;
+  readonly onViewBio: () => void;
 }
 
 interface MenuOption {
