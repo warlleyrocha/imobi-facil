@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 // Hook para navegação programática com Expo Router
-import LocationPermissionModal from '../../components/LocationPermission';
+import LocationPermissionModal from '@/components/modals/LocationPermission';
 // Componente modal customizado para solicitar permissão de localização
 
 // Obtém a largura da tela do dispositivo
@@ -40,7 +40,7 @@ export default function SelectProfile() {
   // Função chamada ao clicar no botão "Usuário"
   // Navega direto para a rota do usuário
   function handleUsuarioClick() {
-    router.push('/(auth)/usuario');
+    router.replace('/(auth)/usuario');
   }
 
   return (
@@ -103,7 +103,7 @@ export default function SelectProfile() {
       <LocationPermissionModal
         visible={showPermissionModal}
         onClose={() => setShowPermissionModal(false)}
-        redirectPath="/(auth)/corretor"
+        redirectPath="/(auth)/corretor/signup"
       />
     </View>
   );
