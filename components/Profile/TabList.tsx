@@ -1,12 +1,12 @@
 import { View } from 'react-native';
 
-import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '@/components/Icons/TabGroup';
+import { GridAltIcon, LayoutAltIcon, LayoutAltSecondIcon } from '~/components/icons/TabGroup';
 
 import { TabItem } from './TabItem';
 
 interface Props {
-  selectedTab: string;
-  onSelect: (id: string) => void;
+  readonly selectedTab: string;
+  readonly onSelect: (id: string) => void;
 }
 
 const TAB_ITEMS = [
@@ -17,7 +17,7 @@ const TAB_ITEMS = [
 
 export function TabList({ selectedTab, onSelect }: Props) {
   return (
-    <View className="mb-4 flex-row justify-between">
+    <View className="flex-row justify-between">
       {TAB_ITEMS.map((item) => (
         <TabItem
           key={item.id}

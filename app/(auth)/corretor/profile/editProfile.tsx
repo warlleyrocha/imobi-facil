@@ -1,13 +1,15 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, View } from 'react-native';
 
-import { FeedbackScreen } from '@/components/FeedbackScreen';
-import Header from '@/components/Header';
-import { CustomSuccessIcon } from '@/components/Icons/CustomSuccessIcon';
-import { ButtonOutline } from '~/components/ButtonOutline';
-import { FormInput } from '~/components/Form/FormInput';
+import { FeedbackScreen } from '~/components/feedbacks/FeedbackScreen';
+import { FormInput } from '~/components/forms/FormInput';
+import { CustomSuccessIcon } from '~/components/icons/CustomSuccessIcon';
+import Header from '~/components/layouts/Header';
+import { ButtonOutline } from '~/components/ui/buttons/ButtonOutline';
 
 export default function EditProfile() {
+  const router = useRouter();
   const [showFeedback, setShowFeedback] = useState(false);
   const [name, setName] = useState('');
   const [creci, setCreci] = useState('');
@@ -20,6 +22,7 @@ export default function EditProfile() {
     // Opcional: fechar o feedback automaticamente após alguns segundos
     setTimeout(() => {
       setShowFeedback(false);
+      router.push('/(auth)/corretor/profile');
     }, 3000);
   };
 

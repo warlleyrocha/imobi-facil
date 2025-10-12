@@ -2,9 +2,9 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 
-import Header from '@/components/Header';
-import { ButtonOutline } from '~/components/ButtonOutline';
-import { FormInput } from '~/components/Form/FormInput';
+import { ButtonOutline } from '@/components/ui/buttons/ButtonOutline';
+import { FormInput } from '~/components/forms/FormInput';
+import Header from '~/components/layouts/Header';
 
 export default function EditBio() {
   const router = useRouter();

@@ -1,10 +1,10 @@
 import { Text, TouchableOpacity } from 'react-native';
 
 interface TabItemProps {
-  label: string;
-  icon: (color: string) => React.ReactElement;
-  active: boolean;
-  onPress: () => void;
+  readonly label: string;
+  readonly icon: (color: string) => React.ReactElement;
+  readonly active: boolean;
+  readonly onPress: () => void;
 }
 
 export function TabItem({ label, icon, active, onPress }: TabItemProps) {
