@@ -28,9 +28,5 @@ export const useGoogleAuth = () => {
     }
   };
 
-  return {
-    loginWithGoogle,
-    loading,
-    error,
-  };
+  return { loginWithGoogle, loading, error };
 };
