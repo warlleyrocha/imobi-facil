@@ -1,12 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-
-// AsyncStorage é usado para armazenar dados persistentes localmente (ex: sessão do usuário)
-import { AuthContextData, User } from '../types/authTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage é usado para armazenar dados persistentes localmente (ex: sessão do usuário)
+import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
+
+import { AuthContextData, User } from '../types/authTypes';
 // Tipos TypeScript para o contexto e o objeto User
 
-const STORAGE_KEY = '@yourapp:user';
+const STORAGE_KEY = '@imobifacil:user';
 // Chave usada para armazenar dados do usuário no AsyncStorage
 
 // Criação do contexto de autenticação, que poderá ser consumido na árvore de componentes

@@ -1,9 +1,8 @@
+import { useEffect } from 'react';
 import { Dimensions, ImageBackground, Platform, Text, TouchableOpacity, View } from 'react-native';
 
 import CompanyIcon from '@/assets/icons-svg/company.svg';
 import Auth from '~/components/ui/buttons/Auth';
-import { useEffect } from 'react';
-import { useRouter } from 'expo-router';
 import { useAuth } from '~/contexts/authContext';
 import type { User } from '~/types/authTypes';
 
@@ -39,7 +38,8 @@ export default function SignIn() {
       //Simulação de limpeza após sair da página
       console.log('Unmount sign-in');
     };
-  }, []);
+  }, [login, user]);
+
   return (
     <View className="flex-1 bg-white">
       <ImageBackground
