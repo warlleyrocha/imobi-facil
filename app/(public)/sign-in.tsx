@@ -31,6 +31,8 @@ export default function SignIn() {
           accessToken,
         });
         await login({ ...decodedUser, accessToken });
+        //Revalidação da página pois localStorage não atualiza a página automaticamente
+        window.location.reload();
       })();
     }
     return () => {
