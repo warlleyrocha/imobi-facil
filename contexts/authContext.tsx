@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, useContext, useEffect, useMemo,useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 // AsyncStorage é usado para armazenar dados persistentes localmente (ex: sessão do usuário)
 import { AuthContextData, User } from '../types/authTypes';
+import { Platform } from 'react-native';
 // Tipos TypeScript para o contexto e o objeto User
 
 const STORAGE_KEY = '@yourapp:user';
@@ -12,7 +13,7 @@ const STORAGE_KEY = '@yourapp:user';
 const AuthContext = createContext<AuthContextData | undefined>(undefined);
 
 // Provider que envolve a aplicação para prover dados de autenticação
-export function AuthContextProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+export function AuthContextProvider({ children }: Readonly<{ children: ReactNode }>) {
   // Estado para guardar o usuário autenticado ou null caso não haja
   const [user, setUser] = useState<User | null>(null);
   // Estado para controlar se está carregando a restauração da sessão
@@ -43,7 +44,9 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
   // Função para fazer login: salva o usuário no AsyncStorage e no estado
   async function login(userData: User) {
     try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+      //+Feature: Identifica plataforma para salvar localmente os dados do usuário
+      if (Platform.OS !== 'web') await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+      else localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
       setUser(userData);
     } catch (e) {
       console.error('Erro no login:', e);
@@ -53,26 +56,30 @@ export function AuthContextProvider({ children }: Readonly<{ children: React.Rea
   // Função para logout: remove o usuário do AsyncStorage e limpa estado
   async function logout() {
     try {
-      await AsyncStorage.removeItem(STORAGE_KEY);
+      //+Feature: Identifica plataforma para remover localmente os dados do usuário
+      if (Platform.OS !== 'web') await AsyncStorage.removeItem(STORAGE_KEY);
+      else localStorage.removeItem(STORAGE_KEY);
       setUser(null);
     } catch (e) {
       console.error('Erro no logout:', e);
     }
   }
 
-  // Sempre que o user mudar, sincroniza o AsyncStorage
+  //+Patch: Sempre que o user mudar, sincroniza o AsyncStorage ou localStorage, dependendo da plataforma
   // Assim garante que alterações manuais em setUser também persistam
   useEffect(() => {
     async function syncUserStorage() {
       if (user) {
         try {
-          await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          if (Platform.OS !== 'web') await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+          else localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
         } catch (e) {
           console.error('Erro ao sincronizar usuário:', e);
         }
       } else {
         try {
-          await AsyncStorage.removeItem(STORAGE_KEY);
+          if (Platform.OS !== 'web') await AsyncStorage.removeItem(STORAGE_KEY);
+          else localStorage.removeItem(STORAGE_KEY);
         } catch (e) {
           console.error('Erro ao limpar usuário:', e);
         }
