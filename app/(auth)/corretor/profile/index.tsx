@@ -224,7 +224,7 @@ export default function Profile() {
               },
             ],
           }}
-          className="px-[16px]">
+          className="bg-white px-[16px]">
           <Header
             title="Perfil do Corretor"
             paddingTopClass="pt-[66px]"
@@ -267,7 +267,7 @@ export default function Profile() {
             </Text>
 
             <TouchableOpacity
-              className="rounded-[6px] border border-stroke p-[18px]"
+              className="rounded-[6px] border border-stroke bg-white p-[18px]"
               onPress={handleEditBio}>
               <Text className="font-mulish text-[16px] leading-[18px] text-[#9098A3]">
                 {bioData.bio}
