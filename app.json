@@ -23,13 +23,15 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.devazulciano.imobifacil"
+      "bundleIdentifier": "com.devazulciano.imobifacil",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
       "package": "com.devazulciano.imobifacil",
+      "versionCode": 1,
       "intentFilters": [
         {
           "action": "VIEW",
