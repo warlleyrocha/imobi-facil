@@ -80,43 +80,45 @@ export default function Corretor() {
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: 'space-between',
-          paddingBottom: 24,
+          paddingBottom: 12,
         }}>
-        {/* Header */}
-        <View className="mt-[80px] w-full flex-row items-center justify-between px-5">
-          <TouchableOpacity onPress={handleGoBack} style={{ padding: 8 }} activeOpacity={0.7}>
-            <Image source={setaEsquerda} className="h-6 w-6" />
-          </TouchableOpacity>
+        <View>
+          {/* Header */}
+          <View className="mt-[80px] w-full flex-row items-center justify-between px-5">
+            <TouchableOpacity onPress={handleGoBack} style={{ padding: 8 }} activeOpacity={0.7}>
+              <Image source={setaEsquerda} className="h-6 w-6" />
+            </TouchableOpacity>
 
-          <Text className="-ml-6 flex-1 text-center font-inter-bold text-[20px] leading-[22px]">
-            Cadastro do Corretor
-          </Text>
-        </View>
+            <Text className="-ml-6 flex-1 text-center font-inter-bold text-[20px] leading-[22px]">
+              Cadastro do Corretor
+            </Text>
+          </View>
 
-        {/* Form Fields */}
-        <View className="mt-6 px-5">
-          {corretorFormFields.map((field) => (
-            <Controller
-              key={field.name}
-              control={control}
-              name={field.name}
-              rules={{ required: `${field.label} é obrigatório` }}
-              render={({ field: { onChange, value } }) => (
-                <FormInput
-                  label={field.label}
-                  required
-                  placeholder={field.placeholder}
-                  value={value}
-                  onChangeText={(text) => {
-                    if (field.name === 'cpf') onChange(maskCPF(text));
-                    else if (field.name === 'birthdate') onChange(maskDate(text));
-                    else onChange(normalizeText(text));
-                  }}
-                  keyboardType={field.keyboardType}
-                />
-              )}
-            />
-          ))}
+          {/* Form Fields */}
+          <View className="mt-[24px] px-5">
+            {corretorFormFields.map((field) => (
+              <Controller
+                key={field.name}
+                control={control}
+                name={field.name}
+                rules={{ required: `${field.label} é obrigatório` }}
+                render={({ field: { onChange, value } }) => (
+                  <FormInput
+                    label={field.label}
+                    required
+                    placeholder={field.placeholder}
+                    value={value}
+                    onChangeText={(text) => {
+                      if (field.name === 'cpf') onChange(maskCPF(text));
+                      else if (field.name === 'birthdate') onChange(maskDate(text));
+                      else onChange(normalizeText(text));
+                    }}
+                    keyboardType={field.keyboardType}
+                  />
+                )}
+              />
+            ))}
+          </View>
         </View>
 
         {/* Terms and Submit */}
