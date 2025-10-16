@@ -16,6 +16,9 @@ import Stats from '@/assets/icons-svg/stats.svg';
 import Users from '@/assets/icons-svg/users.svg';
 import TextSlider from '@/components/TextSlider';
 import TabBar from '~/components/TabBar';
+import People from '@/assets/icons-svg/people.svg';
+import Sino from '@/assets/icons-svg/sino.svg';
+
 
 interface CardQuickAccess {
   id: string;
@@ -36,7 +39,7 @@ interface StatCardData {
 const cardData: CardQuickAccess[] = [
   { id: '1', icon: HouseAddIcon, title: 'Cadastrar Imóvel', route: '/corretor/imoveis/new' },
   { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/imoveis/' },
-  { id: '3', icon: Calendar, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
+  { id: '3', icon: People, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
   { id: '4', icon: Users, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
 ];
 
@@ -130,8 +133,9 @@ export default function HomeCorretor() {
         <View className="relative top-9 flex-row items-center justify-center ">
           <Text className="font-mulish-bold text-[20px]">ImobiFácil</Text>
           <View className="absolute right-4">
-            <Ionicons name="notifications-outline" size={24} color="black" />
-          </View>
+            <Sino width={24} height={24} />
+            </View>
+
         </View>
 
         {/*Acesso rápido*/}

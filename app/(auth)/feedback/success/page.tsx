@@ -39,8 +39,27 @@ export default function Success() {
     return () => clearTimeout(timer);
   }, [router]);
   return (
-    <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
-      <View className="relative h-[350px] w-[343px] items-center justify-center gap-[12px] rounded-[5px] bg-[#F9FAFB]">
+    <View
+  className="flex-1 items-center justify-center px-[16px] py-[10px]"
+  style={{ backgroundColor: '#F1F2F6' }} 
+>
+  {/* Quadrado interno */}
+  <View
+    className="items-center justify-center gap-[12px] rounded-[10px]"
+    style={{
+      backgroundColor: '#F9FAFB', // 
+      borderWidth: 2,
+      borderColor: '#DFE4EA',
+      width: "100%", 
+      height: "55%",
+      paddingVertical: 60,
+      shadowColor: '#000',
+      shadowOpacity: 0.15,
+      shadowRadius: 10,
+      elevation: 6,
+    }}
+  >
+
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
