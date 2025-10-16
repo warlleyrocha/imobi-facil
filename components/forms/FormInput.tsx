@@ -21,9 +21,7 @@ export function FormInput({
     <View className={`gap-[10px] pb-[12px] ${containerClassName ?? ''}`}>
       <Text className="font-mulish-medium text-[16px] text-dark-5">
         {label}
-        {required && '*'}
-        {label.replace('*', '')}
-        {label.includes(`*`) && <Text style={{ color: 'red' }}> *</Text>}
+        {required && <Text style={{ color: '#EF4444' }}>*</Text>}
       </Text>
 
       <View className="relative">

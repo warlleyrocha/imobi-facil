@@ -24,8 +24,8 @@ export default function Corretor() {
 
   const { control, handleSubmit } = useForm<SignUpFormState>({
     defaultValues: {
-      firstname: 'WARLL',
-      lastname: 'rodrigues',
+      firstname: 'Carlos',
+      lastname: 'Souza',
       birthdate: '16/08/1990',
       cpf: '111.111.111-11',
       creci: '123456',
@@ -104,6 +104,7 @@ export default function Corretor() {
               render={({ field: { onChange, value } }) => (
                 <FormInput
                   label={field.label}
+                  required
                   placeholder={field.placeholder}
                   value={value}
                   onChangeText={(text) => {
