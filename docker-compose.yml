@@ -33,6 +33,21 @@ services:
       - postgresql_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  node-sonar:
+    build:
+      context: .
+      dockerfile: Dockerfile # seu Dockerfile enxuto para SonarQube Scanner
+    container_name: node-sonar
+    depends_on:
+      - sonarqube
+    volumes:
+      - ./:/app
+    environment:
+      SONAR_HOST_URL: http://sonarqube:9000
+      SONAR_TOKEN: ${SONAR_TOKEN}
+    working_dir: /app
+    command: ["npx", "sonar-scanner"]
+
 volumes:
   sonarqube_data:
   sonarqube_extensions:
