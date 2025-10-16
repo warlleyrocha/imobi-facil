@@ -22,6 +22,8 @@ export function FormInput({
       <Text className="font-mulish-medium text-[16px] text-dark-5">
         {label}
         {required && '*'}
+        {label.replace('*', '')}
+        {label.includes(`*`) && <Text style={{ color: 'red' }}> *</Text>}
       </Text>
 
       <View className="relative">
