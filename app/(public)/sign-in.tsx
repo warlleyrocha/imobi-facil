@@ -37,7 +37,7 @@ export default function SignIn() {
       <View
         className="flex-1 items-center rounded-t-[24px] bg-white px-4 pb-4"
         style={{
-          marginTop: -40, // Sobreposição sobre o background
+          marginTop: -35, // Sobreposição sobre o background
           paddingTop: 48, // Espaço para compensar a sobreposição
           minHeight: height * 0.5, // Mínimo 50% da altura
         }}>
@@ -67,7 +67,7 @@ export default function SignIn() {
             width: Math.min(width * 0.9, 345), // 90% da largura ou máximo 345px
             gap: 23,
             marginTop: 'auto',
-            marginBottom: 52,
+            marginBottom: 44,
           }}>
           <Auth />
         </TouchableOpacity>

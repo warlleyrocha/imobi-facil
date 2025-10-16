@@ -10,29 +10,29 @@ export interface FormFieldConfig {
 export const corretorFormFields: FormFieldConfig[] = [
   {
     name: 'firstname',
-    label: 'Nome*',
+    label: 'Nome',
     placeholder: 'Digite o seu Nome',
   },
   {
     name: 'lastname',
-    label: 'Sobrenome*',
+    label: 'Sobrenome',
     placeholder: 'Digite o seu Sobrenome',
   },
   {
     name: 'birthdate',
-    label: 'Data de Nascimento*',
+    label: 'Data de Nascimento',
     placeholder: 'DD/MM/AAAA',
     keyboardType: 'numeric',
   },
   {
     name: 'cpf',
-    label: 'CPF*',
+    label: 'CPF',
     placeholder: '000.000.000-00',
     keyboardType: 'numeric',
   },
   {
     name: 'creci',
-    label: 'CRECI/Estado*',
+    label: 'CRECI/Estado',
     placeholder: 'Digite o seu CRECI',
   },
 ];

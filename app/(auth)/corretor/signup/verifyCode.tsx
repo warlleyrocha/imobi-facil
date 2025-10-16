@@ -65,7 +65,9 @@ export default function VerifyCode() {
               Enviamos um código para o email cadastrado!
             </Text>
             <View className="mt-4 text-center font-mulish-semibold text-base text-[#111928]">
-              <Text className="text-[16px] text-[#111928]">Verifique a sua caixa de entrada.</Text>
+              <Text className="font-mulish-bold text-[16px] text-[#111928]">
+                Verifique a sua caixa de entrada.
+              </Text>
               <Text className="mt-1 font-mulish-light text-sm text-[#637381]">
                 Insira no campo abaixo o código de verificação que enviamos para o seu email.
               </Text>
