@@ -40,28 +40,7 @@ export default function FeedBack() {
   }, [router]);
   return (
     <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
-      <View
-    className="items-center justify-center gap-[12px] rounded-[10px]"
-    style={{
-      backgroundColor: '#F9FAFB', // 
-      borderWidth: 2,
-      borderColor: '#DFE4EA',
-      width: "100%", 
-      height: "55%",
-      paddingVertical: 60,
-      shadowColor: '#000',
-      shadowOpacity: 0.15,
-      shadowRadius: 10,
-      elevation: 6,
-    }}
-  >
-        {/* Ícone de fechar no canto superior direito */}
-        <TouchableOpacity
-          className="absolute right-[12px] top-[12px] z-10"
-          onPress={() => router.replace('/(auth)/onboard')}>
-          <Ionicons name="close" size={24} color="black" />
-        </TouchableOpacity>
-
+      <View className="mt-[16px] h-[350px] w-[343px] items-center justify-center gap-[12px] rounded-[10px] border-[1.5px] border-stroke bg-white ">
         <View className="relative">
           <View className="inset-0 items-center justify-center">
             <View className="rounded-full bg-[#ACEFC8;] p-3 shadow-lg">
@@ -73,7 +52,7 @@ export default function FeedBack() {
         <Text className="px-[40px] text-center text-[20px] font-bold text-[#262626]">
           Cadastro concluído!
         </Text>
-        <Text className="px-[100px] text-center text-[14px] text-[#606268]">
+        <Text className="px-[56px] text-center text-[14px] text-[#606268]">
           Agora vamos te mostrar como tirar o máximo do app.
         </Text>
       </View>
