@@ -16,11 +16,14 @@ export default function Success() {
   }, [router]);
 
   return (
-    <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
-      <View className="relative h-[350px] w-[343px] items-center justify-center gap-[12px] rounded-[5px] bg-[#F9FAFB]">
+    <View
+      className="flex-1 items-center justify-center px-[16px] py-[10px]"
+      style={{ backgroundColor: '#F1F2F6' }}>
+      {/* Quadrado interno */}
+      <View className="mt-[16px] h-[350px] w-[343px] items-center justify-center gap-[12px] rounded-[10px] border-[1.5px] border-stroke bg-white ">
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
-          className="absolute right-[12px] top-[12px] z-10"
+          className="absolute right-[12px] top-[30px] z-10"
           onPress={() => router.replace('/(auth)/select-profile')}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
@@ -33,11 +36,11 @@ export default function Success() {
           </View>
         </View>
 
-        <Text className="px-[40px] text-center text-[20px] font-bold text-[#262626]">
+        <Text className="mt-[20px]  px-[40px] text-center text-[20px] font-bold text-[#262626]">
           Login realizado com Sucesso!
         </Text>
         <Text className="px-[100px] text-center text-[14px] text-[#606268]">
-          Redirecionando para completar seu perfil
+          Redirecionando para completar seu perfil.
         </Text>
       </View>
     </View>
