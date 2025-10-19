@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router'; // Navegação programática
 import { useState } from 'react';
 import { Alert, Image, Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
 
-import LocationSVG from '~/components/icons/Location'; // Ícone SVG customizado para localização
+import LocationIcon from '@/assets/icons-svg/location.svg'; // Ícone SVG customizado para localização
 
 // Props esperadas pelo modal de permissão de localização
 interface LocationPermissionModalProps {
@@ -117,7 +117,7 @@ export default function LocationPermissionModal({
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <View className="flex-1 items-center justify-end bg-dark/50 pb-[52px]">
         <View className="z-10 h-auto w-[306px] items-center gap-5 rounded-[26px] bg-white p-5">
-          <LocationSVG /> {/* Ícone de localização */}
+          <LocationIcon />
           <Text className="text-center font-mulish text-base text-black">
             Permitir que o ImobiFácil acesse a localização desse dispositivo?
           </Text>
