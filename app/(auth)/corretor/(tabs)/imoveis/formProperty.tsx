@@ -8,13 +8,13 @@ import { FormData, FormDataWithId } from '@/types/formProperty';
 import { BasicInfoSection } from '~/components/layouts/Sections/BasicInfoSection';
 import { LocationSection } from '~/components/layouts/Sections/LocationSection';
 import { MediaSection } from '~/components/layouts/Sections/MediaSection';
-import { isFormValid } from '~/utils/validationsFormProperty'; // ajuste o caminho
+import { isFormValid } from '~/utils/validationsFormProperty';
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 
 export default function FormProperty() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>(); // <-- aqui você obtém o ID
+  const { id } = useLocalSearchParams<{ id: string }>();
 
   const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
@@ -31,13 +31,12 @@ export default function FormProperty() {
       complemento: 'Apto 101',
       cidade: 'São Paulo',
       estado: 'SP',
-      midias: [], // <- inicializa vazio
+      midias: [],
     },
   });
 
-  // Preencher o formulário caso seja edição
   useEffect(() => {
-    if (!id) return; // Novo cadastro
+    if (!id) return;
 
     const loadPropertyForEdit = async () => {
       try {
@@ -53,7 +52,6 @@ export default function FormProperty() {
           return;
         }
 
-        // Atualiza o react-hook-form com os valores do imóvel
         reset(selected);
       } catch (error) {
         console.error('Erro ao carregar imóvel para edição:', error);
@@ -63,14 +61,10 @@ export default function FormProperty() {
     loadPropertyForEdit();
   }, [id, reset]);
 
-  // Observa mudanças nos campos em tempo real
   const watchedValues = useWatch({ control });
-
-  // Verifica se o formulário está válido
   const formIsValid = isFormValid(watchedValues);
 
   const onSubmit = async (data: FormData) => {
-    // Validação antes do envio
     if (!isFormValid(data)) {
       Alert.alert('Formulário incompleto');
       return;
@@ -88,7 +82,6 @@ export default function FormProperty() {
       let dataComId: FormDataWithId;
 
       if (id) {
-        // Edição: usa o mesmo ID
         dataComId = { id, ...data };
         const index = listPropertys.findIndex((item) => item.id === id);
         if (index >= 0) {
@@ -97,7 +90,6 @@ export default function FormProperty() {
           listPropertys.push(dataComId);
         }
       } else {
-        // Novo cadastro
         const novoImovelId = (listPropertys.length + 1).toString();
         dataComId = { id: novoImovelId, ...data };
         listPropertys.push(dataComId);
@@ -107,10 +99,13 @@ export default function FormProperty() {
 
       console.log('Enviando para API:', dataComId);
 
-      // Navegar para addSuccess ou lista de imóveis
       router.replace({
         pathname: '/(auth)/corretor/(tabs)/imoveis/addSuccess',
-        params: { propertyId: dataComId.id, ...dataComId },
+        params: { 
+          propertyId: dataComId.id,
+          midias: JSON.stringify(dataComId.midias || []),
+          isEdit: id ? 'true' : 'false'
+        },
       });
     } catch (error) {
       console.error('Erro ao salvar os dados do formulário:', error);
@@ -122,7 +117,7 @@ export default function FormProperty() {
       <ScrollView
         className="px-[16px] pt-[55px]"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 64 }}>
+        contentContainerStyle={{ paddingBottom: 100 }}>
         {/* Header */}
         <View className="relative flex-row items-center justify-center pb-[35px]">
           <TouchableOpacity
@@ -130,7 +125,7 @@ export default function FormProperty() {
               if (router.canGoBack()) {
                 router.back();
               } else {
-                router.replace('/(auth)/corretor/(tabs)/imoveis'); // 🔙 força retorno pra aba correta
+                router.replace('/(auth)/corretor/(tabs)/imoveis');
               }
             }}
             className="absolute left-0 top-1">
@@ -151,9 +146,9 @@ export default function FormProperty() {
         {/* Midias */}
         <MediaSection control={control} />
 
-        {/* Botão final */}
+        {/* Botão final com espaçamento superior */}
         <TouchableOpacity
-          className={`h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
+          className={`mt-[24px] h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
             !formIsValid ? 'bg-gray-3' : 'bg-cor-primaria'
           }`}
           onPress={handleSubmit(onSubmit)}
