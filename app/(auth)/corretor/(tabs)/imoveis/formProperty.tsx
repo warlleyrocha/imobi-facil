@@ -35,8 +35,9 @@ export default function FormProperty() {
     },
   });
 
+  // Preencher o formulário caso seja edição
   useEffect(() => {
-    if (!id) return;
+    if (!id) return; // Novo cadastro
 
     const loadPropertyForEdit = async () => {
       try {
@@ -52,6 +53,7 @@ export default function FormProperty() {
           return;
         }
 
+        // Atualiza o react-hook-form com os valores do imóvel
         reset(selected);
       } catch (error) {
         console.error('Erro ao carregar imóvel para edição:', error);
@@ -61,10 +63,14 @@ export default function FormProperty() {
     loadPropertyForEdit();
   }, [id, reset]);
 
+  // Observa mudanças nos campos em tempo real
   const watchedValues = useWatch({ control });
+
+  // Verifica se o formulário está válido
   const formIsValid = isFormValid(watchedValues);
 
   const onSubmit = async (data: FormData) => {
+    // Validação antes do envio
     if (!isFormValid(data)) {
       Alert.alert('Formulário incompleto');
       return;
@@ -82,6 +88,7 @@ export default function FormProperty() {
       let dataComId: FormDataWithId;
 
       if (id) {
+        // Edição: usa o mesmo ID
         dataComId = { id, ...data };
         const index = listPropertys.findIndex((item) => item.id === id);
         if (index >= 0) {
@@ -90,6 +97,7 @@ export default function FormProperty() {
           listPropertys.push(dataComId);
         }
       } else {
+        // Novo cadastro
         const novoImovelId = (listPropertys.length + 1).toString();
         dataComId = { id: novoImovelId, ...data };
         listPropertys.push(dataComId);
@@ -125,7 +133,7 @@ export default function FormProperty() {
               if (router.canGoBack()) {
                 router.back();
               } else {
-                router.replace('/(auth)/corretor/(tabs)/imoveis');
+                router.replace('/(auth)/corretor/(tabs)/imoveis'); // 🔙 força retorno pra aba correta
               }
             }}
             className="absolute left-0 top-1">
