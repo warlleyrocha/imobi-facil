@@ -36,8 +36,9 @@ export default function RootLayout() {
 function RootLayoutInner() {
   const router = useRouter();
   const segments = useSegments();
-  const { user, loading } = useAuth();
+
   const [appReady, setAppReady] = useState(false);
+  const { user, loading } = useAuth();
 
   const [fontsLoaded, fontsError] = useFonts({
     Inter_300Light,
@@ -73,6 +74,7 @@ function RootLayoutInner() {
 
       // Se autenticado e está em rota pública
       if (user && inPublicGroup) {
+        console.log('Autenticado');
         router.replace('/(auth)/select-profile');
       }
 

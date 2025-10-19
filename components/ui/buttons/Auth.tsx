@@ -1,10 +1,10 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 
-import { GoogleIcon } from '~/components/icons/GoogleIcon';
 import { useGoogleAuth } from '@/hooks/useGoogleAuth';
+import { GoogleIcon } from '~/components/icons/GoogleIcon';
 
 const Auth = () => {
-  const { loginWithGoogle, loading, error } = useGoogleAuth();
+  const { loginWithGoogle, loading } = useGoogleAuth();
 
   return (
     <View>
@@ -19,7 +19,6 @@ const Auth = () => {
           <Text className="font-inter-light text-[#111928]">Continue com o Google</Text>
         )}
       </TouchableOpacity>
-      {error && <Text className="mt-2 text-red-600">{error}</Text>}
     </View>
   );
 };
