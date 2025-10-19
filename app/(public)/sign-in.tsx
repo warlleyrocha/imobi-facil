@@ -1,11 +1,45 @@
-import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { useEffect } from 'react';
+import { Dimensions, ImageBackground, Platform, Text, TouchableOpacity, View } from 'react-native';
 
 import CompanyIcon from '@/assets/icons-svg/company.svg';
 import Auth from '~/components/ui/buttons/Auth';
+import { useAuth } from '~/contexts/authContext';
+import type { User } from '~/types/authTypes';
 
 const { width, height } = Dimensions.get('window');
 
 export default function SignIn() {
+  const { user, login } = useAuth();
+
+  useEffect(() => {
+    //+Feature:Pega os parametros da URL e checa se existe algum token. Se existir, faz o login automático
+    // Se o usuário já estiver logado, não faz nada
+    // Até o momento só funciona na web
+    if (Platform.OS !== 'web' || user) return;
+    const searchParams = new URLSearchParams(window.location.search);
+    const userParams = searchParams.get('user');
+    const accessToken = searchParams.get('token');
+    if (userParams && accessToken) {
+      (async () => {
+        // Decodifica o user que veio na URL e faz o login
+        const decodedUser: User = JSON.parse(decodeURIComponent(userParams));
+        console.log({
+          id: decodedUser.id,
+          email: decodedUser.email,
+          name: decodedUser.name,
+          accessToken,
+        });
+        await login({ ...decodedUser, accessToken });
+        //Revalidação da página pois localStorage não atualiza a página automaticamente
+        window.location.reload();
+      })();
+    }
+    return () => {
+      //Simulação de limpeza após sair da página
+      console.log('Unmount sign-in');
+    };
+  }, [login, user]);
+
   return (
     <View className="flex-1 bg-white">
       <ImageBackground

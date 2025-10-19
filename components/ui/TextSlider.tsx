@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions,Text, View } from 'react-native';
+import LightIcon from '@/assets/icons-svg/light.svg';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -25,12 +26,14 @@ const TextSlider = () => {
       <Animated.View
         style={{
           transform: [{ translateX }],
+          display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8
         }}>
+          <LightIcon />
         <Text
           className="text-center font-mulish-semibold text-[14px] text-black"
           numberOfLines={1}
           ellipsizeMode="clip">
-          💡 Cadastros com fotos de qualidade recebem 3x mais cliques
+           Cadastros com fotos de qualidade recebem 3x mais cliques
         </Text>
       </Animated.View>
     </View>

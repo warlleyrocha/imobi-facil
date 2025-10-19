@@ -8,13 +8,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgProps } from 'react-native-svg';
 
 import ImagePro from '@/assets/bg.png';
-import Calendar from '@/assets/icons-svg/calendar.svg';
+import AddClientIcon from '@/assets/icons-svg/add-user.svg';
 import Circle from '@/assets/icons-svg/circle.svg';
 import Eyes from '@/assets/icons-svg/eyes.svg';
 import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
-import Users from '@/assets/icons-svg/users.svg';
+import MyFoldersIcon from '@/assets/icons-svg/folder.svg';
 import ImageWithShadow from '~/components/ui/ImageShadow';
 import TextSlider from '~/components/ui/TextSlider';
 
@@ -42,8 +42,8 @@ const cardData: CardQuickAccess[] = [
     route: '/corretor/imoveis/formProperty',
   },
   { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/imoveis/' },
-  { id: '3', icon: Calendar, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
-  { id: '4', icon: Users, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
+  { id: '3', icon: AddClientIcon, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
+  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
 ];
 
 const statsData: StatCardData[] = [
