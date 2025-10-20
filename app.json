@@ -48,6 +48,7 @@
       ]
     },
     "extra": {
+      "EXPO_PUBLIC_API_URL": "http://localhost:3000",
       "router": {},
       "eas": {
         "projectId": "d3c97ce7-a258-477a-ab64-c3223946c60b"

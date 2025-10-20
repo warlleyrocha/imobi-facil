@@ -47,6 +47,7 @@ Aguarde alguns minutos até o SonarQube inicializar completamente.
 Acesse http://localhost:9000
 
 **Credenciais padrão:**
+
 - Usuário: `admin`
 - Senha: `admin`
 
@@ -90,10 +91,11 @@ No momento, estamos usando **apenas análise simples**, pois ainda não temos te
 Execute a análise de código:
 
 ```bash
-npm run sonar
+npm run sonar:scan
 ```
 
 Esta análise verifica:
+
 - ✅ Qualidade do código (Code Smells)
 - ✅ Bugs potenciais
 - ✅ Vulnerabilidades de segurança
@@ -132,9 +134,11 @@ No dashboard você verá:
 ### Interpretando os Resultados
 
 #### Bugs 🐛
+
 Erros que podem causar falhas na aplicação. **Prioridade máxima!**
 
 **Exemplos:**
+
 - Variáveis usadas antes de serem inicializadas
 - Divisão por zero
 - Null pointer exceptions
@@ -143,9 +147,11 @@ Erros que podem causar falhas na aplicação. **Prioridade máxima!**
 **Ação:** Corrigir **imediatamente** antes de fazer merge.
 
 #### Vulnerabilidades 🔒
+
 Problemas de segurança que podem ser explorados. **Prioridade máxima!**
 
 **Exemplos:**
+
 - SQL Injection
 - Cross-Site Scripting (XSS)
 - Uso de funções inseguras (eval, innerHTML)
@@ -154,9 +160,11 @@ Problemas de segurança que podem ser explorados. **Prioridade máxima!**
 **Ação:** Corrigir **imediatamente** antes de fazer merge.
 
 #### Code Smells 💡
+
 Problemas de design que dificultam manutenção. **Prioridade média.**
 
 **Exemplos:**
+
 - Funções muito longas (>50 linhas)
 - Complexidade alta (muitos if/else aninhados)
 - Código duplicado
@@ -179,13 +187,15 @@ Acesse o dashboard e filtre as issues:
    ```
    Issues > Type: Bug > Severity: Critical/High
    ```
+
    - Corrigir TODOS antes de qualquer outra coisa
    - Podem causar falhas na aplicação
-   
 2. **Vulnerabilidades (Prioridade CRÍTICA)**
+
    ```
    Issues > Type: Vulnerability > Severity: Critical/High
    ```
+
    - Corrigir TODOS imediatamente
    - Riscos de segurança
 
@@ -193,12 +203,14 @@ Acesse o dashboard e filtre as issues:
    ```
    Issues > Type: Code Smell > Severity: Major
    ```
+
    - Focar nos "Major" primeiro
    - Resolver gradualmente
 
 #### Passo 2: Estratégia de Correção
 
 **Semana 1-2: Bugs e Vulnerabilidades**
+
 ```bash
 # 1. Rode análise
 npm run sonar
@@ -213,6 +225,7 @@ git commit -m "fix: resolve critical bugs found by sonarqube"
 ```
 
 **Semana 3-4: Code Smells Críticos (Major)**
+
 ```bash
 # Foque em:
 - Funções muito longas (quebrar em funções menores)
@@ -222,6 +235,7 @@ git commit -m "fix: resolve critical bugs found by sonarqube"
 ```
 
 **Semana 5+: Code Smells Menores**
+
 ```bash
 # Refatore gradualmente:
 - Nomes de variáveis/funções
@@ -232,6 +246,7 @@ git commit -m "fix: resolve critical bugs found by sonarqube"
 #### Passo 3: Definir Meta Inicial
 
 **Meta para os próximos 30 dias:**
+
 ```
 ✅ Bugs: 0 (zero tolerância)
 ✅ Vulnerabilidades: 0 (zero tolerância)
@@ -243,6 +258,7 @@ git commit -m "fix: resolve critical bugs found by sonarqube"
 #### Passo 4: Estabelecer Rotina
 
 **Para cada nova feature/bugfix:**
+
 ```bash
 # 1. Desenvolva normalmente
 git checkout -b feature/minha-feature
@@ -266,11 +282,13 @@ git push origin feature/minha-feature
 #### Passo 1: Setup de Testes
 
 **Dependências:**
+
 ```bash
 npm install --save-dev @testing-library/react-native @testing-library/jest-native
 ```
 
 **Configuração do Jest** (adicione no `package.json`):
+
 ```json
 {
   "jest": {
@@ -295,89 +313,94 @@ npm install --save-dev @testing-library/react-native @testing-library/jest-nativ
 **Ordem recomendada (do mais fácil ao mais complexo):**
 
 **1. Funções Utilitárias (Semana 1)**
+
 ```typescript
 // utils/formatters.test.ts
-import { formatCurrency, formatCPF } from './formatters'
+import { formatCurrency, formatCPF } from './formatters';
 
 describe('formatCurrency', () => {
   it('should format number to BRL currency', () => {
-    expect(formatCurrency(1000)).toBe('R$ 1.000,00')
-    expect(formatCurrency(10.5)).toBe('R$ 10,50')
-  })
-})
+    expect(formatCurrency(1000)).toBe('R$ 1.000,00');
+    expect(formatCurrency(10.5)).toBe('R$ 10,50');
+  });
+});
 
 describe('formatCPF', () => {
   it('should format CPF with mask', () => {
-    expect(formatCPF('12345678900')).toBe('123.456.789-00')
-  })
-})
+    expect(formatCPF('12345678900')).toBe('123.456.789-00');
+  });
+});
 ```
 
 **Meta:** Coverage de `utils/` = 80%+
 
 **2. Validações e Regras de Negócio (Semana 2-3)**
+
 ```typescript
 // utils/validators.test.ts
-import { validateEmail, validateCPF, validatePhone } from './validators'
+import { validateEmail, validateCPF, validatePhone } from './validators';
 
 describe('validateEmail', () => {
   it('should validate correct email', () => {
-    expect(validateEmail('user@example.com')).toBe(true)
-  })
-  
+    expect(validateEmail('user@example.com')).toBe(true);
+  });
+
   it('should reject invalid email', () => {
-    expect(validateEmail('invalid-email')).toBe(false)
-  })
-})
+    expect(validateEmail('invalid-email')).toBe(false);
+  });
+});
 ```
 
 **Meta:** Coverage de `utils/validators.ts` = 100%
 
 **3. Serviços e APIs (Semana 4-5)**
+
 ```typescript
 // services/auth.test.ts
-import { login, logout, validateToken } from './auth'
+import { login, logout, validateToken } from './auth';
 
 // Mock do Appwrite
 jest.mock('appwrite', () => ({
   Client: jest.fn(),
-  Account: jest.fn()
-}))
+  Account: jest.fn(),
+}));
 
 describe('Auth Service', () => {
   it('should login with valid credentials', async () => {
-    const result = await login('user@email.com', 'password')
-    expect(result.success).toBe(true)
-  })
-})
+    const result = await login('user@email.com', 'password');
+    expect(result.success).toBe(true);
+  });
+});
 ```
 
 **Meta:** Coverage de `services/` = 70%+
 
 **4. Hooks Customizados (Semana 6-7)**
+
 ```typescript
 // hooks/useAuth.test.ts
-import { renderHook, act } from '@testing-library/react-native'
-import { useAuth } from './useAuth'
+import { renderHook, act } from '@testing-library/react-native';
+import { useAuth } from './useAuth';
 
 describe('useAuth', () => {
   it('should return user when authenticated', () => {
-    const { result } = renderHook(() => useAuth())
-    
-    expect(result.current.isAuthenticated).toBe(false)
-    
+    const { result } = renderHook(() => useAuth());
+
+    expect(result.current.isAuthenticated).toBe(false);
+
     act(() => {
-      result.current.login('user@email.com', 'password')
-    })
-    
-    expect(result.current.isAuthenticated).toBe(true)
-  })
-})
+      result.current.login('user@email.com', 'password');
+    });
+
+    expect(result.current.isAuthenticated).toBe(true);
+  });
+});
 ```
 
 **Meta:** Coverage de `hooks/` = 60%+
 
 **5. Componentes (Semana 8+)**
+
 ```typescript
 // components/Button.test.tsx
 import { render, fireEvent } from '@testing-library/react-native'
@@ -388,13 +411,13 @@ describe('Button Component', () => {
     const { getByText } = render(<Button>Click me</Button>)
     expect(getByText('Click me')).toBeTruthy()
   })
-  
+
   it('should call onPress when pressed', () => {
     const mockFn = jest.fn()
     const { getByText } = render(
       <Button onPress={mockFn}>Click</Button>
     )
-    
+
     fireEvent.press(getByText('Click'))
     expect(mockFn).toHaveBeenCalled()
   })
@@ -452,6 +475,7 @@ npm run sonar:coverage
 ### Checklist de Progresso
 
 #### Fase 1: Análise Simples ✅ (Atual)
+
 - [x] SonarQube configurado e rodando
 - [ ] Bugs = 0
 - [ ] Vulnerabilities = 0
@@ -459,6 +483,7 @@ npm run sonar:coverage
 - [ ] Time familiarizado com o dashboard
 
 #### Fase 2: Testes 🔄 (Próximo)
+
 - [ ] Jest configurado
 - [ ] Testes de utils (80%+ coverage)
 - [ ] Testes de validators (100% coverage)
@@ -468,15 +493,16 @@ npm run sonar:coverage
 - [ ] Coverage geral ≥ 60%
 
 #### Fase 3: Automação ⏳ (Futuro)
+
 - [ ] Quality Gate configurado
 - [ ] CI/CD com análise automática
 - [ ] SonarCloud (opcional)
 - [ ] Coverage geral ≥ 80%
 
-| Script | Comando | Descrição |
-|--------|---------|-----------|
-| `npm run sonar` | `dotenv -e .env -- sonar-scanner` | Executa análise de código |
-| `npm run test:coverage` | `jest --coverage --watchAll=false` | Gera cobertura de testes |
+| Script                   | Comando                                  | Descrição                 |
+| ------------------------ | ---------------------------------------- | ------------------------- |
+| `npm run sonar`          | `dotenv -e .env -- sonar-scanner`        | Executa análise de código |
+| `npm run test:coverage`  | `jest --coverage --watchAll=false`       | Gera cobertura de testes  |
 | `npm run sonar:coverage` | `npm run test:coverage && npm run sonar` | Testes + Análise completa |
 
 ## Entendendo os Conceitos
@@ -492,6 +518,7 @@ Code Smells são sinais de que algo pode estar errado no código. **Não são bu
 **Tipos comuns:**
 
 #### 1. Funções Muito Longas
+
 ```typescript
 // ❌ Ruim: Função com 100+ linhas
 function processUser(user) {
@@ -506,74 +533,77 @@ function processUser(user) {
 
 // ✅ Bom: Funções pequenas e focadas
 function processUser(user) {
-  validateUser(user)
-  const formatted = formatUser(user)
-  const score = calculateScore(user)
-  sendNotifications(user)
-  saveUser(formatted, score)
+  validateUser(user);
+  const formatted = formatUser(user);
+  const score = calculateScore(user);
+  sendNotifications(user);
+  saveUser(formatted, score);
 }
 ```
 
 #### 2. Código Duplicado
+
 ```typescript
 // ❌ Ruim: Duplicação
 function calcDiscountRegular(price) {
-  const tax = price * 0.1
-  const discount = price * 0.05
-  return price + tax - discount
+  const tax = price * 0.1;
+  const discount = price * 0.05;
+  return price + tax - discount;
 }
 
 function calcDiscountVIP(price) {
-  const tax = price * 0.1
-  const discount = price * 0.15  // Única diferença!
-  return price + tax - discount
+  const tax = price * 0.1;
+  const discount = price * 0.15; // Única diferença!
+  return price + tax - discount;
 }
 
 // ✅ Bom: Reutilização
 function calcFinalPrice(price, discountRate) {
-  const tax = price * 0.1
-  const discount = price * discountRate
-  return price + tax - discount
+  const tax = price * 0.1;
+  const discount = price * discountRate;
+  return price + tax - discount;
 }
 ```
 
 #### 3. Magic Numbers
+
 ```typescript
 // ❌ Ruim: Números "mágicos"
 if (user.age < 18) {
-  discount = price * 0.05
+  discount = price * 0.05;
 }
 
 // ✅ Bom: Constantes nomeadas
-const ADULT_AGE = 18
-const MINOR_DISCOUNT = 0.05
+const ADULT_AGE = 18;
+const MINOR_DISCOUNT = 0.05;
 
 if (user.age < ADULT_AGE) {
-  discount = price * MINOR_DISCOUNT
+  discount = price * MINOR_DISCOUNT;
 }
 ```
 
 #### 4. Complexidade Alta
+
 ```typescript
 // ❌ Ruim: Muitos ifs aninhados
 if (user.age < 18) {
   if (user.hasConsent) {
     if (user.verified) {
-      return 'minor_verified'
+      return 'minor_verified';
     } else {
-      return 'minor_unverified'
+      return 'minor_unverified';
     }
   } else {
-    return 'no_consent'
+    return 'no_consent';
   }
 }
 
 // ✅ Bom: Extrair funções
 function getUserStatus(user) {
   if (user.age < 18) {
-    return getMinorStatus(user)
+    return getMinorStatus(user);
   }
-  return getAdultStatus(user)
+  return getAdultStatus(user);
 }
 ```
 
@@ -586,6 +616,7 @@ Critérios de qualidade que o código precisa atingir para ser aprovado. É como
 **Analogia:** Controle de qualidade numa fábrica - o produto só sai se passar em todos os testes!
 
 **Exemplo de Quality Gate:**
+
 ```
 Critérios para aprovar PR:
 ✅ Bugs = 0
@@ -613,13 +644,14 @@ Result: FAILED ❌
 
 ### Bugs vs Code Smells vs Vulnerabilities
 
-| Tipo | O que é | Urgência | Exemplo |
-|------|---------|----------|---------|
-| **Bug** 🐛 | Erro que causa falha | CRÍTICA | `if (x = 5)` (atribuição ao invés de comparação) |
-| **Vulnerability** 🔒 | Risco de segurança | CRÍTICA | `eval(userInput)` (permite execução de código malicioso) |
-| **Code Smell** 💡 | Problema de design | MÉDIA | Função com 200 linhas, difícil de entender |
+| Tipo                 | O que é              | Urgência | Exemplo                                                  |
+| -------------------- | -------------------- | -------- | -------------------------------------------------------- |
+| **Bug** 🐛           | Erro que causa falha | CRÍTICA  | `if (x = 5)` (atribuição ao invés de comparação)         |
+| **Vulnerability** 🔒 | Risco de segurança   | CRÍTICA  | `eval(userInput)` (permite execução de código malicioso) |
+| **Code Smell** 💡    | Problema de design   | MÉDIA    | Função com 200 linhas, difícil de entender               |
 
 **Prioridade de correção:**
+
 1. 🔒 Vulnerabilities (AGORA!)
 2. 🐛 Bugs (AGORA!)
 3. 💡 Code Smells (Gradualmente)
@@ -643,6 +675,7 @@ sonar.sources=app,components,contexts,hooks,lib,services,types,utils
 #### `docker-compose.yml`
 
 Define os serviços Docker necessários:
+
 - **sonarqube** - Servidor SonarQube (porta 9000)
 - **db** - PostgreSQL para persistência de dados
 
@@ -698,14 +731,16 @@ docker-compose restart
 ### Recursos do Sistema
 
 O SonarQube requer recursos significativos:
+
 - **RAM**: Mínimo 2GB, recomendado 4GB
 - **Disco**: ~2GB para instalação + dados dos projetos
 - **CPU**: 2+ cores recomendados
 
---- de commits importantes**
-   ```bash
-   npm run sonar:coverage
-   ```
+--- de commits importantes\*\*
+
+```bash
+npm run sonar:coverage
+```
 
 2. **Corrija problemas críticos** (Bugs e Vulnerabilidades) antes de fazer merge
 
@@ -741,6 +776,7 @@ docker-compose restart
 ### Erro de autenticação
 
 Verifique se:
+
 1. O token está correto no arquivo `.env`
 2. O arquivo `.env` está na raiz do projeto
 3. O token não expirou no SonarQube

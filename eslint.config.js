@@ -15,6 +15,7 @@ module.exports = defineConfig([
       'react/display-name': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      'import/no-unresolved': ['error', { ignore: ['^@env$'] }],
     },
   },
 ]);
