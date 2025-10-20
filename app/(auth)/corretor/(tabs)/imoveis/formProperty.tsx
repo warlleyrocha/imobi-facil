@@ -109,10 +109,10 @@ export default function FormProperty() {
 
       router.replace({
         pathname: '/(auth)/corretor/(tabs)/imoveis/addSuccess',
-        params: { 
+        params: {
           propertyId: dataComId.id,
           midias: JSON.stringify(dataComId.midias || []),
-          isEdit: id ? 'true' : 'false'
+          isEdit: id ? 'true' : 'false',
         },
       });
     } catch (error) {
@@ -125,7 +125,7 @@ export default function FormProperty() {
       <ScrollView
         className="px-[16px] pt-[55px]"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}>
+        contentContainerStyle={{ paddingBottom: 85 }}>
         {/* Header */}
         <View className="relative flex-row items-center justify-center pb-[35px]">
           <TouchableOpacity
@@ -156,7 +156,7 @@ export default function FormProperty() {
 
         {/* Botão final com espaçamento superior */}
         <TouchableOpacity
-          className={`mt-[24px] h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
+          className={`mt-[8px] h-[44px] w-full flex-row items-center justify-center rounded-lg px-[24px] py-[12px] ${
             !formIsValid ? 'bg-gray-3' : 'bg-cor-primaria'
           }`}
           onPress={handleSubmit(onSubmit)}
