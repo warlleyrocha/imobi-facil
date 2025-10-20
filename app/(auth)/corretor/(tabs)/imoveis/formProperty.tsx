@@ -8,13 +8,13 @@ import { FormData, FormDataWithId } from '@/types/formProperty';
 import { BasicInfoSection } from '~/components/layouts/Sections/BasicInfoSection';
 import { LocationSection } from '~/components/layouts/Sections/LocationSection';
 import { MediaSection } from '~/components/layouts/Sections/MediaSection';
-import { isFormValid } from '~/utils/validationsFormProperty'; // ajuste o caminho
+import { isFormValid } from '~/utils/validationsFormProperty';
 
 const setaEsquerda = require('~/assets/arrow-left.png');
 
 export default function FormProperty() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>(); // <-- aqui você obtém o ID
+  const { id } = useLocalSearchParams<{ id: string }>();
 
   const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
@@ -31,7 +31,7 @@ export default function FormProperty() {
       complemento: 'Apto 101',
       cidade: 'São Paulo',
       estado: 'SP',
-      midias: [], // <- inicializa vazio
+      midias: [],
     },
   });
 
@@ -107,10 +107,13 @@ export default function FormProperty() {
 
       console.log('Enviando para API:', dataComId);
 
-      // Navegar para addSuccess ou lista de imóveis
       router.replace({
         pathname: '/(auth)/corretor/(tabs)/imoveis/addSuccess',
-        params: { propertyId: dataComId.id, ...dataComId },
+        params: {
+          propertyId: dataComId.id,
+          midias: JSON.stringify(dataComId.midias || []),
+          isEdit: id ? 'true' : 'false',
+        },
       });
     } catch (error) {
       console.error('Erro ao salvar os dados do formulário:', error);
@@ -122,7 +125,7 @@ export default function FormProperty() {
       <ScrollView
         className="px-[16px] pt-[55px]"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 64 }}>
+        contentContainerStyle={{ paddingBottom: 85 }}>
         {/* Header */}
         <View className="relative flex-row items-center justify-center pb-[35px]">
           <TouchableOpacity
@@ -151,9 +154,9 @@ export default function FormProperty() {
         {/* Midias */}
         <MediaSection control={control} />
 
-        {/* Botão final */}
+        {/* Botão final com espaçamento superior */}
         <TouchableOpacity
-          className={`h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg px-[24px] py-[12px] ${
+          className={`mt-[8px] h-[44px] w-full flex-row items-center justify-center rounded-lg px-[24px] py-[12px] ${
             !formIsValid ? 'bg-gray-3' : 'bg-cor-primaria'
           }`}
           onPress={handleSubmit(onSubmit)}

@@ -25,11 +25,16 @@ const CustomSuccessIcon = ({ width = 44, height = 44 }) => (
   </Svg>
 );
 
-const imovelImage = require('@/assets/img-imovel-cadastrado.png');
-
 export default function SuccessForm() {
   const router = useRouter();
-  const { propertyId } = useLocalSearchParams<{ propertyId: string }>();
+  const { propertyId, midias, isEdit } = useLocalSearchParams<{
+    propertyId: string;
+    midias: string;
+    isEdit?: string;
+  }>();
+
+  const midiasArray: string[] = midias ? JSON.parse(midias) : [];
+  const isEditMode = isEdit === 'true';
 
   const handleNewProperty = () => {
     console.log('Cadastrar outro imóvel');
@@ -43,7 +48,7 @@ export default function SuccessForm() {
 
   return (
     <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
-      <View className="relative h-[622px] w-[343px] items-center justify-center gap-[12px] rounded-[8px] border border-[#DFE4EA] bg-[#white]">
+      <View className="relative h-[622px] w-[343px] items-center justify-start gap-[12px] rounded-[8px] border border-[#DFE4EA] bg-white">
         {/* Ícone de fechar no canto superior direito */}
         <TouchableOpacity
           className="absolute right-[12px] top-[12px] z-10"
@@ -51,28 +56,32 @@ export default function SuccessForm() {
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
 
-        <View className="relative pt-[40px]">
-          <View className="flex flex-row items-center justify-between gap-[30px] px-4">
-            <View className="rounded-full bg-[#ACEFC8;] p-3">
+        <View className="relative pt-[60px]">
+          <View className="flex flex-row items-center justify-center gap-[24px] px-4">
+            <View className="rounded-full bg-[#ACEFC8] p-3">
               <CustomSuccessIcon width={24} height={24} />
             </View>
             <Text className=" pr-5 text-center text-[20px] font-bold text-dark">
-              Imóvel cadastrado com{'\n'}sucesso!
+              {isEditMode ? 'Imóvel atualizado com' : 'Imóvel cadastrado com'}
+              {'\n'}sucesso!
             </Text>
           </View>
 
-          <View className="mt-[23px] w-full px-4">
-            <View className="items-center rounded-[8px] border border-[#E4E4E7] bg-white">
-              <Image
-                source={imovelImage}
-                style={{
-                  width: 311,
-                  height: 230,
-                  resizeMode: 'contain',
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
-                }}
-              />
+          <View className="mt-[20px] w-full px-4">
+            <View className="items-center rounded-[8px] border border-[#E4E4E7] bg-white pb-2">
+              {/* Exibir primeira imagem */}
+              {midiasArray.length > 0 && (
+                <Image
+                  source={{ uri: midiasArray[0] }}
+                  style={{
+                    width: '100%',
+                    height: 230,
+                    borderTopLeftRadius: 8,
+                    borderTopRightRadius: 8,
+                  }}
+                  resizeMode="cover"
+                />
+              )}
 
               <Text className="mb-[28px] mt-[30px] px-4 text-center font-mulish-semibold text-[22px] leading-[30px] text-[#111928]">
                 Seu imóvel já está visível para os interessados.
@@ -87,7 +96,7 @@ export default function SuccessForm() {
                   </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity className="bg-transparent pt-3" onPress={handleNewProperty}>
+                <TouchableOpacity className="bg-transparent" onPress={handleNewProperty}>
                   <Text className="mb-2 mt-4 px-6 pb-6 text-center font-mulish text-[16px] text-[#6B7280]">
                     Cadastrar outro imóvel
                   </Text>

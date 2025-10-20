@@ -69,7 +69,7 @@ export default function MyProperties() {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <View className="px-[16px] pt-[55px]">
+      <View className="px-[16px] pt-[55px] pb-[24px]">
         <View className="relative flex-row items-center justify-center pb-[32px]">
           <TouchableOpacity
             onPress={() => {
