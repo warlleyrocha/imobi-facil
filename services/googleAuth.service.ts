@@ -1,5 +1,4 @@
-// /services/googleAuth.service.ts
-import * as AuthSession from 'expo-auth-session';
+// @/services/googleAuth.service.ts
 import * as WebBrowser from 'expo-web-browser';
 import { Platform } from 'react-native';
 
