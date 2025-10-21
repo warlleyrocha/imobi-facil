@@ -41,6 +41,7 @@ export default function Onboard() {
 
   // Função para ir para home do corretor
   const handleStart = () => {
+    router.dismissAll();
     router.replace('/(auth)/corretor/(tabs)/home');
   };
 

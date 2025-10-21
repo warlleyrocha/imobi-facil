@@ -117,6 +117,7 @@ export default function FormProperty() {
       });
     } catch (error) {
       console.error('Erro ao salvar os dados do formulário:', error);
+      router.replace('/(auth)/corretor/(tabs)/imoveis/addFail');
     }
   };
 

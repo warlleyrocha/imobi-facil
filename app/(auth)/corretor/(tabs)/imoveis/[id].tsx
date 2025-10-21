@@ -58,7 +58,7 @@ export default function DetailsImovel() {
   //Função para editar
   const handleEdit = () => {
     if (!propertyData) return;
-    router.push({
+    router.replace({
       pathname: '/(auth)/corretor/(tabs)/imoveis/formProperty',
       params: { id: propertyData.id },
     });
