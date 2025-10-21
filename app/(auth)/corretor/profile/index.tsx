@@ -40,13 +40,15 @@ export default function Profile() {
   const [isViewingBio, setIsViewingBio] = useState(false);
 
   const {
-    propertyList,
     setPropertyList,
     menuVisible,
     setMenuVisible,
     menuPosition,
     setMenuPosition,
     deleteConfirmVisible,
+    filteredPropertyList, // Nova lista filtrada
+    searchQuery, // Novo estado de busca
+    setSearchQuery, // Nova função de busca
     handleEditProperty,
     handleAddToFolder,
     handleDeleteClick,
@@ -154,6 +156,8 @@ export default function Profile() {
                       placeholder="Busque por um imóvel"
                       placeholderTextColor="#FAFAFA"
                       className="ml-2 flex-1 font-mulish-medium text-[16px] leading-[18px] text-white"
+                      value={searchQuery}
+                      onChangeText={setSearchQuery}
                     />
                   </BlurView>
                 </View>
@@ -285,7 +289,7 @@ export default function Profile() {
       {/* Conteúdo de imóveis */}
       <View className="flex-1 bg-[##f3f4f6] px-[16px] pt-[20px]">
         <PropertyList
-          data={propertyList}
+          data={filteredPropertyList}
           activeTab={activeTab}
           menuVisible={menuVisible}
           menuPosition={menuPosition}
