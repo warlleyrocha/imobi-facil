@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { FormDataWithId } from '@/types/formProperty';
 
@@ -14,6 +14,9 @@ export function usePropertyManagement(options: UsePropertyManagementOptions = {}
 
   // Estados de propriedades
   const [propertyList, setPropertyList] = useState<FormDataWithId[]>([]);
+
+  // Estado de busca propriedades
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Estados do menu suspenso
   const [menuVisible, setMenuVisible] = useState<string | null>(null);
@@ -88,6 +91,23 @@ export function usePropertyManagement(options: UsePropertyManagementOptions = {}
     // Implementar lógica de adicionar à pasta
   };
 
+  // Lista filtrada com useMemo para otimização
+  const filteredPropertyList = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return propertyList;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+
+    return propertyList.filter((property) => {
+      // Busca pelo ID ou Título (case insensitive)
+      const matchesId = property.id.toLowerCase().includes(query);
+      const matchesTitle = property.titulo?.toLowerCase().includes(query);
+
+      return matchesId || matchesTitle;
+    });
+  }, [propertyList, searchQuery]);
+
   return {
     // Estados
     propertyList,
@@ -98,6 +118,9 @@ export function usePropertyManagement(options: UsePropertyManagementOptions = {}
     setMenuPosition,
     deleteConfirmVisible,
     propertyToDelete,
+    filteredPropertyList, // Nova lista filtrada
+    searchQuery, // Novo estado de busca
+    setSearchQuery, // Nova função de busca
 
     // Funções
     loadProperties,
