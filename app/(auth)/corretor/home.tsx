@@ -39,9 +39,9 @@ const cardData: CardQuickAccess[] = [
     id: '1',
     icon: HouseAddIcon,
     title: 'Cadastrar Imóvel',
-    route: '/corretor/imoveis/formProperty',
+    route: '/corretor/property/formProperty',
   },
-  { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/imoveis/' },
+  { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/property' },
   {
     id: '3',
     icon: AddClientIcon,

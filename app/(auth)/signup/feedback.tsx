@@ -30,7 +30,7 @@ export default function FeedBack() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace('/(auth)/onboard');
+      router.replace('/(auth)/corretor/onboard');
     }, 3000); // Redireciona após 3 segundos para a página de onboard
 
     // Limpa o timer caso o componente desmonte antes do timeout

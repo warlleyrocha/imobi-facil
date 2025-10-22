@@ -10,7 +10,7 @@ export default function VerifyCode() {
   const setaEsquerda = require('~/assets/arrow-left.png');
 
   // Estado para armazenar os 6 dígitos
-  const [code, setCode] = useState<string[]>(Array(6).fill(''));
+  const [code, setCode] = useState<string[]>(Array(6).fill('1'));
 
   // Array de refs para inputs
   const inputRefs = useRef<(TextInput | null)[]>([]);
@@ -49,7 +49,7 @@ export default function VerifyCode() {
     const verificationCode = code.join('');
     console.log('Código digitado:', verificationCode);
     // Aqui você pode chamar sua API para validação
-    router.replace('/(auth)/corretor/signup/feedback' as any);
+    router.replace('/(auth)/signup/feedback' as any);
   };
 
   return (

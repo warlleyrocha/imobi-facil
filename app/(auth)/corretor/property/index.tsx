@@ -76,11 +76,7 @@ export default function MyProperties() {
         <View className="relative flex-row items-center justify-center pb-[32px]">
           <TouchableOpacity
             onPress={() => {
-              if (router.canGoBack()) {
-                router.back();
-              } else {
-                router.replace('/corretor/home'); // ou qualquer aba padrão
-              }
+              router.replace('/corretor/home'); // ou qualquer aba padrão
             }}
             className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
@@ -98,7 +94,7 @@ export default function MyProperties() {
               key={property.id}
               onPress={() =>
                 router.push({
-                  pathname: '/(auth)/corretor/(tabs)/imoveis/[id]',
+                  pathname: '/(auth)/corretor/property/[id]',
                   params: { id: property.id },
                 })
               }
@@ -184,7 +180,7 @@ export default function MyProperties() {
 
           <TouchableOpacity
             className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
-            onPress={() => router.push('/(auth)/corretor/(tabs)/imoveis/formProperty')}>
+            onPress={() => router.push('/(auth)/corretor/property/formProperty')}>
             <CirclePlusIcon />
             <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
           </TouchableOpacity>

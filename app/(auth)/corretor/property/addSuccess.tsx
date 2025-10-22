@@ -38,16 +38,16 @@ export default function SuccessForm() {
 
   const handleNewProperty = () => {
     console.log('Cadastrar outro imóvel');
-    router.replace('/(auth)/corretor/(tabs)/imoveis/formProperty');
+    router.replace('/(auth)/corretor/property/formProperty');
   };
 
   const handleViewProperty = (id: string) => {
     if (!id) return;
-    router.push(`/(auth)/corretor/(tabs)/imoveis/[id]`);
+    router.replace(`/(auth)/corretor/property/${id}`);
   };
   const handleClose = () => {
     // Volta para a lista
-    router.replace('/(auth)/corretor/(tabs)/imoveis');
+    router.replace('/(auth)/corretor/property');
   };
 
   return (

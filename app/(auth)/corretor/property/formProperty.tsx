@@ -108,7 +108,7 @@ export default function FormProperty() {
       console.log('Enviando para API:', dataComId);
 
       router.replace({
-        pathname: '/(auth)/corretor/(tabs)/imoveis/addSuccess',
+        pathname: '/(auth)/corretor/property/addSuccess',
         params: {
           propertyId: dataComId.id,
           midias: JSON.stringify(dataComId.midias || []),
@@ -117,7 +117,7 @@ export default function FormProperty() {
       });
     } catch (error) {
       console.error('Erro ao salvar os dados do formulário:', error);
-      router.replace('/(auth)/corretor/(tabs)/imoveis/addFail');
+      router.replace('/(auth)/corretor/property/addFail');
     }
   };
 
@@ -131,11 +131,8 @@ export default function FormProperty() {
         <View className="relative flex-row items-center justify-center pb-[35px]">
           <TouchableOpacity
             onPress={() => {
-              if (router.canGoBack()) {
-                router.back();
-              } else {
-                router.replace('/(auth)/corretor/(tabs)/imoveis'); // 🔙 força retorno pra aba correta
-              }
+              // ✅ CORRETO: Sempre usar replace para limpar o histórico
+              router.replace('/(auth)/corretor/property');
             }}
             className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />

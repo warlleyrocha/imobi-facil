@@ -45,7 +45,7 @@ export default function Corretor() {
   const onSubmit = async (data: SignUpFormState) => {
     console.log('Dados:', data);
     try {
-      router.push('/(auth)/corretor/signup/verifyCode' as any);
+      router.push('/(auth)/signup/verifyCode' as any);
     } catch (error) {
       console.error(error);
     }
