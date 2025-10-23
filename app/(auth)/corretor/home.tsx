@@ -48,14 +48,14 @@ const cardData: CardQuickAccess[] = [
     id: '3',
     icon: AddClientIcon,
     title: 'Cadastrar Cliente',
-    route: '/(auth)/feedback/success/page',
+    route: '/',
   }, //substituir pela rota correta
-  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' },
+  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/' },
   {
     id: '5',
     icon: ManageClientsIcon,
     title: 'Gerenciar Clientes',
-    route: '/(auth)/feedback/success/page',
+    route: '/',
   },
   { id: '6', icon: ProfileIcon, title: 'Perfil do Corretor', route: '/(auth)/corretor/profile' },
 ];
@@ -167,7 +167,7 @@ export default function HomeCorretor() {
         <TextSlider />
 
         {/* Contratar PRO */}
-        <View className="gap-[16px] pb-[110px] pt-[40px]">
+        <View className="gap-[16px] pb-[16px] pt-[40px]">
           <View className="flex-row items-center justify-between">
             <Text className="font-mulish-bold text-[18px]">Ver Estatísticas</Text>
             <TouchableOpacity className="flex-row gap-[10px] rounded-lg bg-cor-primaria px-[24px] py-[10px]">
