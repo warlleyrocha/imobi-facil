@@ -139,11 +139,7 @@ export default function Profile() {
                 {/* Botão Voltar */}
                 <TouchableOpacity
                   onPress={() => {
-                    if (router.canGoBack()) {
-                      router.back();
-                    } else {
-                      router.replace('/corretor/home'); // volta pra Home ou qualquer aba principal
-                    }
+                    router.replace('/corretor/home'); // volta pra Home ou qualquer aba principal
                   }}>
                   <ArrowLeftIcon />
                 </TouchableOpacity>
