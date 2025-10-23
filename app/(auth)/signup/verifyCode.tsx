@@ -4,10 +4,13 @@ import { useRef, useState } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import CheckIcon from '@/assets/icons-svg/checkmark.svg';
+import { FeedbackScreen } from '@/components/feedbacks/FeedbackScreen';
+import { CustomSuccessIcon } from '@/components/icons/CustomSuccessIcon';
 
 export default function VerifyCode() {
   const router = useRouter();
   const setaEsquerda = require('~/assets/arrow-left.png');
+  const [showFeedback, setShowFeedback] = useState(false);
 
   // Estado para armazenar os 6 dígitos
   const [code, setCode] = useState<string[]>(Array(6).fill('1'));
@@ -48,9 +51,28 @@ export default function VerifyCode() {
 
     const verificationCode = code.join('');
     console.log('Código digitado:', verificationCode);
+
     // Aqui você pode chamar sua API para validação
-    router.replace('/(auth)/signup/feedback' as any);
+    setShowFeedback(true);
+
+    setTimeout(() => {
+      setShowFeedback(false);
+      router.replace('/(auth)/corretor/onboard');
+    }, 500);
   };
+
+  // Se showFeedback for true, renderiza apenas o FeedbackScreen
+  if (showFeedback) {
+    return (
+      <FeedbackScreen
+        icon={<CustomSuccessIcon width={54} height={54} />}
+        title="Cadastro concluído!"
+        description="Agora vamos te mostrar como tirar o máximo do app."
+        onClose={() => setShowFeedback(false)}
+        showCloseButton
+      />
+    );
+  }
 
   return (
     <View className="flex-1 bg-[#F6F6F6] px-4">
