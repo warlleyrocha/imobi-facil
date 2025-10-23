@@ -15,6 +15,8 @@ import MyFoldersIcon from '@/assets/icons-svg/folder.svg';
 import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
+import ProfileIcon from '@/assets/icons-svg/user-edit.svg';
+import ManageClientsIcon from '@/assets/icons-svg/user-settings.svg';
 import ImageWithShadow from '~/components/ui/ImageShadow';
 import TextSlider from '~/components/ui/TextSlider';
 
@@ -48,7 +50,14 @@ const cardData: CardQuickAccess[] = [
     title: 'Cadastrar Cliente',
     route: '/(auth)/feedback/success/page',
   }, //substituir pela rota correta
-  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
+  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' },
+  {
+    id: '5',
+    icon: ManageClientsIcon,
+    title: 'Gerenciar Clientes',
+    route: '/(auth)/feedback/success/page',
+  },
+  { id: '6', icon: ProfileIcon, title: 'Perfil do Corretor', route: '/(auth)/corretor/profile' },
 ];
 
 const statsData: StatCardData[] = [
