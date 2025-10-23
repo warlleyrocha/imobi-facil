@@ -41,12 +41,7 @@ export default function Onboard() {
 
   // Função para ir para home do corretor
   const handleStart = () => {
-    console.log('🟢 Clicou em Começar Agora');
-    console.log('🟢 Tentando ir para: /(auth)/corretor/home');
-
     router.replace('/(auth)/corretor/home');
-
-    console.log('🟢 Navegação executada');
   };
 
   const isFirstSlide = currentIndex === 0;
