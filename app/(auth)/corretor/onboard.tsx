@@ -3,8 +3,8 @@ import { useRef, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-import { onboardImages } from '../../assets/onboard';
-import ImageSlide from '../../components/ui/ImageSlide';
+import { onboardImages } from '../../../assets/onboard';
+import ImageSlide from '../../../components/ui/ImageSlide';
 
 export default function Onboard() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,7 +41,7 @@ export default function Onboard() {
 
   // Função para ir para home do corretor
   const handleStart = () => {
-    router.replace('/(auth)/corretor/(tabs)/home');
+    router.replace('/(auth)/corretor/home');
   };
 
   const isFirstSlide = currentIndex === 0;

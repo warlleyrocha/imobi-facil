@@ -45,21 +45,14 @@ export default function Corretor() {
   const onSubmit = async (data: SignUpFormState) => {
     console.log('Dados:', data);
     try {
-      router.replace('/(auth)/corretor/signup/verifyCode' as any);
+      router.push('/(auth)/signup/verifyCode' as any);
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleGoBack = () => {
-    console.log('Tentando voltar...');
-    if (router.canGoBack()) {
-      console.log('Pode voltar - usando router.back()');
-      router.back();
-    } else {
-      console.log('Não pode voltar - redirecionando para select-profile');
-      router.replace('/(auth)/select-profile' as any);
-    }
+    router.replace('/(auth)/select-profile' as any);
   };
 
   const openTerms = () => {

@@ -1,12 +1,12 @@
 // /hooks/useGoogleAuth.ts
-import { useRouter } from 'expo-router';
 import { useState } from 'react';
 
 //import { googleAuthService } from '@/services/googleAuth.service';
 
 export const useGoogleAuth = () => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
 
   const loginWithGoogle = () => {
@@ -18,7 +18,10 @@ export const useGoogleAuth = () => {
       console.log('Redirecionando para:', authUrl);
       googleAuthService.redirectToGoogle(authUrl);*/
       // Simulação de redirecionamento
-      router.replace('/(auth)/feedback/success/page');
+      setTimeout(() => {
+        setLoading(false);
+        setShowFeedback(true);
+      }, 500);
     } catch (err: any) {
       console.error('Erro ao iniciar login:', err);
       setError('Erro ao iniciar autenticação');
@@ -28,6 +31,8 @@ export const useGoogleAuth = () => {
 
   return {
     loginWithGoogle,
+    setShowFeedback,
+    showFeedback,
     loading,
     error,
   };

@@ -22,7 +22,7 @@ export default function EditProfile() {
     // Opcional: fechar o feedback automaticamente após alguns segundos
     setTimeout(() => {
       setShowFeedback(false);
-      router.push('/(auth)/corretor/profile');
+      router.replace('/(auth)/corretor/profile');
     }, 3000);
   };
 

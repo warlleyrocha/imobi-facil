@@ -11,10 +11,12 @@ import ImagePro from '@/assets/bg.png';
 import AddClientIcon from '@/assets/icons-svg/add-user.svg';
 import Circle from '@/assets/icons-svg/circle.svg';
 import Eyes from '@/assets/icons-svg/eyes.svg';
+import MyFoldersIcon from '@/assets/icons-svg/folder.svg';
 import HouseAddIcon from '@/assets/icons-svg/house-add.svg';
 import HouseAltIcon from '@/assets/icons-svg/house-alt.svg';
 import Stats from '@/assets/icons-svg/stats.svg';
-import MyFoldersIcon from '@/assets/icons-svg/folder.svg';
+import ProfileIcon from '@/assets/icons-svg/user-edit.svg';
+import ManageClientsIcon from '@/assets/icons-svg/user-settings.svg';
 import ImageWithShadow from '~/components/ui/ImageShadow';
 import TextSlider from '~/components/ui/TextSlider';
 
@@ -39,11 +41,23 @@ const cardData: CardQuickAccess[] = [
     id: '1',
     icon: HouseAddIcon,
     title: 'Cadastrar Imóvel',
-    route: '/corretor/imoveis/formProperty',
+    route: '/corretor/property/formProperty',
   },
-  { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/imoveis/' },
-  { id: '3', icon: AddClientIcon, title: 'Cadastrar Cliente', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
-  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/(auth)/feedback/success/page' }, //substituir pela rota correta
+  { id: '2', icon: HouseAltIcon, title: 'Meus Imóveis', route: '/corretor/property' },
+  {
+    id: '3',
+    icon: AddClientIcon,
+    title: 'Cadastrar Cliente',
+    route: '/',
+  }, //substituir pela rota correta
+  { id: '4', icon: MyFoldersIcon, title: 'Minhas Pastas', route: '/' },
+  {
+    id: '5',
+    icon: ManageClientsIcon,
+    title: 'Gerenciar Clientes',
+    route: '/',
+  },
+  { id: '6', icon: ProfileIcon, title: 'Perfil do Corretor', route: '/(auth)/corretor/profile' },
 ];
 
 const statsData: StatCardData[] = [
@@ -153,7 +167,7 @@ export default function HomeCorretor() {
         <TextSlider />
 
         {/* Contratar PRO */}
-        <View className="gap-[16px] pb-[110px] pt-[40px]">
+        <View className="gap-[16px] pb-[16px] pt-[40px]">
           <View className="flex-row items-center justify-between">
             <Text className="font-mulish-bold text-[18px]">Ver Estatísticas</Text>
             <TouchableOpacity className="flex-row gap-[10px] rounded-lg bg-cor-primaria px-[24px] py-[10px]">

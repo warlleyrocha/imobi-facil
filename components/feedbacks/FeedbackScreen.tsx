@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Text, View } from 'react-native';
 
 interface FeedbackScreenProps {
@@ -9,6 +9,8 @@ interface FeedbackScreenProps {
   readonly showCloseButton?: boolean;
   readonly autoRedirectMs?: number;
   readonly onAutoRedirect?: () => void;
+  readonly descriptionPaddingX?: number; // novo prop opcional
+  readonly titleMarginTop?: number;
 }
 
 export function FeedbackScreen({
@@ -19,17 +21,19 @@ export function FeedbackScreen({
   showCloseButton = true,
   autoRedirectMs,
   onAutoRedirect,
+  descriptionPaddingX = 58,
+  titleMarginTop,
 }: FeedbackScreenProps) {
   // Se precisar do auto-redirect, use useEffect aqui
-  // useEffect(() => {
-  //   if (autoRedirectMs && onAutoRedirect) {
-  //     const timer = setTimeout(onAutoRedirect, autoRedirectMs);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [autoRedirectMs, onAutoRedirect]);
+  useEffect(() => {
+    if (autoRedirectMs && onAutoRedirect) {
+      const timer = setTimeout(onAutoRedirect, autoRedirectMs);
+      return () => clearTimeout(timer);
+    }
+  }, [autoRedirectMs, onAutoRedirect]);
 
   return (
-    <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
+    <View className="flex-1 items-center justify-center bg-[#F1F2F6] px-[16px] py-[10px]">
       <View className="relative h-[350px] w-[343px] items-center justify-center gap-[12px] rounded-[8px] border border-[#DFE4EA] bg-[#F9FAFB]">
         <View className="relative">
           <View className="inset-0 items-center justify-center">
@@ -37,8 +41,16 @@ export function FeedbackScreen({
           </View>
         </View>
 
-        <Text className="px-[40px] text-center text-[20px] font-bold text-[#262626]">{title}</Text>
-        <Text className="px-[100px] text-center text-[14px] text-[#606268]">{description}</Text>
+        <Text
+          className="px-[40px] text-center text-[20px] font-bold text-[#262626]"
+          style={{ marginTop: titleMarginTop }}>
+          {title}
+        </Text>
+        <Text
+          className="text-center text-[14px] leading-[22px] text-[#606268]"
+          style={{ paddingHorizontal: descriptionPaddingX }}>
+          {description}
+        </Text>
       </View>
     </View>
   );

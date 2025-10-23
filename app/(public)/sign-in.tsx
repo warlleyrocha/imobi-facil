@@ -1,7 +1,11 @@
+import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { Dimensions, ImageBackground, Platform, Text, TouchableOpacity, View } from 'react-native';
 
 import CompanyIcon from '@/assets/icons-svg/company.svg';
+import { FeedbackScreen } from '@/components/feedbacks/FeedbackScreen';
+import { CustomSuccessIcon } from '@/components/icons/CustomSuccessIcon';
+import { useGoogleAuth } from '@/hooks/useGoogleAuth';
 import Auth from '~/components/ui/buttons/Auth';
 import { useAuth } from '~/contexts/authContext';
 import type { User } from '~/types/authTypes';
@@ -10,6 +14,8 @@ const { width, height } = Dimensions.get('window');
 
 export default function SignIn() {
   const { user, login } = useAuth();
+  const router = useRouter();
+  const { loginWithGoogle, loading, showFeedback, setShowFeedback } = useGoogleAuth();
 
   useEffect(() => {
     //+Feature:Pega os parametros da URL e checa se existe algum token. Se existir, faz o login automático
@@ -39,6 +45,33 @@ export default function SignIn() {
       console.log('Unmount sign-in');
     };
   }, [login, user]);
+
+  const handleFeedbackClose = () => {
+    setShowFeedback(false);
+    // Redireciona após fechar o feedback
+    setTimeout(() => {
+      router.replace('/(auth)/select-profile'); // ou a rota desejada
+    }, 100);
+  };
+
+  if (showFeedback) {
+    return (
+      <FeedbackScreen
+        icon={<CustomSuccessIcon width={54} height={54} />}
+        title="Login realizado com Sucesso!"
+        description="Redirecionando para completar seu perfil."
+        onClose={handleFeedbackClose}
+        showCloseButton
+        descriptionPaddingX={74}
+        titleMarginTop={16}
+        autoRedirectMs={2500} // tempo em ms
+        onAutoRedirect={() => {
+          setShowFeedback(false);
+          router.replace('/(auth)/select-profile');
+        }}
+      />
+    );
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -103,7 +136,7 @@ export default function SignIn() {
             marginTop: 'auto',
             marginBottom: 44,
           }}>
-          <Auth />
+          <Auth onPress={loginWithGoogle} loading={loading} />
         </TouchableOpacity>
       </View>
     </View>

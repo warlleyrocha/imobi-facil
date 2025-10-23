@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 import CirclePlusIcon from '@/assets/icons-svg/circle-plus.svg';
@@ -42,42 +43,40 @@ export default function MyProperties() {
   });
 
   // Carregar imóveis do AsyncStorage sempre que a tela for focada
-  useEffect(() => {
-    const loadProperties = async () => {
-      try {
-        const savedData = await AsyncStorage.getItem('formPropertyData');
-        console.log('Carregando imóveis na tela MEUS IMÓVEIS', savedData);
+  useFocusEffect(
+    useCallback(() => {
+      loadProperties();
+    }, [])
+  );
 
-        if (savedData) {
-          let parsedList: FormDataWithId[] = JSON.parse(savedData);
-          // Se não for array (cadastrado antes como único), transforma em array
-          if (!Array.isArray(parsedList)) {
-            parsedList = [parsedList];
-          }
+  const loadProperties = async () => {
+    try {
+      const savedData = await AsyncStorage.getItem('formPropertyData');
+      console.log('Carregando imóveis na tela MEUS IMÓVEIS', savedData);
 
-          setPropertyList(parsedList);
-        } else {
-          setPropertyList([]);
+      if (savedData) {
+        let parsedList: FormDataWithId[] = JSON.parse(savedData);
+        // Se não for array (cadastrado antes como único), transforma em array
+        if (!Array.isArray(parsedList)) {
+          parsedList = [parsedList];
         }
-      } catch (error) {
-        console.error('Erro ao carregar imóveis:', error);
-      }
-    };
 
-    loadProperties();
-  }, [setPropertyList]); // Você pode adicionar dependência para re-carregar quando voltar da tela de detalhes
+        setPropertyList(parsedList);
+      } else {
+        setPropertyList([]);
+      }
+    } catch (error) {
+      console.error('Erro ao carregar imóveis:', error);
+    }
+  };
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <View className="px-[16px] pt-[55px] pb-[24px]">
+      <View className="px-[16px] pb-[24px] pt-[55px]">
         <View className="relative flex-row items-center justify-center pb-[32px]">
           <TouchableOpacity
             onPress={() => {
-              if (router.canGoBack()) {
-                router.back();
-              } else {
-                router.replace('/corretor/home'); // ou qualquer aba padrão
-              }
+              router.replace('/corretor/home'); // ou qualquer aba padrão
             }}
             className="absolute left-0 top-1">
             <Image source={setaEsquerda} className="h-6 w-6" />
@@ -95,7 +94,7 @@ export default function MyProperties() {
               key={property.id}
               onPress={() =>
                 router.push({
-                  pathname: '/(auth)/corretor/(tabs)/imoveis/[id]',
+                  pathname: '/(auth)/corretor/property/[id]',
                   params: { id: property.id },
                 })
               }
@@ -181,7 +180,7 @@ export default function MyProperties() {
 
           <TouchableOpacity
             className="h-[44px] w-full flex-row items-center justify-center gap-[8px] rounded-lg bg-cor-primaria px-[24px] py-[12px]"
-            onPress={() => router.push('/(auth)/corretor/(tabs)/imoveis/formProperty')}>
+            onPress={() => router.push('/(auth)/corretor/property/formProperty')}>
             <CirclePlusIcon />
             <Text className="font-mulish-medium text-[16px] text-white">Novo imóvel</Text>
           </TouchableOpacity>

@@ -38,21 +38,23 @@ export default function SuccessForm() {
 
   const handleNewProperty = () => {
     console.log('Cadastrar outro imóvel');
-    router.push('/(auth)/corretor/(tabs)/imoveis/formProperty');
+    router.replace('/(auth)/corretor/property/formProperty');
   };
 
   const handleViewProperty = (id: string) => {
     if (!id) return;
-    router.push(`/(auth)/corretor/(tabs)/imoveis/${id}`);
+    router.replace(`/(auth)/corretor/property/${id}`);
+  };
+  const handleClose = () => {
+    // Volta para a lista
+    router.replace('/(auth)/corretor/property');
   };
 
   return (
     <View className="flex-1 items-center justify-center bg-white px-[16px] py-[10px]">
       <View className="relative h-[622px] w-[343px] items-center justify-start gap-[12px] rounded-[8px] border border-[#DFE4EA] bg-white">
         {/* Ícone de fechar no canto superior direito */}
-        <TouchableOpacity
-          className="absolute right-[12px] top-[12px] z-10"
-          onPress={() => router.replace('/(auth)/corretor/(tabs)/imoveis')}>
+        <TouchableOpacity className="absolute right-[12px] top-[12px] z-10" onPress={handleClose}>
           <Ionicons name="close" size={24} color="black" />
         </TouchableOpacity>
 
