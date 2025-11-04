@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 
@@ -42,59 +42,86 @@ export default function CustomCalendar() {
   const today = new Date().toISOString().split('T')[0];
   const [selected, setSelected] = useState<string>(today);
   const [currentMonth, setCurrentMonth] = useState<string>(today);
-
-  // No componente, adicione o estado para as reuniões
   const [meeting, setMeeting] = useState<MeetingProps[]>([
     {
       id: '1',
       typeActivity: 'Reunião com o Cliente',
       client: 'Larissa Andrade',
-      date: '2025-11-04',
+      date: '2025-11-03',
       hours: '14:00',
       location: 'Praça da Sé',
       obs: 'Cliente interessado em apartamento 2 quartos',
     },
   ]);
 
-  // Função para filtrar reuniões do dia selecionado
-  const getMeetingToday = (dateString: string): MeetingProps[] => {
-    return meeting.filter((meeting) => meeting.date === dateString);
-  };
+  // Reuniões do dia selecionado
+  const getMeetingToday = useMemo(() => {
+    return meeting.filter((m) => m.date === selected);
+  }, [meeting, selected]);
 
-  const getMarkedDates = () => {
+  const markedDates = useMemo(() => {
     const marks: { [key: string]: any } = {};
-
-    const currentDate = new Date(currentMonth);
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
     const todayDate = new Date(today);
+    const selectedDate = new Date(selected);
 
-    // Marcar todos os dias passados
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // Marca o dia atual (sempre visível)
+    marks[today] = {
+      customStyles: {
+        container: {
+          backgroundColor: '#10B981',
+          borderRadius: 50,
+          width: 42,
+          height: 42,
+          alignItems: 'center',
+          justifyContent: 'center',
+          transform: [{ translateY: -5 }],
+        },
+        text: {
+          color: '#fff',
+        },
+      },
+    };
 
-    for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(year, month, day);
-      const dateString = date.toISOString().split('T')[0];
+    // Aplica o estilo de seleção apenas se for diferente do dia atual
+    if (selected !== today) {
+      const isPast = selectedDate < todayDate;
+      const isFuture = selectedDate > todayDate;
 
-      // Se a data é anterior a hoje
-      if (date < todayDate) {
-        marks[dateString] = {
-          disabled: true,
-          disableTouchEvent: true,
+      if (isPast) {
+        marks[selected] = {
+          customStyles: {
+            container: {
+              borderWidth: 1,
+              borderColor: '#9CA3AF',
+              borderRadius: 50,
+              width: 42,
+              height: 42,
+              alignItems: 'center',
+              justifyContent: 'center',
+              transform: [{ translateY: -5 }],
+            },
+          },
+        };
+      } else if (isFuture) {
+        marks[selected] = {
+          customStyles: {
+            container: {
+              borderWidth: 1,
+              borderColor: '#10B981',
+              borderRadius: 50,
+              width: 42,
+              height: 42,
+              alignItems: 'center',
+              justifyContent: 'center',
+              transform: [{ translateY: -5 }],
+            },
+          },
         };
       }
     }
 
-    // Sobrescrever com o dia selecionado
-    marks[selected] = {
-      selected: true,
-      selectedColor: '#10B981',
-    };
-
     return marks;
-  };
-
-  const markedDates = getMarkedDates();
+  }, [selected, today]);
 
   const handlePreviousMonth = (): void => {
     const date = new Date(currentMonth);
@@ -109,30 +136,15 @@ export default function CustomCalendar() {
   };
 
   const renderHeader = (date: Date): React.ReactElement => {
-    const monthNames = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-
     return (
       <View className="w-full flex-row items-center justify-between px-0 pb-4">
         <View className="flex flex-row gap-[16px]">
-          <TouchableOpacity className="" onPress={handlePreviousMonth}>
+          <TouchableOpacity onPress={handlePreviousMonth}>
             <ArrowLeftIcon />
           </TouchableOpacity>
 
           <Text className="text-[18px] font-semibold leading-[22px] text-dark">
-            {monthNames[date.getMonth()]}
+            {MONTH_NAMES[date.getMonth()]}
           </Text>
 
           <TouchableOpacity onPress={handleNextMonth}>
@@ -147,14 +159,18 @@ export default function CustomCalendar() {
     );
   };
 
-  const formatarData = (dateString: string): string => {
-    const date = new Date(dateString);
+  const formattedDate = useMemo(() => {
+    const date = new Date(selected);
     const diaSemana = DAY_NAMES[date.getDay()];
     const dia = date.getDate();
     const mes = MONTH_NAMES[date.getMonth()];
-
     return `${diaSemana}, ${dia} de ${mes}`;
+  }, [selected]);
+
+  const handleAddMeeting = () => {
+    console.log('Adicionar reunião para:', selected);
   };
+
   return (
     <ScrollView
       className="bg-white"
@@ -163,12 +179,10 @@ export default function CustomCalendar() {
       <HeaderNew title="ImobiFácil" />
 
       <Calendar
-        key={currentMonth}
         current={currentMonth}
+        markingType="custom"
         markedDates={markedDates}
-        onDayPress={(day: { dateString: string }) => {
-          setSelected(day.dateString);
-        }}
+        onDayPress={(day) => setSelected(day.dateString)}
         renderHeader={renderHeader}
         hideArrows={true}
         hideExtraDays={true}
@@ -176,11 +190,8 @@ export default function CustomCalendar() {
           backgroundColor: 'transparent',
           calendarBackground: 'transparent',
           textSectionTitleColor: '#000',
-          selectedDayBackgroundColor: '#10B981',
-          selectedDayTextColor: '#ffffff',
-          todayTextColor: '#10B981',
+          todayTextColor: '#000',
           dayTextColor: '#374151',
-          textDisabledColor: '#637381',
           monthTextColor: '#000',
           textMonthFontSize: 12,
           textMonthFontWeight: '600',
@@ -188,18 +199,13 @@ export default function CustomCalendar() {
           textDayFontWeight: '400',
           textDayHeaderFontSize: 16,
           textDayHeaderFontWeight: '500',
-          dotColor: '#10B981',
-          selectedDotColor: '#ffffff',
         }}
       />
 
       <View className="items-start px-[16px] pt-[42px]">
-        <Text className="pb-[4px] font-mulish-bold text-[20px] text-dark">
-          {formatarData(selected)}
-        </Text>
+        <Text className="pb-[4px] font-mulish-bold text-[20px] text-dark">{formattedDate}</Text>
 
-        {getMeetingToday(selected).length === 0 ? (
-          // Layout quando não há reuniões
+        {getMeetingToday.length === 0 ? (
           <View className="w-full items-center pt-[24px]">
             <Text className="mb-2 font-inter text-[18px] text-texto-c-secundario">
               Nenhum compromisso agendado
@@ -211,7 +217,7 @@ export default function CustomCalendar() {
         ) : (
           // Layout quando há reuniões
           <View className="mt-6 w-full">
-            {getMeetingToday(selected).map((meeting) => (
+            {getMeetingToday.map((meeting) => (
               <TouchableOpacity
                 key={meeting.id}
                 className="mb-3 rounded-xl bg-[#74767C] px-[16px] py-[20px]">
@@ -250,7 +256,9 @@ export default function CustomCalendar() {
       </View>
 
       <View className="mt-16 w-full items-end px-[16px]">
-        <TouchableOpacity className="h-[56px] w-[56px] items-center justify-center rounded-full bg-cor-primaria shadow-lg">
+        <TouchableOpacity
+          className="h-[56px] w-[56px] items-center justify-center rounded-full bg-cor-primaria shadow-lg"
+          onPress={handleAddMeeting}>
           <PlusIcon />
         </TouchableOpacity>
       </View>
