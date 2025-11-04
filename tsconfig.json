@@ -15,7 +15,8 @@
       "@/types/*": ["types/*"],
       "@/schemas/*": ["schemas/*"],
       "@/utils/*": ["utils/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/constants/*": ["constants/*"]
     }
   },
   "exclude": ["node_modules"],
