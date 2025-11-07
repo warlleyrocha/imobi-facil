@@ -126,13 +126,20 @@ export default function CustomCalendar() {
   const handlePreviousMonth = (): void => {
     const date = new Date(currentMonth);
     date.setMonth(date.getMonth() - 1);
-    setCurrentMonth(date.toISOString().split('T')[0]);
+    const newMonth = date.toISOString().split('T')[0];
+    setCurrentMonth(newMonth);
   };
 
   const handleNextMonth = (): void => {
     const date = new Date(currentMonth);
     date.setMonth(date.getMonth() + 1);
-    setCurrentMonth(date.toISOString().split('T')[0]);
+    const newMonth = date.toISOString().split('T')[0];
+    setCurrentMonth(newMonth);
+  };
+
+  const handleMonthChange = (month: any): void => {
+    console.log('Calendar month changed to:', month.dateString);
+    setCurrentMonth(month.dateString);
   };
 
   const renderHeader = (date: Date): React.ReactElement => {
@@ -179,6 +186,7 @@ export default function CustomCalendar() {
       <HeaderNew title="ImobiFácil" />
 
       <Calendar
+        key={currentMonth}
         current={currentMonth}
         markingType="custom"
         markedDates={markedDates}
@@ -186,6 +194,7 @@ export default function CustomCalendar() {
         renderHeader={renderHeader}
         hideArrows={true}
         hideExtraDays={true}
+        onMonthChange={handleMonthChange}
         theme={{
           backgroundColor: 'transparent',
           calendarBackground: 'transparent',
