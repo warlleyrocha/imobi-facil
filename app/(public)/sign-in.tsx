@@ -136,7 +136,7 @@ export default function SignIn() {
             marginTop: 'auto',
             marginBottom: 44,
           }}>
-          <Auth onPress={loginWithGoogle} loading={loading} />
+          <Auth onPress={() => router.push('/(auth)/corretor/schedule')} loading={loading} />
         </TouchableOpacity>
       </View>
     </View>
