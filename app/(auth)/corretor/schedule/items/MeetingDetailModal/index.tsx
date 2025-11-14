@@ -1,28 +1,32 @@
+import { useState } from 'react';
 import { Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 
 import EditIconSVG from '@/assets/icons-svg/meeting-edit.svg';
 import TrashIconSVG from '@/assets/icons-svg/meeting-trash.svg';
 
 import { INITIAL_SELECTED_MEETING } from '../../utils';
+import DeleteMeetingModal from '../DeleteMeetingModal';
 import { IMeetingDetailModal } from './types';
 import { meetingItems } from './utils';
 
 const MeetingDetailModal = ({
-  selectedMeeting: { data, isOpenDetailModal },
+  selectedMeeting,
   setSelectedMeeting,
   isFutureMeeting,
 }: IMeetingDetailModal) => {
+  const { data, isOpenDetailModal } = selectedMeeting;
+
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+
   if (!data) return;
 
   const { typeActivity } = data;
 
-  const onCloseModal = () => {
-    setSelectedMeeting(INITIAL_SELECTED_MEETING);
-  };
-
-  const meetingFieldsBackgroundColor = isFutureMeeting ? '#effffb' : '#f8faff';
+  const onCloseModal = () => setSelectedMeeting(INITIAL_SELECTED_MEETING);
 
   const getMeetingFields = () => {
+    const meetingFieldsBackgroundColor = isFutureMeeting ? '#effffb' : '#f8faff';
+
     return meetingItems(isFutureMeeting).map(({ field, icon, customContent }) => (
       <View
         key={field}
@@ -64,12 +68,21 @@ const MeetingDetailModal = ({
                     <Text className="text-xl text-[#3758F9]">Editar</Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity className="mb-4 flex-row  items-center justify-center gap-2 rounded-lg bg-white p-3 shadow-sm">
+                  <TouchableOpacity
+                    className="mb-4 flex-row  items-center justify-center gap-2 rounded-lg bg-white p-3 shadow-sm"
+                    onPress={() => setIsOpenDeleteModal(true)}>
                     <TrashIconSVG color="#E10E0E" />
                     <Text className="text-xl text-[#E10E0E]">Excluir</Text>
                   </TouchableOpacity>
                 </View>
               )}
+
+              <DeleteMeetingModal
+                isOpen={isOpenDeleteModal}
+                setIsOpen={setIsOpenDeleteModal}
+                selectedMeeting={selectedMeeting}
+                setSelectedMeeting={setSelectedMeeting}
+              />
             </View>
           </TouchableWithoutFeedback>
         </View>
