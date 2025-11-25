@@ -212,7 +212,7 @@ export default function CustomCalendar() {
 
   return (
     <ScrollView
-      className="flex bg-[#F6F6F6]"
+      className="flex bg-[#FFFFFF]"
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: 6 }}>
       <HeaderNew title="ImobiFácil" />

@@ -47,6 +47,7 @@ export const CALENDAR_THEME: CalendarProps['theme'] = {
   textDayFontWeight: '400',
   textDayHeaderFontSize: 16,
   textDayHeaderFontWeight: '500',
+  textSectionTitleColor: '#111928',
 };
 
 export const LOCALES = {
