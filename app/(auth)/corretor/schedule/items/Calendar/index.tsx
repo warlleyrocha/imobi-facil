@@ -18,6 +18,7 @@ import HeaderNew from '~/components/layouts/HeaderNew';
 import { formatDateWords } from '../../functions';
 import { IMeetingData, ISelectedMeeting } from '../../types';
 import { INITIAL_SELECTED_MEETING } from '../../utils';
+import MeetingFormModal from '../AddMeetingModal';
 import MeetingDetailModal from '../MeetingDetailModal';
 import { checkIsFutureMeeting, getDayState } from './functions';
 import { CALENDAR_THEME, DAY_ACCENT_COLOR, INITIAL_MEETING, LOCALES } from './utils';
@@ -34,6 +35,11 @@ export default function CustomCalendar() {
   const [meeting, setMeeting] = useState<IMeetingData[]>(INITIAL_MEETING);
   const [selectedMeeting, setSelectedMeeting] =
     useState<ISelectedMeeting>(INITIAL_SELECTED_MEETING);
+
+  // Estado para controlar abertura do modal de criação/edição
+  const [isOpenFormModal, setIsOpenFormModal] = useState<boolean>(false);
+  // Estado para enviar dados iniciais ao formulário (para edição ou prefill de data)
+  const [initialMeetingForm, setInitialMeetingForm] = useState<IMeetingData | null>(null);
 
   const selectedDayState = getDayState(selected);
 
@@ -137,8 +143,35 @@ export default function CustomCalendar() {
     );
   };
 
+  // Ao clicar no +: abre modal de criação, pre-fill com data selecionada (ou hoje se não houver seleção)
   const handleAddMeeting = () => {
-    console.log('Adicionar reunião para:', selected);
+    const dateToUse = selected || today;
+    setInitialMeetingForm({
+      id: '',
+      typeActivity: '',
+      client: '',
+      date: dateToUse,
+      hours: '',
+      location: '',
+      obs: '',
+    });
+
+    setIsOpenFormModal(true);
+  };
+
+  // Ao receber a reunião do formulário: adicionar ao estado local
+  const onSubmitMeeting = (newMeeting: IMeetingData) => {
+    // Garantir que o meeting tenha um id
+    const meetingToStore: IMeetingData = {
+      ...newMeeting,
+      id: newMeeting.id || String(Date.now()),
+    };
+
+    setMeeting((prev) => [...prev, meetingToStore]);
+
+    // fechar modal e selecionar o dia criado para atualizar a listagem
+    setIsOpenFormModal(false);
+    setSelected(newMeeting.date);
   };
 
   const onPressMeeting = (selectedMeeting: IMeetingData) => {
@@ -211,50 +244,62 @@ export default function CustomCalendar() {
   };
 
   return (
-    <ScrollView
-      className="flex bg-[#FFFFFF]"
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 6 }}>
-      <HeaderNew title="ImobiFácil" />
+    <>
+      <ScrollView
+        className="flex bg-[#FFFFFF]"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 6 }}>
+        <HeaderNew title="ImobiFácil" />
 
-      <Calendar
-        key={currentMonth}
-        current={currentMonth}
-        markingType="custom"
-        markedDates={markedDates}
-        onDayPress={(day) => setSelected(() => (day.dateString === selected ? '' : day.dateString))}
-        renderHeader={renderHeader}
-        hideArrows={true}
-        hideExtraDays={true}
-        onMonthChange={handleMonthChange}
-        theme={CALENDAR_THEME}
-      />
-
-      {selected && (
-        <View className="items-start px-[16px] pt-[42px]">
-          <Text className="pb-[4px] font-mulish-bold text-[20px] text-dark ">
-            {formatDateWords(selected)}
-          </Text>
-
-          {renderSelectedDayMeetings()}
-        </View>
-      )}
-
-      <View className="mt-16 w-full items-end px-[16px]">
-        <TouchableOpacity
-          className="fixed bottom-6 right-6 h-[56px] w-[56px] items-center justify-center rounded-full bg-cor-primaria shadow-lg"
-          onPress={handleAddMeeting}>
-          <PlusIcon />
-        </TouchableOpacity>
-      </View>
-
-      {selectedMeeting.isOpenDetailModal && selectedMeeting.data && (
-        <MeetingDetailModal
-          selectedMeeting={selectedMeeting}
-          setSelectedMeeting={setSelectedMeeting}
-          isFutureMeeting={checkIsFutureMeeting(selectedMeeting.data)}
+        <Calendar
+          key={currentMonth}
+          current={currentMonth}
+          markingType="custom"
+          markedDates={markedDates}
+          onDayPress={(day) =>
+            setSelected(() => (day.dateString === selected ? '' : day.dateString))
+          }
+          renderHeader={renderHeader}
+          hideArrows={true}
+          hideExtraDays={true}
+          onMonthChange={handleMonthChange}
+          theme={CALENDAR_THEME}
         />
-      )}
-    </ScrollView>
+
+        {selected && (
+          <View className="items-start px-[16px] pt-[42px]">
+            <Text className="pb-[4px] font-mulish-bold text-[20px] text-dark ">
+              {formatDateWords(selected)}
+            </Text>
+
+            {renderSelectedDayMeetings()}
+          </View>
+        )}
+
+        <View className="mt-16 w-full items-end px-[16px]">
+          <TouchableOpacity
+            className="fixed bottom-6 right-6 h-[56px] w-[56px] items-center justify-center rounded-full bg-cor-primaria shadow-lg"
+            onPress={handleAddMeeting}>
+            <PlusIcon />
+          </TouchableOpacity>
+        </View>
+
+        {selectedMeeting.isOpenDetailModal && selectedMeeting.data && (
+          <MeetingDetailModal
+            selectedMeeting={selectedMeeting}
+            setSelectedMeeting={setSelectedMeeting}
+            isFutureMeeting={checkIsFutureMeeting(selectedMeeting.data)}
+          />
+        )}
+      </ScrollView>
+
+      {/* Modal do formulário para novo compromisso / edição */}
+      <MeetingFormModal
+        isOpen={isOpenFormModal}
+        setIsOpen={setIsOpenFormModal}
+        initialMeeting={initialMeetingForm ?? undefined}
+        onSubmit={onSubmitMeeting}
+      />
+    </>
   );
 }
