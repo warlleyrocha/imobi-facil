@@ -91,14 +91,14 @@ export function TimePickerInput({
       {/* Time Picker Modal */}
       <Modal visible={isOpen} animationType="fade" transparent onRequestClose={handleCancel}>
         <View className="flex-1 items-center justify-center bg-black/40">
-          <View className="w-[320px] rounded-2xl bg-white p-6">
+          <View className="w-[282px] rounded-[28px] bg-white px-6 py-6">
             {/* Header */}
             <Text className="mb-6 text-start font-mulish-medium text-[12px] leading-[16px] text-texto-c-primario">
               Selecionar hora
             </Text>
 
             {/* Time Inputs */}
-            <View className="mb-8 flex-row items-center justify-center gap-3">
+            <View className="mb-7 flex-row items-center justify-center gap-3">
               {/* Hour Input */}
               <TouchableOpacity
                 activeOpacity={1}
@@ -115,8 +115,15 @@ export function TimePickerInput({
                   keyboardType="number-pad"
                   maxLength={2}
                   selectTextOnFocus
-                  className={`h-[80px] w-[100px] rounded-xl bg-blue-light-5 text-center font-inter text-[48px] ${
-                    focusedInput === 'hour' ? ' text-[#3758F9]' : 'text-black'
+                  style={{
+                    textAlignVertical: 'center',
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                  }}
+                  className={`h-[72px] w-[100px] rounded-xl border-2 bg-blue-light-5 text-center font-inter text-[48px] ${
+                    focusedInput === 'hour'
+                      ? 'border-[#ADBCF2] text-[#3758F9]'
+                      : 'border-transparent text-black'
                   }`}
                 />
                 <Text className="ml-1 mt-2 font-mulish text-[12px] text-texto-c-primario">
@@ -143,8 +150,15 @@ export function TimePickerInput({
                   keyboardType="number-pad"
                   maxLength={2}
                   selectTextOnFocus
-                  className={`h-[80px] w-[100px] rounded-xl bg-blue-light-5 text-center font-inter text-[48px] ${
-                    focusedInput === 'minute' ? ' text-[#3758F9]' : 'text-black'
+                  style={{
+                    textAlignVertical: 'center',
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                  }}
+                  className={`h-[72px] w-[100px] rounded-xl border-2 bg-blue-light-5 text-center font-inter text-[48px] ${
+                    focusedInput === 'minute'
+                      ? 'border-[#ADBCF2] text-[#3758F9]'
+                      : 'border-transparent text-black'
                   }`}
                 />
                 <Text className="ml-1 mt-2 font-inter text-[12px] text-texto-c-primario">
@@ -154,7 +168,7 @@ export function TimePickerInput({
             </View>
 
             {/* Action Buttons */}
-            <View className="flex-row items-center justify-between px-[25px]">
+            <View className="flex-row items-center justify-between px-[10px]">
               <ClockIcon />
 
               <View className="flex-row gap-10">
