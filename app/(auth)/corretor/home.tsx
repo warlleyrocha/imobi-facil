@@ -58,6 +58,7 @@ const cardData: CardQuickAccess[] = [
     route: '/',
   },
   { id: '6', icon: ProfileIcon, title: 'Perfil do Corretor', route: '/(auth)/corretor/profile' },
+  { id: '7', icon: MyFoldersIcon, title: 'Locação', route: '/corretor/locacao' },
 ];
 
 const statsData: StatCardData[] = [

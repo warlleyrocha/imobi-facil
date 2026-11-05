@@ -19,6 +19,7 @@ export default function CorretorLayout() {
       {/* Módulos com navegação própria */}
       <Stack.Screen name="profile" />
       <Stack.Screen name="property" />
+      <Stack.Screen name="locacao" />
     </Stack>
   );
 }
